@@ -9,8 +9,31 @@ import { Form, FormGroup, Label, FormText, Collapse, CardBody, Card, Dropdown, D
 
 export default function Community() {
   const [search, setSearch] = useState('');
-  const searchResults = data.filter(searchResult => {
-    return searchResult.title.toLowerCase().includes(search.toLowerCase())
+  const searchResults = data.filter(item => {
+    return item.title.toLowerCase().includes(search.toLowerCase())
+  });
+
+  const [filters, setFilters] = useState([]);
+  const filteredResults = data.filter(item => {
+    for (let i = 0; i < filters.length; i++) {
+      if (item.tags.includes(filters[i])) {
+        // item tags contain this filter tag
+        continue;
+      } else {
+        return false;
+      }
+    }
+    // item tags contains all the filter tags
+    return true;
+  })
+
+  // combine results from search and filtered results
+  // const combinedResults = (searchResults, filteredResults) => {
+  //   searchResults.filter(result => {
+  //     return filteredResults.includes(result)
+  // })};
+  const combinedResults = searchResults.filter(result => {
+    return filteredResults.includes(result)
   });
 
   return (
@@ -27,11 +50,14 @@ export default function Community() {
           <InputGroupAddon addonType="append"><Button color="primary"><i class="pe-7s-search pe-lg"></i></Button></InputGroupAddon>
         </InputGroup>
         <Row>
-          <Button color="secondary ml-3">Sort By</Button>
-          <FilterResults />
+          <Button color="secondary ml-3">Sort by</Button>
+          <FilterResults handleFilters={(filters) => setFilters(filters)}/>
         </Row>
-        <section className="searchResultsList">
-          {searchResults.map((searchResult) => {
+        <section className="resultsList">
+          {/* {searchResults.map((searchResult) => {
+            return <SearchResult {...searchResult}></SearchResult>;
+          })} */}
+          {combinedResults.map((searchResult) => {
             return <SearchResult {...searchResult}></SearchResult>;
           })}
         </section>
