@@ -33,7 +33,6 @@ function FilterResults(props) {
 
     setChecked(updatedChecked)
     props.handleFilters(updatedChecked)
-    console.log(updatedChecked)
   }
 
   return (
@@ -51,7 +50,7 @@ function FilterResults(props) {
                   styles: {
                     ...data.styles,
                     overflow: "auto",
-                    maxHeight: "600px",
+                    maxHeight: "60vh",
                   },
                 }
               },
@@ -187,6 +186,53 @@ function FilterResults(props) {
             </Label>
           </FormGroup>
           <DropdownItem divider />
+          <DropdownItem header>Overseas Programmes</DropdownItem>
+          <FormGroup check inline className="mx-3 my-1">
+            <Label check>
+              <Input
+                type="checkbox"
+                id="sep"
+                checked={checked.includes("sep")}
+                onChange={e => handleToggle(e.target.id, e.target.checked)}
+              />{" "}
+              Student Exchange Programme
+            </Label>
+          </FormGroup>
+          <FormGroup check inline className="mx-3 my-1">
+            <Label check>
+              <Input
+                type="checkbox"
+                id="noc"
+                checked={checked.includes("noc")}
+                onChange={e => handleToggle(e.target.id, e.target.checked)}
+              />{" "}
+              NUS Overseas College
+            </Label>
+          </FormGroup>
+          <FormGroup check inline className="mx-3 my-1">
+            <Label check>
+              <Input
+                type="checkbox"
+                id="winter"
+                checked={checked.includes("winter")}
+                onChange={e => handleToggle(e.target.id, e.target.checked)}
+              />{" "}
+              Winter Exchange Programme
+            </Label>
+          </FormGroup>
+          <FormGroup check inline className="mx-3 my-1">
+            <Label check>
+              <Input
+                type="checkbox"
+                id="summer"
+                checked={checked.includes("summer")}
+                onChange={e => handleToggle(e.target.id, e.target.checked)}
+              />{" "}
+              Summer Exchange Programme
+            </Label>
+          </FormGroup>
+          <DropdownItem divider />
+
           <DropdownItem header>Other Programmes</DropdownItem>
           <FormGroup check inline className="mx-3 my-1">
             <Label check>
@@ -210,18 +256,6 @@ function FilterResults(props) {
               University Scholars Programme
             </Label>
           </FormGroup>
-          <FormGroup check inline className="mx-3 my-1">
-            <Label check>
-              <Input
-                type="checkbox"
-                id="rvrc"
-                checked={checked.includes("rvrc")}
-                onChange={e => handleToggle(e.target.id, e.target.checked)}
-              />{" "}
-              Ridge View Residential College Programme
-            </Label>
-          </FormGroup>
-          <DropdownItem divider />
         </DropdownMenu>
       </Dropdown>
     </>
