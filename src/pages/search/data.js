@@ -1,21 +1,21 @@
 export const data = [
   {
-    title: "cs year1-4 focus in AI",
+    title: "cs year1-4 focus in AI + USP",
     date: "date 1",
     numLikes: 1,
     numComments: 1,
     username: "thelegend27",
     desc: "this is a description",
-    tags: ["computing"],
+    tags: ["computing", "usp", "single-degree"],
   },
   {
-    title: "cs year1-4 focus in game dev",
+    title: "cs year1-4 focus in game dev + math 2nd degree",
     date: "date 1",
     numLikes: 1,
     numComments: 1,
     username: "thelegend27",
     desc: "this is a description",
-    tags: ["computing"],
+    tags: ["computing", "double-degree"],
   },
   {
     title: "biomed",
@@ -24,7 +24,7 @@ export const data = [
     numComments: 2,
     username: "thelegend28",
     desc: "this is a description",
-    tags: ["science"],
+    tags: ["science", "single-degree"],
   },
   {
     title: "law kid here",
@@ -33,7 +33,7 @@ export const data = [
     numComments: 3,
     username: "thelegend29",
     desc: "this is a description",
-    tags: ["law"],
+    tags: ["law", "single-degree"],
   },
   {
     title: "archi",
@@ -42,7 +42,7 @@ export const data = [
     numComments: 4,
     username: "thelegend30",
     desc: "this is a description",
-    tags: ["design"],
+    tags: ["design", "single-degree"],
   },
   {
     title: "bba",
@@ -51,7 +51,7 @@ export const data = [
     numComments: 5,
     username: "thelegend31",
     desc: "this is a description",
-    tags: ["business"],
+    tags: ["business", "single-degree"],
   },
   {
     title: "fass psych year1-4",
@@ -60,9 +60,9 @@ export const data = [
     numComments: 5,
     username: "thelegend31",
     desc: "this is a description",
-    tags: ["arts"],
+    tags: ["arts", "single-degree"],
   },
-];
+]
 
 // export const faculties = [
 //   "Arts and Social Sciences",

@@ -5,14 +5,17 @@ import {data} from "./search/data";
 import SearchResult from "./search/SearchResult";
 import FilterResults from "./search/FilterResults";
 
-import { Form, FormGroup, Label, FormText, Collapse, CardBody, Card, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, InputGroupAddon, Input, Button, Row, Container } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input, Button, Row, Container } from 'reactstrap';
 
 export default function Community() {
+
+  /* search function */
   const [search, setSearch] = useState('');
   const searchResults = data.filter(item => {
     return item.title.toLowerCase().includes(search.toLowerCase())
   });
 
+  /* filtering by tags */
   const [filters, setFilters] = useState([]);
   const filteredResults = data.filter(item => {
     for (let i = 0; i < filters.length; i++) {
@@ -27,11 +30,7 @@ export default function Community() {
     return true;
   })
 
-  // combine results from search and filtered results
-  // const combinedResults = (searchResults, filteredResults) => {
-  //   searchResults.filter(result => {
-  //     return filteredResults.includes(result)
-  // })};
+  // combining results from search and filter 
   const combinedResults = searchResults.filter(result => {
     return filteredResults.includes(result)
   });
@@ -54,9 +53,6 @@ export default function Community() {
           <FilterResults handleFilters={(filters) => setFilters(filters)}/>
         </Row>
         <section className="resultsList">
-          {/* {searchResults.map((searchResult) => {
-            return <SearchResult {...searchResult}></SearchResult>;
-          })} */}
           {combinedResults.map((searchResult) => {
             return <SearchResult {...searchResult}></SearchResult>;
           })}
