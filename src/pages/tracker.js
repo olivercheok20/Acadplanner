@@ -5,6 +5,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Layout from "../components/layout"
 import classnames from 'classnames';
 
+var global;
+
 export default function Tracker() {
   
   const [user, setUser] = useState({});
@@ -93,6 +95,31 @@ export default function Tracker() {
   const [modal, setModal] = useState(false);
 
   const togglemodal = () => setModal(!modal);
+
+  function addMod (r) {
+    togglemodal();
+    global = r;
+  }
+
+  function myFunction (r, s) {
+    var ul = document.getElementById(r).parentNode.previousSibling.previousSibling;
+    var li = document.createElement("li");
+    var children = ul.children.length + 1
+    li.setAttribute("id", "element"+children)
+    li.appendChild(document.createTextNode(""+global));
+    ul.appendChild(li);
+    document.getElementById(global).style.display = 'none';
+    togglemodal();
+    updateMC(s);
+  }
+
+  function updateMC (s) {
+    var ele = document.getElementById(s);
+    var str = ele.innerText;
+    var val = str.substring(12);
+    var val = parseInt(val) + 4;
+    ele.innerHTML = "<strong>Total MCs : " + val + "</strong>";
+  }
 
   return (
     <Layout>
@@ -307,8 +334,8 @@ export default function Tracker() {
                     <p>UEM7000 4MC</p>
                   </Col>
                 </Row>
-                <a href="#/" onClick={togglemodal}>Add UEM8000 to your academic plan</a>
-                <Modal isOpen={modal} toggle={togglemodal} className={className} size="lg">
+                <a href="#/" onClick={() => addMod("UEM8000")} id="UEM8000">Add UEM8000 to your academic plan</a>
+                <Modal isOpen={modal} toggle={togglemodal} className={className} size="lg" unmountOnClose={false}>
                   <ModalHeader toggle={togglemodal}>Choose Semester</ModalHeader>
                   <ModalBody>
                     <Row>
@@ -322,9 +349,9 @@ export default function Tracker() {
                           <li>CS1010</li>
                           <li>CS1231</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 24</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc1"><strong>Total MCs : 24</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add1","mc1")} id="add1">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
@@ -337,9 +364,9 @@ export default function Tracker() {
                           <li>CS2102</li>
                           <li>CS2105</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 24</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc2"><strong>Total MCs : 24</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add2", "mc2")} id="add2">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
@@ -348,26 +375,19 @@ export default function Tracker() {
                           <li>UEM6000</li>
                           <li>CS3240</li>
                           <li>CS3203</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 16</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc3"><strong>Total MCs : 16</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add3", "mc3")} id="add3">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
                         <p style={{textAlign: "center", fontSize: '14px'}}><strong>Year 4 Sem 1</strong></p>
                         <ul style={{listStyleType: "square", marginLeft: "20px"}}>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 0</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc4"><strong>Total MCs : 0</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add4","mc4")} id="add4">Add +</Button>
                         </div>
                       </Col>
                     </Row>
@@ -384,9 +404,9 @@ export default function Tracker() {
                           <li>CS2030</li>
                           <li>CS2040</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 24</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc5"><strong>Total MCs : 24</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add5", "mc5")} id="add5">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
@@ -398,9 +418,9 @@ export default function Tracker() {
                           <li>CS3230</li>
                           <li>CS2106</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 20</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc6"><strong>Total MCs : 20</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add6", "mc6")} id="add6">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
@@ -408,27 +428,19 @@ export default function Tracker() {
                         <ul style={{listStyleType: "square", marginLeft: "20px"}}>
                           <li>UEM7000</li>
                           <li>CS3241</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 8</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc7"><strong>Total MCs : 8</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add7", "mc7")} id="add7">Add +</Button>
                         </div>
                       </Col>
                       <Col sm="3">
                         <p style={{textAlign: "center", fontSize: '14px'}}><strong>Year 4 Sem 2</strong></p>
                         <ul style={{listStyleType: "square", marginLeft: "20px"}}>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
-                          <li>(Empty)</li>
                         </ul>
-                        <p style={{textAlign: "center", fontSize: '14px'}}><strong>Total MCs : 0</strong></p>
+                        <p style={{textAlign: "center", fontSize: '14px'}} id="mc8"><strong>Total MCs : 0</strong></p>
                         <div style={{textAlign: "center"}}>
-                          <Button color="primary" onClick={togglemodal}>Add +</Button>
+                          <Button color="primary" onClick={() => myFunction("add8", "mc8")} id="add8">Add +</Button>
                         </div>
                       </Col>
                     </Row>
@@ -493,9 +505,9 @@ export default function Tracker() {
                     <p>CS3241 4MC</p>
                   </Col>
                 </Row>
-                <p><a href="#/" onClick={togglemodal}>Add IS1103 to your academic plan</a></p>
-                <p><a href="#/" onClick={togglemodal}>Add ES2660 to your academic plan</a></p>
-                <p><a href="#/" onClick={togglemodal}>Add CP3209 to your academic plan</a></p>
+                <p><a href="#/" onClick={() => addMod("IS1103")} id="IS1103">Add IS1103 to your academic plan</a></p>
+                <p><a href="#/" onClick={() => addMod("ES2660")} id="ES2660">Add ES2660 to your academic plan</a></p>
+                <p><a href="#/" onClick={() => addMod("CP3209")} id="CP3209">Add CP3209 to your academic plan</a></p>
               </Col>
               <Col sm="4">
                 <p>Units Required: 108MCs</p>
