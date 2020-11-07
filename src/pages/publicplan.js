@@ -60,55 +60,49 @@ export default function PublicPlan() {
   const toggleImportModal = () => setImportModal(!importModal)
 
   /* for comments section */
-  const [comments, setComments] = useState([])
-  setComments(plan.comments)
+  const [comments, setComments] = useState(plan.comments)
 
   const [textAreaInput, setTextAreaInput] = useState("")
 
   const handleTextAreaChange = e => setTextAreaInput(e.target.value)
 
   const handlePostComment = () => {
-    // create new comment object
-    const date = new Date()
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "July",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ]
-    const dateString =
-      date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
-    const newComment = {
-      username: "Me",
-      date: dateString,
-      content: textAreaInput,
-      numLikes: 0,
-    }
+    // add new comment only if text area input is not empty
+    if (textAreaInput !== "") {
+      // create new comment object
+      const date = new Date()
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ]
+      const dateString =
+        date.getDate() +
+        " " +
+        months[date.getMonth()] +
+        " " +
+        date.getFullYear()
+      const newComment = {
+        username: "Me",
+        date: dateString,
+        content: textAreaInput,
+        numLikes: 0,
+      }
 
-    // add new comment to the plan
-    // plan.comments.push(newComment)
-    setComments(comments.push(newComment))
+      // add new comment to the plan and update state
+      setComments(comments.concat([newComment]))
 
-    console.log("after posting comment")
-    console.log(comments)
-    console.log(Array.isArray(comments))
-    // console.log(comments[0])
-    // re-render?
-  }
-
-  const convertCommentsToArray = () => {
-    if (!Array.isArray(comments)) {
-      setComments(Object.entries(comments))
-      console.log("converting comments")
-      console.log(comments)
+      // reset the input
+      setTextAreaInput("")
     }
   }
 
@@ -192,18 +186,16 @@ export default function PublicPlan() {
         <section style={{ width: "50%" }}>
           <h5>Comments</h5>
           <br />
-          {/* {console.log("before render: " + Array.isArray(comments))} */}
-          {convertCommentsToArray}
           {comments.map(comment => {
             return <Comment {...comment}></Comment>
           })}
-
           <Form>
             <FormGroup>
               <Input
                 onChange={e => handleTextAreaChange(e)}
                 type="textarea"
                 name="text"
+                value={textAreaInput}
                 placeholder="Write your comment here..."
               />
             </FormGroup>
