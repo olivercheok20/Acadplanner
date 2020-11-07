@@ -71,15 +71,16 @@ export default function Tracker() {
   function calcCAP () {
     var checked = document.querySelectorAll('#exampleSelectMulti :checked');
     var selected = [...checked].map(option => option.value);
-    if (selected == "y1 sem1") {
+    selected = String(selected);
+    if (selected === "y1 sem1") {
       document.getElementById('CCAP').innerHTML = '3.12 (Honours)';
-    } else if (selected == "y1 sem1,y1 sem2") {
+    } else if (selected === "y1 sem1,y1 sem2") {
       document.getElementById('CCAP').innerHTML = '3.33 (Honours)';
-    } else if (selected == "y1 sem1,y1 sem2,y2 sem1") {
+    } else if (selected === "y1 sem1,y1 sem2,y2 sem1") {
       document.getElementById('CCAP').innerHTML = '3.20 (Honours)';
-    } else if (selected == "y1 sem1,y1 sem2,y2 sem1,y2 sem2") {
+    } else if (selected === "y1 sem1,y1 sem2,y2 sem1,y2 sem2") {
       document.getElementById('CCAP').innerHTML = '3.22 (Honours)';
-    } else if (selected == "") {
+    } else if (selected === "") {
       document.getElementById('CCAP').innerHTML = '-';
     }
   }
@@ -110,7 +111,7 @@ export default function Tracker() {
     ul.appendChild(li);
     togglemodal();
     updateMC(s);
-    if (global == "UEM8000") {
+    if (global === "UEM8000") {
       document.getElementById(global).style.display = 'none';
       document.getElementById(global).nextSibling.style.display = "block";
       updateuebadge()
