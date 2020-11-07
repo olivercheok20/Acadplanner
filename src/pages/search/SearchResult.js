@@ -1,7 +1,5 @@
 import React from "react"
 
-import PlanModal from "./PlanModal"
-
 import { Button, Col, Row, Container } from "reactstrap"
 
 const SearchResult = ({
@@ -13,7 +11,10 @@ const SearchResult = ({
   username,
   desc,
 }) => {
-  console.log("in search result" + id)
+  const handleClick = () => {
+    const url = "/publicplan?id=" + id
+    window.open(url)
+  }
 
   return (
     <article className="searchResult">
@@ -24,7 +25,9 @@ const SearchResult = ({
             {/* <Button color="link" size="lg" onClick={toggleModal}>
               {title}
             </Button> */}
-            <PlanModal id={id} />
+            <Button color="link" onClick={handleClick}>
+              {title}
+            </Button>
             {/* <h5>{title}</h5> */}
             <Row>
               <p>{date}</p>
