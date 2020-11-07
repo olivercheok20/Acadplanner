@@ -8,6 +8,20 @@ export const data = [
     username: "thelegend27",
     desc: "this is a description",
     tags: ["computing", "usp", "single-degree"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
   {
     id: 1,
@@ -18,6 +32,20 @@ export const data = [
     username: "thelegend27",
     desc: "this is a description",
     tags: ["computing", "double-degree"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
   {
     id: 2,
@@ -28,6 +56,20 @@ export const data = [
     username: "thelegend28",
     desc: "this is a description",
     tags: ["science", "single-degree"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
   {
     id: 3,
@@ -38,6 +80,20 @@ export const data = [
     username: "thelegend29",
     desc: "this is a description",
     tags: ["law", "single-degree", "sep"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
   {
     id: 4,
@@ -48,6 +104,20 @@ export const data = [
     username: "thelegend30",
     desc: "this is a description",
     tags: ["design", "single-degree"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
   {
     id: 5,
@@ -58,6 +128,20 @@ export const data = [
     username: "thelegend31",
     desc: "this is a description",
     tags: ["business", "single-degree", "noc"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 3,
+      },
+    ],
   },
   {
     id: 6,
@@ -68,6 +152,20 @@ export const data = [
     username: "thelegend31",
     desc: "this is a description",
     tags: ["arts", "single-degree"],
+    comments: [
+      {
+        username: "JaniceLee",
+        date: "26 sep 2020",
+        content: "this was really helpful, thank you!!",
+        numLikes: 1,
+      },
+      {
+        username: "Alice Tan",
+        date: "28 sep 2020",
+        content: "shouldn't CS1231 be in y1s1??",
+        numLikes: 1,
+      },
+    ],
   },
 ]
 

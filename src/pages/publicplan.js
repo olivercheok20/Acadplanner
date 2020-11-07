@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react"
 
 import { data } from "./search/data"
-
 import Layout from "../components/layout"
+import Comment from "./search/Comment"
 
 import {
   Row,
@@ -12,6 +12,10 @@ import {
   ModalHeader,
   ModalBody,
   Container,
+  FormGroup,
+  Form,
+  Label,
+  Input,
 } from "reactstrap"
 
 export default function PublicPlan() {
@@ -19,7 +23,7 @@ export default function PublicPlan() {
   const id = urlParams.get("id")
   const plan = data[id]
 
-  // for 'share plan' modal
+  /* for 'share plan' modal */
   const [modal, setModal] = useState(false)
   const toggleModal = () => {
     setModal(!modal)
@@ -30,7 +34,7 @@ export default function PublicPlan() {
     }
   }
 
-  // for buttons in 'share plan' modal
+  /* for buttons in 'share plan' modal */
   const [downloadButtonText, setDownloaded] = useState("Download as PNG")
   const [copyLinkButtonText, setCopyLink] = useState("Copy Link")
 
@@ -48,12 +52,65 @@ export default function PublicPlan() {
     setCopyLink("Link Copied!")
   }
 
-  // for import plan modal
+  /* for import plan modal */
   const [importModal, setImportModal] = useState(false)
-  const importModalRef = useRef(importModal)
-  importModalRef.current = importModal
+  // const importModalRef = useRef(importModal)
+  // importModalRef.current = importModal
 
   const toggleImportModal = () => setImportModal(!importModal)
+
+  /* for comments section */
+  const [comments, setComments] = useState([])
+  setComments(plan.comments)
+
+  const [textAreaInput, setTextAreaInput] = useState("")
+
+  const handleTextAreaChange = e => setTextAreaInput(e.target.value)
+
+  const handlePostComment = () => {
+    // create new comment object
+    const date = new Date()
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "July",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ]
+    const dateString =
+      date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
+    const newComment = {
+      username: "Me",
+      date: dateString,
+      content: textAreaInput,
+      numLikes: 0,
+    }
+
+    // add new comment to the plan
+    // plan.comments.push(newComment)
+    setComments(comments.push(newComment))
+
+    console.log("after posting comment")
+    console.log(comments)
+    console.log(Array.isArray(comments))
+    // console.log(comments[0])
+    // re-render?
+  }
+
+  const convertCommentsToArray = () => {
+    if (!Array.isArray(comments)) {
+      setComments(Object.entries(comments))
+      console.log("converting comments")
+      console.log(comments)
+    }
+  }
 
   return (
     <Layout>
@@ -129,6 +186,32 @@ export default function PublicPlan() {
             </ModalBody>
           </Modal>
         </Row>
+        <div>this is where the plan would go</div>
+        <br />
+        <br />
+        <section style={{ width: "50%" }}>
+          <h5>Comments</h5>
+          <br />
+          {/* {console.log("before render: " + Array.isArray(comments))} */}
+          {convertCommentsToArray}
+          {comments.map(comment => {
+            return <Comment {...comment}></Comment>
+          })}
+
+          <Form>
+            <FormGroup>
+              <Input
+                onChange={e => handleTextAreaChange(e)}
+                type="textarea"
+                name="text"
+                placeholder="Write your comment here..."
+              />
+            </FormGroup>
+            <Button color="primary" onClick={handlePostComment}>
+              Post Comment
+            </Button>
+          </Form>
+        </section>
       </Container>
     </Layout>
   )
