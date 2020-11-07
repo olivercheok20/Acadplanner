@@ -21,14 +21,9 @@ const SearchResult = ({
       <Container>
         <Row>
           <Col xs="9">
-            {/* <a href="/publicplan">{title}</a> */}
-            {/* <Button color="link" size="lg" onClick={toggleModal}>
-              {title}
-            </Button> */}
             <Button color="link" onClick={handleClick}>
               {title}
             </Button>
-            {/* <h5>{title}</h5> */}
             <Row>
               <p>{date}</p>
               <p>{numLikes}</p>

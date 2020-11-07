@@ -78,16 +78,6 @@ function SortBy(props) {
               Title
             </Label>
           </FormGroup>
-          {/* <FormGroup check className="mx-3 my-1">
-            <Label check>
-              <Input
-                type="radio"
-                id="title"
-                onChange={e => console.log(e.target)}
-              />{" "}
-              Title
-            </Label>
-          </FormGroup> */}
         </DropdownMenu>
       </Dropdown>
     </>

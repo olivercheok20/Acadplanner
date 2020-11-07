@@ -85,7 +85,6 @@ export default function Community() {
           </InputGroupAddon>
         </InputGroup>
         <Row>
-          {/* <Button color="secondary ml-3">Sort by</Button> */}
           <SortBy handleSorting={sorting => setSorting(sorting)} />
           <FilterResults handleFilters={filters => setFilters(filters)} />
         </Row>

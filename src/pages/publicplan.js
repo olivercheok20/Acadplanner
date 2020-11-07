@@ -53,18 +53,7 @@ export default function PublicPlan() {
   const importModalRef = useRef(importModal)
   importModalRef.current = importModal
 
-  const toggleImportModal = () => {
-    setImportModal(!importModal)
-    // if modal is open, set it to close in 3 seconds
-    // console.log("before timeout: " + importModal)
-    if (importModal) {
-      const timer = setTimeout(
-        () => setImportModal(importModalRef.current),
-        1000
-      )
-      clearTimeout(timer)
-    }
-  }
+  const toggleImportModal = () => setImportModal(!importModal)
 
   return (
     <Layout>
@@ -107,10 +96,6 @@ export default function PublicPlan() {
             >
               Added <b>{plan.title}</b> to your plans!
             </ModalHeader>
-            {/* <ModalBody className="align-items-center justify-content-center">
-              
-              <Button className="close"></Button>
-            </ModalBody> */}
           </Modal>
           <Button outline color="secondary" onClick={toggleModal}>
             Share Plan
