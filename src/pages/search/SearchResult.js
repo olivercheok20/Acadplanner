@@ -1,15 +1,30 @@
-import React from 'react'
+import React from "react"
 
-import { Button, Col, Row, Container } from 'reactstrap';
+import PlanModal from "./PlanModal"
 
-const SearchResult = ({ title, date, numLikes, numComments, username, desc }) => {
+import { Button, Col, Row, Container } from "reactstrap"
+
+const SearchResult = ({
+  id,
+  title,
+  date,
+  numLikes,
+  numComments,
+  username,
+  desc,
+}) => {
+  console.log("in search result" + id)
+
   return (
     <article className="searchResult">
       <Container>
         <Row>
           <Col xs="9">
             {/* <a href="/publicplan">{title}</a> */}
-            <Button color="link" size="lg" href="../public-plan">{title}</Button>
+            {/* <Button color="link" size="lg" onClick={toggleModal}>
+              {title}
+            </Button> */}
+            <PlanModal id={id} />
             {/* <h5>{title}</h5> */}
             <Row>
               <p>{date}</p>
@@ -27,7 +42,7 @@ const SearchResult = ({ title, date, numLikes, numComments, username, desc }) =>
         <p>{desc}</p>
       </Container>
     </article>
-  );
-};
+  )
+}
 
 export default SearchResult

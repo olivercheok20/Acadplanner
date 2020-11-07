@@ -1,5 +1,6 @@
 export const data = [
   {
+    id: 0,
     title: "cs year1-4 focus in AI + USP",
     date: "25 Sep 2020",
     numLikes: 1,
@@ -9,6 +10,7 @@ export const data = [
     tags: ["computing", "usp", "single-degree"],
   },
   {
+    id: 1,
     title: "cs year1-4 focus in game dev + math 2nd degree",
     date: "6 Nov 2020",
     numLikes: 1,
@@ -18,6 +20,7 @@ export const data = [
     tags: ["computing", "double-degree"],
   },
   {
+    id: 2,
     title: "biomed",
     date: "5 Nov 2020",
     numLikes: 2,
@@ -27,6 +30,7 @@ export const data = [
     tags: ["science", "single-degree"],
   },
   {
+    id: 3,
     title: "law with exchange to canada",
     date: "2 Nov 2020",
     numLikes: 3,
@@ -36,6 +40,7 @@ export const data = [
     tags: ["law", "single-degree", "sep"],
   },
   {
+    id: 4,
     title: "archi",
     date: "1 Nov 2020",
     numLikes: 4,
@@ -45,6 +50,7 @@ export const data = [
     tags: ["design", "single-degree"],
   },
   {
+    id: 5,
     title: "bba + noc",
     date: "4 Oct 2020",
     numLikes: 5,
@@ -54,6 +60,7 @@ export const data = [
     tags: ["business", "single-degree", "noc"],
   },
   {
+    id: 6,
     title: "fass psych year1-4",
     date: "28 Sep 2019",
     numLikes: 5,
