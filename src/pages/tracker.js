@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Row, Col, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, Input, Form, FormGroup, Label } from "reactstrap";
+import { Row, Col, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, Input, Form, FormGroup } from "reactstrap";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Badge } from 'reactstrap';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Layout from "../components/layout"
 import classnames from 'classnames';
 
@@ -108,17 +108,60 @@ export default function Tracker() {
     li.setAttribute("id", "element"+children)
     li.appendChild(document.createTextNode(""+global));
     ul.appendChild(li);
-    document.getElementById(global).style.display = 'none';
     togglemodal();
     updateMC(s);
+    if (global == "UEM8000") {
+      document.getElementById(global).style.display = 'none';
+      document.getElementById(global).nextSibling.style.display = "block";
+      updateuebadge()
+    } else {
+      document.getElementById(global).style.display = 'none';
+      document.getElementById(global).nextSibling.style.display = "block";
+      updatemajbadge()
+    }
   }
 
   function updateMC (s) {
     var ele = document.getElementById(s);
     var str = ele.innerText;
     var val = str.substring(12);
-    var val = parseInt(val) + 4;
+    val = parseInt(val) + 4;
     ele.innerHTML = "<strong>Total MCs : " + val + "</strong>";
+  }
+
+  function updateuebadge() {
+    var ele = document.getElementById("uebadge");
+    ele.innerHTML = "&#x2713;";
+    ele.style.backgroundColor = "#545cd8";
+
+    var ueUnitsPlanned = document.getElementById("ueplan");
+    var planstr = ueUnitsPlanned.innerText;
+    var planval = planstr.substring(15,16);
+    planval = parseInt(planval) + 4;
+    ueUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
+
+    var ueUnitsNeeded = document.getElementById("ueneed");
+    var needstr = ueUnitsNeeded.innerText;
+    var needval = needstr.substring(14,15);
+    needval = parseInt(needval) - 4;
+    ueUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
+  }
+
+  function updatemajbadge() {
+    var ele = document.getElementById("majbadge");
+    ele.innerHTML = parseInt(ele.innerHTML) - 4;
+
+    var majUnitsPlanned = document.getElementById("majplan");
+    var planstr = majUnitsPlanned.innerText;
+    var planval = planstr.substring(15,17);
+    planval = parseInt(planval) + 4;
+    majUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
+
+    var majUnitsNeeded = document.getElementById("majneed");
+    var needstr = majUnitsNeeded.innerText;
+    var needval = needstr.substring(14,17);
+    needval = parseInt(needval) - 4;
+    majUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
   }
 
   return (
@@ -246,7 +289,7 @@ export default function Tracker() {
             className={classnames({ active: activeTab === '2' })}
             onClick={() => { toggle('2'); }}
           >
-            Unrestrictive Electives Requirements <Badge color="danger">4</Badge>
+            Unrestrictive Electives Requirements <Badge color="danger" id="uebadge">4</Badge>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -254,7 +297,7 @@ export default function Tracker() {
             className={classnames({ active: activeTab === '3' })}
             onClick={() => { toggle('3'); }}
           >
-            Programme Requirements <Badge color="danger">40</Badge>
+            Programme Requirements <Badge color="danger" id="majbadge">40</Badge>
           </NavLink>
         </NavItem>
       </Nav>
@@ -335,6 +378,7 @@ export default function Tracker() {
                   </Col>
                 </Row>
                 <a href="#/" onClick={() => addMod("UEM8000")} id="UEM8000">Add UEM8000 to your academic plan</a>
+                <p style={{display: "none"}}><strong>UEM8000 has been successfully added!</strong></p>
                 <Modal isOpen={modal} toggle={togglemodal} className={className} size="lg" unmountOnClose={false}>
                   <ModalHeader toggle={togglemodal}>Choose Semester</ModalHeader>
                   <ModalBody>
@@ -450,8 +494,8 @@ export default function Tracker() {
               <Col sm="4">
                 <p>Units Required: 32MCs</p>
                 <p>Units Taken: 20MCs</p>
-                <p>Units Planned: 8MCs</p>
-                <p><strong>Units Needed: 4MCs</strong></p>
+                <p id="ueplan">Units Planned: 8MCs</p>
+                <p><strong id="ueneed">Units Needed: 4MCs</strong></p>
               </Col>
             </Row>
           </div>
@@ -505,15 +549,24 @@ export default function Tracker() {
                     <p>CS3241 4MC</p>
                   </Col>
                 </Row>
-                <p><a href="#/" onClick={() => addMod("IS1103")} id="IS1103">Add IS1103 to your academic plan</a></p>
-                <p><a href="#/" onClick={() => addMod("ES2660")} id="ES2660">Add ES2660 to your academic plan</a></p>
-                <p><a href="#/" onClick={() => addMod("CP3209")} id="CP3209">Add CP3209 to your academic plan</a></p>
+                <p>
+                  <a href="#/" onClick={() => addMod("IS1103")} id="IS1103">Add IS1103 to your academic plan</a>
+                  <span style={{display: "none"}}><strong>IS1103 has been successfully added!</strong></span>
+                </p>
+                <p>
+                  <a href="#/" onClick={() => addMod("ES2660")} id="ES2660">Add ES2660 to your academic plan</a>
+                  <span style={{display: "none"}}><strong>ES2660 has been successfully added!</strong></span>
+                </p>
+                <p>
+                  <a href="#/" onClick={() => addMod("CP3209")} id="CP3209">Add CP3209 to your academic plan</a>
+                  <span style={{display: "none"}}><strong>CP3209 has been successfully added!</strong></span>
+                </p>
               </Col>
               <Col sm="4">
                 <p>Units Required: 108MCs</p>
                 <p>Units Taken: 52MCs</p>
-                <p>Units Planned: 16MCs</p>
-                <p><strong>Units Needed: 40MCs</strong></p>
+                <p id="majplan">Units Planned: 16MCs</p>
+                <p><strong id="majneed">Units Needed: 40MCs</strong></p>
               </Col>
             </Row>
           </div>
