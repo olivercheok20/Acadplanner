@@ -7,14 +7,14 @@ import { Row, Col, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropd
 import { connect, Provider } from "react-redux";
 import store from '../../state/createStore';
 
-class ExamplePlan extends Component {
+class View extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       editPlanDescription: false,
       editPlanName: false,
-      activePlan: this.props.plans[0]
+      activePlan: this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]]
     }
   }
 
@@ -50,7 +50,7 @@ class ExamplePlan extends Component {
             type="select"
             name="text"
             id="planselection"
-            defaultValue={this.getNamesFromPlans[0]}
+            defaultValue={this.state.activePlan.planName}
             onChange={(e) => { this.handleChangePlan(document.getElementById("planselection").value) }}
           >
             {this.props.plans.map((plan, i) => (
@@ -130,7 +130,6 @@ function mapState(state) {
   return { plans: state.plans }
 }
 
-// Maps `dispatch` to `props`:
 function mapDispatch(dispatch) {
   return {
     onChangePlanName: (planName, newName) => dispatch ({type: 'changePlanName', payload: { 'planName': planName, 'newName': newName }}),
@@ -138,5 +137,4 @@ function mapDispatch(dispatch) {
   }
 }
 
-// Connect them:
-export default connect(mapState, mapDispatch)(ExamplePlan)
+export default connect(mapState, mapDispatch)(View)
