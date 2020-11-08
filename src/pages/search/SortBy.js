@@ -24,7 +24,9 @@ function SortBy(props) {
   return (
     <>
       <Dropdown className="ml-3" isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Sort by</DropdownToggle>
+        <DropdownToggle outline caret>
+          Sort by
+        </DropdownToggle>
         <DropdownMenu
           modifiers={{
             setMaxHeight: {

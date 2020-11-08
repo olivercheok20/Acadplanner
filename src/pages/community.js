@@ -69,8 +69,8 @@ export default function Community() {
 
   return (
     <Layout>
-      <Container>
-        <InputGroup className="my-2">
+      <Container className="py-4 w-75">
+        <InputGroup className="mt-2 mb-3">
           <Input
             type="search"
             name="search"
@@ -80,15 +80,16 @@ export default function Community() {
           />
           <InputGroupAddon addonType="append">
             <Button color="primary">
-              <i class="pe-7s-search pe-lg pe-7s-like2"></i>
+              <i class="pe-7s-search pe-lg"></i>
             </Button>
           </InputGroupAddon>
         </InputGroup>
-        <Row>
+        <Row className="my-2">
           <SortBy handleSorting={sorting => setSorting(sorting)} />
           <FilterResults handleFilters={filters => setFilters(filters)} />
         </Row>
-        <section className="resultsList">
+        <br />
+        <section>
           {combinedResults.map(searchResult => {
             return <SearchResult {...searchResult}></SearchResult>
           })}

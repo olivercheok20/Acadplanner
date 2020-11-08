@@ -38,7 +38,9 @@ function FilterResults(props) {
   return (
     <>
       <Dropdown className="ml-2" isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Filter</DropdownToggle>
+        <DropdownToggle outline caret>
+          Filter
+        </DropdownToggle>
         <DropdownMenu
           modifiers={{
             setMaxHeight: {

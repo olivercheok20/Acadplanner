@@ -127,7 +127,7 @@ export default function PublicPlan() {
           <div className="plan-details">
             <Col className="px-0">
               <div className="plan-subtitle">
-                <p className="mr-4 ml-0">{plan.date}</p>
+                <p className="mr-2 ml-0">{plan.date}</p>
                 <Row
                   className={like ? "btn-like-liked" : "btn-like-default"}
                   onClick={e => toggleLike(e)}
@@ -145,7 +145,7 @@ export default function PublicPlan() {
                   </Button>
                 </div>
               </div>
-              <p class="text-justify">{plan.desc}</p>
+              <p className="text-justify">{plan.desc}</p>
             </Col>
           </div>
         </Col>
