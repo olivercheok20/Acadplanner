@@ -25,7 +25,7 @@ export const PlanToTake = (props) => {
     }
 
     return (
-        <Card style={{ padding: 30, paddingBottom: 5 }}>
+        <Card style={{ padding: 30, paddingBottom: 5, borderWidth: '1px' }}>
             {modules.map((module, i) => (
                 <PlanToTakeModule moduleData={module} key={i} />
             ))}

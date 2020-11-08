@@ -32,7 +32,7 @@ export const Semester = (props) => {
     }
 
     return (
-        <Card style={{ padding: 30, paddingBottom: 5 }}>
+        <Card style={{ padding: 30, paddingBottom: 5, borderWidth: '1px' }}>
             <div style={{ display: 'flex', marginLeft: 5 }}>
                 {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{semesterName}</h5>}
                 {!editSemesterName && <Button color="link" onClick={() => setEditSemesterName(true)}>edit</Button>}
