@@ -4,6 +4,8 @@ import { data } from "./search/data"
 import Layout from "../components/layout"
 import Comment from "./search/Comment"
 
+import "./search/publicplan.css"
+
 import {
   Row,
   Col,
@@ -14,7 +16,6 @@ import {
   Container,
   FormGroup,
   Form,
-  Label,
   Input,
 } from "reactstrap"
 
@@ -22,6 +23,29 @@ export default function PublicPlan() {
   const urlParams = new URLSearchParams(window.location.search)
   const id = urlParams.get("id")
   const plan = data[id]
+
+  /* for like button */
+  const [like, setLike] = useState(false)
+  const toggleLike = e => {
+    setLike(!like)
+    // if already liked, set to primary (default) colour and decrement value of numLikes
+    if (like) {
+      // e.target.style.color = "#545cd8"
+      // e.target.style.textColor = "#545cd8"
+      plan.numLikes -= 1
+    } else {
+      // if not liked, colour button green and increment value of numLikes
+      // e.target.style.color = "#3ac47d"
+      // e.target.style.textColor = "#3ac47d"
+
+      plan.numLikes += 1
+    }
+  }
+
+  // if button is liked, change to blue, else, would be default gray colour
+  let likeBtnStyle = like
+    ? { color: "#545cd8", cursor: "pointer" }
+    : { color: "#495057", cursor: "pointer" }
 
   /* for 'share plan' modal */
   const [modal, setModal] = useState(false)
@@ -110,23 +134,32 @@ export default function PublicPlan() {
     <Layout>
       <Container className="p-3">
         <h3>{plan.title}</h3>
-        <Col className="mx-3">
-          <Row>
-            <Col xs="9">
-              <Row>
-                <p>{plan.date + " "}</p>
-                <p>{plan.numLikes + " "}</p>
-                <i class="pe-7s-like2 pe-lg"></i>
-                <p>{plan.numComments + " "}</p>
-                <i class="pe-7s-comment pe-lg"></i>
-              </Row>
+        <Col className="px-0">
+          <div className="plan-details">
+            <Col className="px-0">
+              <div className="plan-subtitle">
+                <p className="mr-4 ml-0">{plan.date}</p>
+                <Row
+                  className={like ? "btn-like-liked" : "btn-like-default"}
+                  onClick={e => toggleLike(e)}
+                >
+                  <i className="pe-7s-like2 pe-lg pe-fw"></i>
+                  <p>{plan.numLikes}</p>
+                </Row>
+                <i class="pe-7s-comment pe-lg pe-fw"></i>
+                <p className="font-weight-bold pr-2">{plan.numComments}</p>
+              </div>
+              <div className="user-info">
+                Made by
+                <i className="pe-7s-user pe-lg pe-va pe-fw px-2"></i>
+                <Button color="link" className="pl-2 py-0">
+                  {plan.username}
+                </Button>
+              </div>
+              <br />
+              <p class="text-justify">{plan.desc}</p>
             </Col>
-            <Col xs="3">
-              <i class="pe-7s-user pe-lg"></i>
-              <h6>{plan.username}</h6>
-            </Col>
-          </Row>
-          <p>{plan.desc}</p>
+          </div>
         </Col>
         <Row>
           <Button color="primary" onClick={toggleImportModal}>
@@ -150,6 +183,9 @@ export default function PublicPlan() {
           </Modal>
           <Button outline color="secondary" onClick={toggleModal}>
             Share Plan
+          </Button>
+          <Button outline color="secondary">
+            Compare with One of My Plans
           </Button>
           <Modal isOpen={modal} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Share Plan</ModalHeader>
