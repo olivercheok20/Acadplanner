@@ -1,0 +1,62 @@
+.icon {
+  position: relative;
+  top: 0.1rem;
+}
+
+.btn-like-liked {
+  color: #545cd8 !important;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.btn-like-default {
+  color: #495057 !important;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 0.5rem;
+}
+
+.user-info > span {
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.plan-details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.plan-subtitle {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.25rem;
+}
+
+.username-link {
+  padding: 0 0.25rem !important;
+  font-size: 0.88rem !important;
+}
+
+.action-btns-row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.action-btns-row > Button {
+  margin-right: 1rem;
+}
+
+.text-area {
+  font-size: 0.88rem; /* font size of p */
+}
