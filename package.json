@@ -16,6 +16,7 @@
   "dependencies": {
     "animate-sass": "^0.8.2",
     "gatsby": "^2.24.91",
+    "gatsby-plugin-react-redux": "^1.1.0",
     "gatsby-plugin-sass": "^2.3.22",
     "linearicons": "^1.0.2",
     "loaders.css": "^0.1.2",
@@ -24,8 +25,13 @@
     "react-dom": "^16.12.0",
     "react-full-height": "^1.2.2",
     "react-metismenu": "^1.4.0",
+    "react-redux": "^7.2.2",
     "react-slick": "^0.27.12",
     "reactstrap": "^8.7.0",
+    "redux": "^4.0.5",
+    "redux-devtools": "^3.7.0",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "webpack": "^5.3.2"
   },
   "devDependencies": {
