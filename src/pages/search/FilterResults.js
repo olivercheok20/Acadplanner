@@ -121,8 +121,8 @@ function FilterResults(props) {
             <Label check>
               <Input
                 type="checkbox"
-                id="design"
-                checked={checked.includes("design")}
+                id="sde"
+                checked={checked.includes("sde")}
                 onChange={e => handleToggle(e.target.id, e.target.checked)}
               />{" "}
               Design and Environment
@@ -154,33 +154,11 @@ function FilterResults(props) {
             <Label check>
               <Input
                 type="checkbox"
-                id="music"
-                onChange={e => handleToggle(e.target.id)}
-              />{" "}
-              Music
-            </Label>
-          </FormGroup>{" "}
-          */}
-          <FormGroup check inline className="mx-3 my-1">
-            <Label check>
-              <Input
-                type="checkbox"
                 id="science"
                 checked={checked.includes("science")}
                 onChange={e => handleToggle(e.target.id, e.target.checked)}
               />{" "}
               Science
-            </Label>
-          </FormGroup>
-          <FormGroup check inline className="mx-3 my-1">
-            <Label check>
-              <Input
-                type="checkbox"
-                id="yale"
-                checked={checked.includes("yale")}
-                onChange={e => handleToggle(e.target.id, e.target.checked)}
-              />{" "}
-              Yale-NUS College
             </Label>
           </FormGroup>
           <DropdownItem divider />
@@ -204,7 +182,7 @@ function FilterResults(props) {
                 checked={checked.includes("noc")}
                 onChange={e => handleToggle(e.target.id, e.target.checked)}
               />{" "}
-              NUS Overseas College
+              NUS Overseas Colleges
             </Label>
           </FormGroup>
           <FormGroup check inline className="mx-3 my-1">
