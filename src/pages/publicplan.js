@@ -134,6 +134,7 @@ export default function PublicPlan() {
     <Layout>
       <Container className="p-3">
         <h3>{plan.title}</h3>
+        <hr />
         <Col className="px-0">
           <div className="plan-details">
             <Col className="px-0">
@@ -143,25 +144,24 @@ export default function PublicPlan() {
                   className={like ? "btn-like-liked" : "btn-like-default"}
                   onClick={e => toggleLike(e)}
                 >
-                  <i className="pe-7s-like2 pe-lg pe-fw"></i>
-                  <p>{plan.numLikes}</p>
+                  <i className="pe-7s-like2 pe-lg pe-fw icon"></i>
+                  <p className="my-0">{plan.numLikes}</p>
                 </Row>
-                <i class="pe-7s-comment pe-lg pe-fw"></i>
-                <p className="font-weight-bold pr-2">{plan.numComments}</p>
+                <i class="pe-7s-comment pe-lg pe-fw icon"></i>
+                <p className="my-0">{plan.numComments}</p>
+                <div className="user-info">
+                  <span>·</span>Made by
+                  {/* <i className="pe-7s-user pe-2x pe-va pe-fw px-2 "></i> */}
+                  <Button color="link" className="username-link">
+                    {plan.username}
+                  </Button>
+                </div>
               </div>
-              <div className="user-info">
-                Made by
-                <i className="pe-7s-user pe-lg pe-va pe-fw px-2"></i>
-                <Button color="link" className="pl-2 py-0">
-                  {plan.username}
-                </Button>
-              </div>
-              <br />
               <p class="text-justify">{plan.desc}</p>
             </Col>
           </div>
         </Col>
-        <Row>
+        <Row className="action-btns-row">
           <Button color="primary" onClick={toggleImportModal}>
             Import
           </Button>
@@ -216,10 +216,11 @@ export default function PublicPlan() {
             </ModalBody>
           </Modal>
         </Row>
+        <br />
         <div>this is where the plan would go</div>
         <br />
-        <br />
-        <section style={{ width: "50%" }}>
+        <hr />
+        <section style={{ width: "60%" }}>
           <h5>Comments</h5>
           <br />
           {comments.map(comment => {
@@ -233,6 +234,7 @@ export default function PublicPlan() {
                 name="text"
                 value={textAreaInput}
                 placeholder="Write your comment here..."
+                className="text-area"
               />
             </FormGroup>
             <Button color="primary" onClick={handlePostComment}>
@@ -240,6 +242,8 @@ export default function PublicPlan() {
             </Button>
           </Form>
         </section>
+        <br />
+        <br />
       </Container>
     </Layout>
   )

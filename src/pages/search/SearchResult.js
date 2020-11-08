@@ -26,10 +26,10 @@ const SearchResult = ({
             </Button>
             <Row>
               <p>{date}</p>
-              <p>{numLikes}</p>
               <i class="pe-7s-like2 pe-lg"></i>
-              <p>{numComments}</p>
+              <p>{numLikes}</p>
               <i class="pe-7s-comment pe-lg"></i>
+              <p>{numComments}</p>
             </Row>
           </Col>
           <Col xs="3">

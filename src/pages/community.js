@@ -80,7 +80,7 @@ export default function Community() {
           />
           <InputGroupAddon addonType="append">
             <Button color="primary">
-              <i class="pe-7s-search pe-lg"></i>
+              <i class="pe-7s-search pe-lg pe-7s-like2"></i>
             </Button>
           </InputGroupAddon>
         </InputGroup>

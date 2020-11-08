@@ -1,0 +1,38 @@
+.comment-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.comment-container > text {
+  word-break: "break-all";
+}
+
+.comment-heading {
+  margin-right: 0;
+  margin-left: 0;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.comment-heading > p {
+  margin-bottom: 0;
+  color: gray;
+}
+
+.comment-heading > h6 {
+  padding-left: 0.5rem;
+  padding-right: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.actions-row {
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.actions-row > btn {
+  padding: 0 0.75rem !important;
+}
