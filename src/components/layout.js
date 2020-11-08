@@ -4,14 +4,12 @@ import store from '../state/createStore';
 
 import { Navbar, Nav, NavbarBrand, NavItem, NavLink, Row, Col } from "reactstrap";
 import MetisMenu from "react-metismenu";
-
+import { Link } from "gatsby";
 import { connect } from "react-redux";
 
 import {
     MainNav
 } from "./NavItems";
-
-console.log(store())
 
 class Layout extends Component {
     render() {
@@ -30,7 +28,7 @@ class Layout extends Component {
                                     }
                                 }>
                                     Acadplanner
-                        </h2>
+                                </h2>
                             </a>
                         </Col>
                         <Col lg={10} style={{ "padding": 0 }}>
@@ -39,7 +37,7 @@ class Layout extends Component {
 
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <a href='/profile'>
-                            <a style={{ marginRight: 10, color: '#495057' }} href='/profile'>{this.props.name}</a>
+                            <a style={{ marginRight: 10, color: '#495057' }} href='/profile'>{this.props.profile.name}</a>
                                         <img src={require("../assets/avatar-icon.png")} height='50' />
                                     </a>
                                 </div>
@@ -49,7 +47,7 @@ class Layout extends Component {
                     <Row style={{ "margin": 0 }}>
                         <Col lg={2} style={{ "padding-left": 15, "padding-right": 15, "padding-top": 10, "height": "92vh" }}>
                             <MetisMenu content={MainNav} activeLinkFromLocation
-                                className="vertical-nav-menu" iconNamePrefix="" />
+                                className="vertical-nav-menu" iconNamePrefix="" LinkComponent={Link} />
                         </Col>
                         <Col lg={10} style={{ "padding": 25, "border-left": "1.5px solid #DDDDDD" }}>
                             {this.props.children}
@@ -62,7 +60,7 @@ class Layout extends Component {
 }
 
 function mapState (state) {
-    return {name: state.profile.name}
+    return {profile: state.profile, plans: state.plans, community: state.community}
 }
 
 export default connect(mapState)(Layout)
