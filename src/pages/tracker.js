@@ -167,24 +167,6 @@ export default function Tracker() {
 
   return (
     <Layout>
-      <div style={{ display: 'flex', justifyContent: 'space-between', margin: 50, marginBottom: 10 }}>
-        <h1>Degree Tracker</h1>
-        <div style={{ display: 'flex', alignItems: 'center' }} >
-          <div style={{ marginRight: 10 }}>{user.name}</div>
-          <img src={require("./avatar-icon.png")} height='50' />
-          <UncontrolledDropdown>
-            <DropdownToggle caret color="info">
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem header>Header</DropdownItem>
-              <DropdownItem disabled>Action</DropdownItem>
-              <DropdownItem>Another Action</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Another Action</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
-      </div>
 
       <hr style={{ margin: 50, marginTop: 0 }} />
 
