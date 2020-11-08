@@ -38,7 +38,7 @@ export default function Community() {
   })
 
   /* sorting the results */
-  const [sorting, setSorting] = useState("")
+  const [sorting, setSorting] = useState("newest")
 
   function sortBy(result1, result2) {
     if (sorting === "oldest") {
