@@ -36,3 +36,18 @@
 .actions-row > btn {
   padding: 0 0.75rem !important;
 }
+
+.btn-like-liked {
+  margin-left: 0;
+  color: #545cd8 !important;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.btn-like-default {
+  margin-left: 0;
+  color: #495057 !important;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}

@@ -1,10 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { Button, Row, Col } from "reactstrap"
 
 import "./Comment.css"
 
 export default function Comment(props) {
+  /* for like button */
+  const [like, setLike] = useState(false)
+  const toggleLike = () => {
+    setLike(!like)
+    if (like) {
+      setNumLikes(numLikes - 1)
+    } else {
+      setNumLikes(numLikes + 1)
+    }
+  }
+
+  const [numLikes, setNumLikes] = useState(props.numLikes)
+
   return (
     <>
       <Col className="comment-container">
@@ -13,12 +26,15 @@ export default function Comment(props) {
           <h6>{props.username}</h6>
           <p>{props.date}</p>
         </Row>
-        {/* <p style={{ wordBreak: "break-all" }}> */}
         {props.content}
-        {/* </p> */}
         <Row className="actions-row">
-          <i className="pe-7s-like2 pe-lg pe-va pe-fw"></i>
-          {props.numLikes}
+          <Row
+            className={like ? "btn-like-liked" : "btn-like-default"}
+            onClick={toggleLike}
+          >
+            <i className="pe-7s-like2 pe-lg pe-va pe-fw"></i>
+            {numLikes}
+          </Row>
           <Button color="link">Reply</Button>
         </Row>
       </Col>

@@ -28,24 +28,12 @@ export default function PublicPlan() {
   const [like, setLike] = useState(false)
   const toggleLike = e => {
     setLike(!like)
-    // if already liked, set to primary (default) colour and decrement value of numLikes
     if (like) {
-      // e.target.style.color = "#545cd8"
-      // e.target.style.textColor = "#545cd8"
       plan.numLikes -= 1
     } else {
-      // if not liked, colour button green and increment value of numLikes
-      // e.target.style.color = "#3ac47d"
-      // e.target.style.textColor = "#3ac47d"
-
       plan.numLikes += 1
     }
   }
-
-  // if button is liked, change to blue, else, would be default gray colour
-  let likeBtnStyle = like
-    ? { color: "#545cd8", cursor: "pointer" }
-    : { color: "#495057", cursor: "pointer" }
 
   /* for 'share plan' modal */
   const [modal, setModal] = useState(false)
