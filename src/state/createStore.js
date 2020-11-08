@@ -39,7 +39,7 @@ function plansReducer(plans =
             planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Israel in Y3S2.',
             public: false,
             current: true,
-            tags: [],
+            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Israel'],
             years: [
                 {
                     yearName: "Year 1",
@@ -55,11 +55,11 @@ function plansReducer(plans =
             ]
         },
         {
-            planName: 'Plan 2',
-            planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Israel in Y3S2.',
+            planName: 'CS + USP + Germany Exchange',
+            planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
             public: false,
             current: false,
-            tags: [],
+            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
             years: [
                 {
                     yearName: "Year 1",
@@ -76,15 +76,28 @@ function plansReducer(plans =
     ], action) {
     switch (action.type) {
         case 'changePlanName':
-            console.log(plans)
-            // for (var i; i < length(plans); i++) {
-            //     if (plans[i].planName == action.payload.planName) {
-            //         plans[i].planName = action.payload.newName
-            //     }
-            // }
-            return plans
+            break
         case 'changePlanDescription':
             break
+        case 'addPlan':
+            var newPlan = {
+                planName: 'New Plan',
+                planDescription: 'This is a new plan.',
+                public: false,
+                current: false,
+                tags: [],
+                years: [
+                    {
+                        yearName: "Year 1",
+                        semesters: [
+                        ]
+                    }
+                ],
+                planToTakeModules: [
+                ]
+            };
+            console.log(plans.concat([newPlan]))
+            return plans.concat([newPlan])
         default:
             return plans
     }
