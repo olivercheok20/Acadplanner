@@ -167,9 +167,6 @@ export default function Tracker() {
 
   return (
     <Layout>
-
-      <hr style={{ margin: 50, marginTop: 0 }} />
-
       <Row style={{ marginLeft: 60, marginBottom: 10, height: 70 }}>
         <Col md={4}>
           <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8'}}>
