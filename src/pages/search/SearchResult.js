@@ -28,21 +28,12 @@ const SearchResult = ({
             <p>{numLikes}</p>
             <i class="pe-7s-comment pe-lg pe-va pe-fw icon ml-1"></i>
             <p>{numComments}</p>
-            {/* <div className="user-info"> */}
             <span className="middot">·</span>Made by
-            {/* <i className="pe-7s-user pe-2x pe-va pe-fw px-2 "></i> */}
-            {/* <Button color="link" className="username-link"> */}
-            {/* <i class="pe-7s-user pe-lg pe-va pe-fw icon"></i> */}
             <Button color="link" className="username-link">
               {username}
             </Button>
-            {/* </Button> */}
-            {/* </div> */}
           </Row>
         </Col>
-        {/* <Col>
-            <h6>{username}</h6>
-          </Col> */}
       </Row>
       <p className="text-justify">{desc}</p>
       <hr />

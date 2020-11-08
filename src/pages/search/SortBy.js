@@ -6,7 +6,6 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
   Input,
 } from "reactstrap"
 

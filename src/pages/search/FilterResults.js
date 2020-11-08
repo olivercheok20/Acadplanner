@@ -117,11 +117,6 @@ function FilterResults(props) {
               Computing
             </Label>
           </FormGroup>
-          {/* <FormGroup check inline className="mx-3 my-1">
-          <Label check>
-            <Input type="checkbox" id="dentistry" onChange={(e) => handleToggle(e.target.id)}/> Dentistry
-          </Label>
-        </FormGroup> */}
           <FormGroup check inline className="mx-3 my-1">
             <Label check>
               <Input
@@ -155,16 +150,17 @@ function FilterResults(props) {
               Law
             </Label>
           </FormGroup>
-          {/* <FormGroup check inline className="mx-3 my-1">
-          <Label check>
-              <Input type="checkbox" id="medicine" onChange={(e) => handleToggle(e.target.id)}/> Medicine
-          </Label>
-        </FormGroup>
-        <FormGroup check inline className="mx-3 my-1">
-          <Label check>
-              <Input type="checkbox" id="music" onChange={(e) => handleToggle(e.target.id)}/> Music
-          </Label>
-        </FormGroup> */}
+          <FormGroup check inline className="mx-3 my-1">
+            <Label check>
+              <Input
+                type="checkbox"
+                id="music"
+                onChange={e => handleToggle(e.target.id)}
+              />{" "}
+              Music
+            </Label>
+          </FormGroup>{" "}
+          */}
           <FormGroup check inline className="mx-3 my-1">
             <Label check>
               <Input
@@ -234,7 +230,6 @@ function FilterResults(props) {
             </Label>
           </FormGroup>
           <DropdownItem divider />
-
           <DropdownItem header>Other Programmes</DropdownItem>
           <FormGroup check inline className="mx-3 my-1">
             <Label check>
