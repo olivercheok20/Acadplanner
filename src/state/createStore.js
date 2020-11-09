@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import { Semester } from '../components/Semester';
 
 function profileReducer(
     profile = {
@@ -48,37 +49,161 @@ function plansReducer(plans =
                         { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
                         { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
                     ]
-                }
-            ],
-            planToTakeModules: [
-                { name: 'CS1231', modularCredits: '4' }
-            ]
-        },
-        {
-            planName: 'CS + USP + Germany Exchange',
-            planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
-            public: false,
-            current: false,
-            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
-            years: [
+                },
                 {
-                    yearName: "Year 1",
+                    yearName: "Year 2",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem1', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
                     ]
                 }
             ],
             planToTakeModules: [
                 { name: 'CS1231', modularCredits: '4' }
             ]
-        }
+        },
+        // {
+        //     planName: 'CS + USP + Germany Exchange',
+        //     planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
+        //     public: false,
+        //     current: false,
+        //     tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
+        //     years: [
+        //         {
+        //             yearName: "Year 1",
+        //             semesters: [
+        //                 { semesterName: 'sem1', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
+        //                 { semesterName: 'sem2', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
+        //             ]
+        //         }
+        //     ],
+        //     planToTakeModules: [
+        //         { name: 'CS1231', modularCredits: '4' }
+        //     ]
+        // }
     ], action) {
     switch (action.type) {
         case 'changePlanName':
-            break
+            plans.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.planName = action.payload.newName;
+                }
+            })
+            return plans;
         case 'changePlanDescription':
-            break
+            plans.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.planDescription = action.payload.newDescription;
+                }
+            })
+            return plans;
+        case 'changeSemesterName':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName == action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName == action.payload.semesterName) {
+                                    semester.semesterName = action.payload.newName;
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'addModule':
+            var newModule = { name: '', modularCredits: '', grade: '' };
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName == action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName == action.payload.semesterName) {
+                                    semester.modules = semester.modules.concat([newModule]);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'addSemester':
+            var newSemester = {
+                semesterName: 'New semester', modules: [{ name: '', modularCredits: '', grade: '' }]
+            };
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName == action.payload.yearName) {
+                            year.semesters = year.semesters.concat([newSemester]);
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'addYear':
+            var newYear = {
+                yearName: "",
+                semesters: [
+                    { semesterName: 'New semester', modules: [{ name: 'dummy', modularCredits: '', grade: '' }] }
+                ]
+            };
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    newYear.yearName = "Year " + (plan.years.length + 1).toString();
+                    plan.years = plan.years.concat([newYear])
+                }
+            })
+            return plansCopy;
+        case 'changeModulePosition':
+            console.log(plans);
+            let sourceYear = action.payload.sourceSemester.split('<>')[0]
+            let sourceSemester = action.payload.sourceSemester.split('<>')[1]
+            let sourceModuleIndex = action.payload.sourceModuleIndex;
+            let destinationYear = action.payload.destinationSemester.split('<>')[0]
+            let destinationSemester = action.payload.destinationSemester.split('<>')[1]
+            let destinationModuleIndex = action.payload.destinationModuleIndex;
+            let movedModule;
+            var plansCopy = plans.slice();
+
+            // remove moved module from original pos
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName == sourceYear) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName == sourceSemester) {
+                                    movedModule = semester.modules[sourceModuleIndex];
+                                    semester.modules.splice(sourceModuleIndex, 1);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
+            // add moved module to new pos
+            plansCopy.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName == destinationYear) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName == destinationSemester) {
+                                    semester.modules.splice(destinationModuleIndex, 0, movedModule)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            console.log(plansCopy)
+            return plans;
         case 'addPlan':
             var newPlan = {
                 planName: 'New Plan',
@@ -96,7 +221,6 @@ function plansReducer(plans =
                 planToTakeModules: [
                 ]
             };
-            console.log(plans.concat([newPlan]))
             return plans.concat([newPlan])
         default:
             return plans

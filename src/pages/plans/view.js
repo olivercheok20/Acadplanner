@@ -2,10 +2,12 @@ import React, { Component } from "react"
 import Layout from "../../components/layout"
 import { Semester } from "../../components/Semester";
 import { PlanToTake } from "../../components/PlanToTake";
-import { Row, Col, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, Input, Button } from "reactstrap";
+import { Row, Col, Input, Button } from "reactstrap";
 
 import { connect, Provider } from "react-redux";
 import store from '../../state/createStore';
+
+import { DragDropContext } from 'react-beautiful-dnd';
 
 class View extends Component {
 
@@ -16,6 +18,13 @@ class View extends Component {
       editPlanName: false,
       activePlan: this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]]
     }
+    this.onAddModule = this.props.onAddModule.bind(this)
+    this.onChangeSemesterName = this.props.onChangeSemesterName.bind(this)
+    this.onDragEnd = this.onDragEnd.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ activePlan: nextProps.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] });
   }
 
   getNamesFromPlans() {
@@ -38,20 +47,35 @@ class View extends Component {
     this.setState({ activePlan: newActivePlan });
   }
 
-  addSemester() {
+  onDragEnd(result) {
+    const { destination, source, draggableId } = result;
 
+    if (!destination) { // Destination of the drop is not in a droppable
+      return;
+    }
+
+    // Destination and source droppables are the same, index/position is also the same.
+    // i.e. User dropped the item back into the position that it started 
+    // droppableId is set to semester name for now, each semester should probably have an id in dummy data to prevent issues when semesters have the same names
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
+    this.props.onChangeModulePosition(source.droppableId, source.index, destination.droppableId, destination.index, this.state.activePlan.planName);
   }
 
   render() {
     return (
       <Layout>
         <Provider store={store()}>
+
           <Input
             type="select"
             name="text"
             id="planselection"
             defaultValue={this.state.activePlan.planName}
             onChange={(e) => { this.handleChangePlan(document.getElementById("planselection").value) }}
+            style={{ marginLeft: 60, marginBottom: 50, width: 500, marginTop: 50 }}
           >
             {this.props.plans.map((plan, i) => (
               <option key={i}>{plan.planName} </option>
@@ -64,53 +88,74 @@ class View extends Component {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h5>Name</h5>
                 {!this.state.editPlanName && <Button color="link" onClick={() => this.setState({ editPlanName: true })}>edit</Button>}
-                {this.state.editPlanName && <Button color="link" onClick={() => this.setState({ editPlanName: false })}>done</Button>}
+                {this.state.editPlanName && <Button color="link" onClick={() => {
+                  this.setState({ editPlanName: false })
+                  this.props.onChangePlanName(this.state.activePlan.planName, document.getElementById("name").value)
+                }}>done</Button>}
               </div>
               {!this.state.editPlanName && this.state.activePlan && <p>{this.state.activePlan.planName}</p>}
-              {this.state.editPlanName && <Input
-                type="textarea"
-                name="text"
-                id="exampleText"
-                value={this.state.activePlan.planName}
-                onSubmit={this.props.onChangePlanName}
-                rows={2}
-              />}
+              {this.state.editPlanName &&
+                <Input
+                  type="textarea"
+                  name="text"
+                  id="name"
+                  defaultValue={this.state.activePlan.planName}
+                  rows={2}
+                />}
             </Col>
 
             <Col md={5}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h5>Description</h5>
                 {!this.state.editPlanDescription && <Button color="link" onClick={() => this.setState({ editPlanDescription: true })}>edit</Button>}
-                {this.state.editPlanDescription && <Button color="link" onClick={() => this.setState({ editPlanDescription: false })}>done</Button>}
+                {this.state.editPlanDescription && <Button color="link" onClick={() => {
+                  this.setState({ editPlanDescription: false })
+                  this.props.onChangePlanDescription(this.state.activePlan.planName, document.getElementById("description").value)
+                }}>done</Button>}
               </div>
               {!this.state.editPlanDescription && this.state.activePlan && <p>{this.state.activePlan.planDescription}</p>}
               {this.state.editPlanDescription && <Input
                 type="textarea"
                 name="text"
-                id="exampleText"
-                value={this.state.activePlan.planDescription}
-                onChange={this.props.onChangePlanDescription}
+                id="description"
+                defaultValue={this.state.activePlan.planDescription}
                 rows={3}
               />}
             </Col>
           </Row>
 
-          <h3 style={{ marginLeft: 50 }}>Semesters</h3>
+          <h1 style={{ marginLeft: 40 }}>All Years</h1>
 
-          <Row style={{ margin: 30, marginTop: 0 }}>
-            {this.state.activePlan && this.state.activePlan.years[0].semesters.map((semester, i) => ( // THIS IS ONLY SHOWING THE SEMESTERS FOR THE FIRST YEAR, MUST USE FOREACH YEAR TO SHOW SEMESTERS FOR ALL YEARS
-              <Col md={6} key={i}>
-                <div style={{ margin: 20 }} >
-                  <Semester semester={semester} />
-                </div>
-              </Col>
-            ))}
-            <Col md={6}>
-              <div style={{ margin: 20, flex: 1 }}>
-                <Button style={{ width: '100%' }} color="info" onClick={() => this.addSemester()}>Add Semester</Button>
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            {this.state.activePlan.years.map((year, i) => (
+              <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
+                <h3 style={{ margin: 20, marginBottom: 0 }}>{year.yearName}</h3>
+
+                <Row>
+                  {this.state.activePlan && year.semesters.map((semester, i) => (
+                    <Col md={6} key={i}>
+                      <div style={{ margin: 20 }} >
+                        <Semester semester={semester} yearName={year.yearName} planName={this.state.activePlan.planName} onAddModule={this.onAddModule} onChangeSemesterName={this.onChangeSemesterName} />
+                      </div>
+                    </Col>
+                  ))}
+                  <Col md={6}>
+                    <div style={{ margin: 20, flex: 1 }}>
+                      <Button style={{ width: '100%' }} color="info" onClick={() =>
+                        this.props.onAddSemester(this.state.activePlan.planName, year.yearName)
+                      }>Add Semester</Button>
+                    </div>
+                  </Col>
+                </Row>
               </div>
-            </Col>
-          </Row>
+            ))}
+          </DragDropContext>
+
+          <div style={{ margin: 20, flex: 1 }}>
+            <Button style={{ width: '100%' }} color="info" onClick={() => {
+              this.props.onAddYear(this.state.activePlan.planName)
+            }}>Add Year</Button>
+          </div>
 
           <h3 style={{ marginLeft: 50 }}>Plan to take</h3>
           <Row style={{ margin: 30, marginTop: 0 }}>
@@ -132,8 +177,14 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    onChangePlanName: (planName, newName) => dispatch ({type: 'changePlanName', payload: { 'planName': planName, 'newName': newName }}),
-    onChangePlanDescription: (planName, newDescription) => dispatch ({type: 'changePlanName', payload: { 'planName': planName, 'newDescription': newDescription }})
+    onChangePlanName: (planName, newName) => dispatch({ type: 'changePlanName', payload: { 'planName': planName, 'newName': newName } }),
+    onChangePlanDescription: (planName, newDescription) => dispatch({ type: 'changePlanDescription', payload: { 'planName': planName, 'newDescription': newDescription } }),
+    onChangeSemesterName: (planName, yearName, semesterName, newName) => dispatch({ type: 'changeSemesterName', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'newName': newName } }),
+    onAddModule: (planName, yearName, semesterName) => dispatch({ type: 'addModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName } }),
+    onAddSemester: (planName, yearName) => dispatch({ type: 'addSemester', payload: { 'planName': planName, 'yearName': yearName } }),
+    onAddYear: (planName) => dispatch({ type: 'addYear', payload: { 'planName': planName } }),
+    onChangeModulePosition: (sourceSemester, sourceModuleIndex, destinationSemester, destinationModuleIndex, planName) =>
+      dispatch({ type: 'changeModulePosition', payload: { 'sourceSemester': sourceSemester, 'sourceModuleIndex': sourceModuleIndex, 'destinationSemester': destinationSemester, 'destinationModuleIndex': destinationModuleIndex, 'planName': planName } })
   }
 }
 
