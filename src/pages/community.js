@@ -2,9 +2,9 @@ import React, { useState } from "react"
 
 import Layout from "../components/layout"
 import { data } from "../components/data"
-import SearchResult from "./search/SearchResult"
-import FilterResults from "./search/FilterResults"
-import SortBy from "./search/SortBy"
+import SearchResult from "../components/SearchResult"
+import FilterResults from "../components/FilterResults"
+import SortBy from "../components/SortBy"
 
 import {
   InputGroup,

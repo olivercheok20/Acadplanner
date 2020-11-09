@@ -2,9 +2,9 @@ import React, { useState, useRef } from "react"
 
 import { data } from "../components/data"
 import Layout from "../components/layout"
-import Comment from "./search/Comment"
+import Comment from "../components/Comment"
 
-import "./search/publicplan.css"
+import "../components/publicplan.css"
 
 import {
   Row,
