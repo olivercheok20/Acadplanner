@@ -149,6 +149,31 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'addSpecifiedModule':
+            var newModule = action.payload.module;
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    let add = true;
+                                    for (const mod of semester.modules) {
+                                        if (mod.name == newModule.name) {
+                                            add = false
+                                        }
+                                    }
+                                    if (add) {
+                                        semester.modules = semester.modules.concat([newModule]);
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
         case 'deleteModule':
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
