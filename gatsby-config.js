@@ -31,9 +31,9 @@ module.exports = {
         windowKey: '__PRELOADED_STATE__',
       },
     },
-    {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [ `/community/index/*`, `/plans/index/*`, `/profile/index/*`, `/publicplan/index/*`, `/tracker/index/*`, ] },
-    },
+    // {
+    //   resolve: `gatsby-plugin-create-client-paths`,
+    //   options: { prefixes: [ `/community/*`, `/plans/*`, `/profile/*`, `/publicplan/*`, `/tracker/*`, ] },
+    // },
   ],
 }

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@loadable/component": "^5.14.1",
+    "@metismenu/react": "0.0.2",
     "animate-sass": "^0.8.2",
     "gatsby": "^2.24.91",
     "gatsby-plugin-create-client-paths": "^2.3.13",
