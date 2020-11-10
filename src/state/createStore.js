@@ -174,6 +174,9 @@ function plansReducer(plans =
                                     semester.modules.forEach(module => {
                                         if (module.name === action.payload.nameOfPreviousModule) {
                                             module.name = action.payload.nameOfNewModule;
+                                            if (module.modularCredits == '') {
+                                                module.modularCredits = '4';
+                                            }
                                             module.grade = '';
                                         }
                                     })
