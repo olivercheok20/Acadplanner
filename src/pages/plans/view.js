@@ -47,6 +47,7 @@ class View extends Component {
     this.onDeleteModule = this.props.onDeleteModule.bind(this);
     this.onDeleteYear = this.props.onDeleteYear.bind(this);
     this.onReplaceModule = this.props.onReplaceModule.bind(this);
+    this.onChangeGrade = this.props.onChangeGrade.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -199,6 +200,7 @@ class View extends Component {
                 onDeleteModule={this.onDeleteModule}
                 onDeleteYear={this.onDeleteYear}
                 onReplaceModule={this.onReplaceModule}
+                onChangeGrade={this.onChangeGrade}
               />
             ))}
           </DragDropContext>
@@ -245,6 +247,7 @@ function mapDispatch(dispatch) {
     onDeleteSemester: (planName, yearName, semesterName) => dispatch({ type: 'deleteSemester', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName } }),
     onDeleteYear: (planName, yearName) => dispatch({ type: 'deleteYear', payload: { 'planName': planName, 'yearName': yearName } }),
     onReplaceModule: (planName, yearName, semesterName, nameOfPreviousModule, nameOfNewModule) => dispatch({ type: 'replaceModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'nameOfPreviousModule': nameOfPreviousModule, 'nameOfNewModule': nameOfNewModule } }),
+    onChangeGrade: (planName, yearName, semesterName, moduleName, newGrade) => dispatch({ type: 'changeGrade', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'moduleName': moduleName, 'newGrade': newGrade } }),
   }
 }
 

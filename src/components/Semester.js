@@ -54,14 +54,16 @@ export const Semester = (props) => {
                         >
                             {props.semester.modules.map((module, i) => (
                                 <Module
-                                    moduleData={module}
+                                    module={module}
                                     key={Math.random()}
                                     index={i}
                                     planName={props.planName}
                                     yearName={props.yearName}
                                     semesterName={props.semester.semesterName}
                                     onDeleteModule={props.onDeleteModule}
-                                    onReplaceModule={props.onReplaceModule} />
+                                    onReplaceModule={props.onReplaceModule}
+                                    onChangeGrade={props.onChangeGrade}
+                                />
                             ))}
                             {provided.placeholder}
                         </div>

@@ -184,6 +184,26 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'changeGrade':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules.forEach(module => {
+                                        if (module.name === action.payload.moduleName) {
+                                            module.grade = action.payload.newGrade;
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
         case 'addSemester':
             var newSemester = {
                 semesterName: 'New semester', modules: [{ name: '', modularCredits: '', grade: '' }]

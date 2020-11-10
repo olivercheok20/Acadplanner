@@ -20,43 +20,47 @@ export const Module = (props) => {
         { name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' },
         { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: '' },
         { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
-    ]
+    ];
 
-    useEffect(() => {
-        let moduleData = props.moduleData;
-        setModularCredits(moduleData.modularCredits)
-        setGrade(moduleData.grade);
-    }, [])
+    const grades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D+', 'D', 'F'];
 
-    const onChangeGrade = e => {
-        setGrade(e.target.value);
+    const reformatDummyModules = (dummyModules) => {
+        let reformatted = [];
+        for (let dummyModule of dummyModules) {
+            reformatted.push({ value: dummyModule.name, label: dummyModule.name });
+        }
+        return reformatted;
     }
 
-    const convertToFormatRequiredBySelect = (dummyModules) => {
-        let convertedFormat = [];
-        for (let dummyModule of dummyModules) {
-            convertedFormat.push({ value: dummyModule.name, label: dummyModule.name });
+    const reformatGrades = (grades) => {
+        let reformatted = [];
+        for (let grade of grades) {
+            reformatted.push({ value: grade, label: grade });
         }
-        return convertedFormat;
+        return reformatted;
     }
 
     const onReplaceModule = (e) => {
         setSelectedOption(e);
-        props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.moduleData.name, e.value)
+        props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+    }
+
+    const onChangeGrade = (e) => {
+        props.onChangeGrade(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
     }
 
     return (
-        <Draggable draggableId={props.yearName + props.semesterName + props.moduleData.name} index={props.index}>
+        <Draggable draggableId={props.yearName + props.semesterName + props.module.name} index={props.index}>
             {(provided) => (
                 <div {...provided.draggableProps}
                     ref={provided.innerRef}
                 >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ flex: 12, margin: 5 }}>
+                        <div style={{ flex: 10, margin: 5 }}>
                             <Select
-                                defaultValue={props.moduleData.name ? { value: props.moduleData.name, label: props.moduleData.name } : { value: 'Add a module..', label: 'Add a module..' }}
+                                defaultValue={props.module.name != '' ? { value: props.module.name, label: props.module.name } : { value: 'Add a module..', label: 'Add a module..' }}
                                 onChange={onReplaceModule}
-                                options={convertToFormatRequiredBySelect(dummyModules)}
+                                options={reformatDummyModules(dummyModules)}
                             />
                         </div>
                         <Input
@@ -64,21 +68,29 @@ export const Module = (props) => {
                             name="state"
                             id="exampleState"
                             placeholder="0"
-                            value={modularCredits}
+                            value={props.module.modularCredits}
                             disabled
                             style={{ flex: 1, margin: 5, textAlign: 'center' }}
                         />
-                        <Input
+                        <div style={{ flex: 2, margin: 5 }}>
+                            <Select
+                                defaultValue={props.module.grade != '' ? { value: props.module.grade, label: props.module.grade } : { value: 'Grade', label: 'Grade' }}
+                                onChange={onChangeGrade}
+                                options={reformatGrades(grades)}
+                                isSearchable={false}
+                            />
+                        </div>
+                        {/* <Input
                             type="text"
                             name="zip"
                             id="exampleZip"
                             placeholder="Grade"
-                            value={grade}
+                            value={props.module.grade}
                             onChange={onChangeGrade}
                             style={{ flex: 2, margin: 5, textAlign: 'center' }}
-                        />
+                        /> */}
                         <div style={{ margin: 5 }}>
-                            <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.moduleData.name)}>
+                            <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)}>
                                 <FaTrashAlt />
                             </Button>
                         </div>
