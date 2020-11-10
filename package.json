@@ -25,6 +25,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.14.0",
     "react-full-height": "^1.2.2",
+    "react-icons": "^3.11.0",
     "react-metismenu": "^1.4.0",
     "react-metismenu-router-link": "^2.1.0",
     "react-redux": "^7.2.2",

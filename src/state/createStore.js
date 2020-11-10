@@ -136,6 +136,22 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'deleteModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules = semester.modules.filter(module => module.name !== action.payload.moduleName);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
         case 'addSemester':
             var newSemester = {
                 semesterName: 'New semester', modules: [{ name: '', modularCredits: '', grade: '' }]
@@ -146,6 +162,18 @@ function plansReducer(plans =
                     plan.years.forEach(year => {
                         if (year.yearName === action.payload.yearName) {
                             year.semesters = year.semesters.concat([newSemester]);
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'deleteSemester':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters = year.semesters.filter(semester => semester.semesterName !== action.payload.semesterName)
                         }
                     })
                 }
@@ -163,6 +191,14 @@ function plansReducer(plans =
                 if (plan.planName === action.payload.planName) {
                     newYear.yearName = "Year " + (plan.years.length + 1).toString();
                     plan.years = plan.years.concat([newYear])
+                }
+            })
+            return plansCopy;
+        case 'deleteYear':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years = plans.years.filter(year => year.yearName !== action.payload.yearName)
                 }
             })
             return plansCopy;

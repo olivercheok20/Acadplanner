@@ -42,6 +42,8 @@ class View extends Component {
     this.onAddModule = this.props.onAddModule.bind(this)
     this.onChangeSemesterName = this.props.onChangeSemesterName.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
+    this.onDeleteSemester = this.props.onDeleteSemester.bind(this);
+    this.onDeleteModule = this.props.onDeleteModule.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -179,13 +181,27 @@ class View extends Component {
           <DragDropContext onDragEnd={this.onDragEnd}>
             {this.state.activePlan.years.map((year, i) => (
               <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
-                <h3 style={{ margin: 20, marginBottom: 0 }}>{year.yearName}</h3>
+
+                <div style={{ margin: 20, marginBottom: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
+                    <Button close onClick={() => this.props.onDeleteYear(this.activePlan.planName, year.yearName)} />
+                  </div>
+                  <h3 style={{ marginLeft: 20 }}>{year.yearName}</h3>
+                </div>
 
                 <Row>
                   {this.state.activePlan && year.semesters.map((semester, i) => (
                     <Col md={6} key={i}>
                       <div style={{ margin: 20 }} >
-                        <Semester semester={semester} yearName={year.yearName} planName={this.state.activePlan.planName} onAddModule={this.onAddModule} onChangeSemesterName={this.onChangeSemesterName} />
+                        <Semester
+                          semester={semester}
+                          yearName={year.yearName}
+                          planName={this.state.activePlan.planName}
+                          onAddModule={this.onAddModule}
+                          onChangeSemesterName={this.onChangeSemesterName}
+                          onDeleteSemester={this.onDeleteSemester}
+                          onDeleteModule={this.onDeleteModule}
+                        />
                       </div>
                     </Col>
                   ))}
@@ -238,6 +254,9 @@ function mapDispatch(dispatch) {
     onChangeCurrentPlan: (planName) => dispatch({ type: 'changeCurrentPlan', payload: { 'planName': planName } }),
     onChangePublicPlan: (planName) => dispatch({ type: 'changePublicPlan', payload: { 'planName': planName } }),
     onChangeTags: (planName, tagsArray) => dispatch({ type: 'changeTags', payload: { 'planName': planName, 'tagsArray': tagsArray } }),
+    onDeleteModule: (planName, yearName, semesterName, moduleName) => dispatch({ type: 'deleteModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'moduleName': moduleName } }),
+    onDeleteSemester: (planName, yearName, semesterName) => dispatch({ type: 'deleteSemester', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName } }),
+    onDeleteYear: (planName, yearName) => dispatch({ type: 'deleteYear', payload: { 'planName': planName, 'yearName': yearName } }),
   }
 }
 

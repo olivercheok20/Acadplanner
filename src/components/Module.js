@@ -1,8 +1,9 @@
 import React, { useState, useEffect, } from "react";
-import { Input } from "reactstrap";
+import { Input, Button } from "reactstrap";
 import Select from "react-select";
 
 import { Draggable } from 'react-beautiful-dnd';
+import { FaTrashAlt, FaTh } from 'react-icons/fa';
 
 export const Module = (props) => {
 
@@ -33,12 +34,10 @@ export const Module = (props) => {
         <Draggable draggableId={props.yearName + props.semesterName + props.moduleData.name} index={props.index}>
             {(provided) => (
                 <div {...provided.draggableProps}
-                    {...provided.dragHandleProps}
                     ref={provided.innerRef}
                 >
-                    {/* <div>{props.moduleData.name}</div> */}
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ flex: 5, margin: 5 }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ flex: 7, margin: 5 }}>
                             <Select
                                 defaultValue={props.moduleData.name ? { value: props.moduleData.name, label: props.moduleData.name } : { value: 'Add a module..', label: 'Add a module..' }}
                                 onChange={setSelectedOption}
@@ -63,6 +62,14 @@ export const Module = (props) => {
                             onChange={onChangeGrade}
                             style={{ flex: 1, margin: 5, textAlign: 'center' }}
                         />
+                        <div style={{ margin: 5 }}>
+                            <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.moduleData.name)}>
+                                <FaTrashAlt />
+                            </Button>
+                        </div>
+                        <div {...provided.dragHandleProps} style={{ marginLeft: 5 }}>
+                            <FaTh />
+                        </div>
                     </div>
                 </div>
             )}
