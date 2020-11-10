@@ -44,23 +44,22 @@ function plansReducer(plans =
                 { value: 'Computing', label: 'Computing' },
                 { value: 'AI', label: 'AI' },
                 { value: 'Computer Science', label: 'Computer Science' },
-                { value: 'Israel', label: 'Israel' },
             ],
             years: [
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
                     ]
                 },
                 {
                     yearName: "Year 2",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
                     ]
                 }
             ],
@@ -157,6 +156,27 @@ function plansReducer(plans =
                             year.semesters.forEach((semester) => {
                                 if (semester.semesterName === action.payload.semesterName) {
                                     semester.modules = semester.modules.filter(module => module.name !== action.payload.moduleName);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'replaceModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules.forEach(module => {
+                                        if (module.name === action.payload.nameOfPreviousModule) {
+                                            module.name = action.payload.nameOfNewModule;
+                                            module.grade = '';
+                                        }
+                                    })
                                 }
                             })
                         }
@@ -314,7 +334,7 @@ export default preloadedState => {
         rootReducer,
         preloadedState,
         // compose(
-            applyMiddleware(thunk),
+        applyMiddleware(thunk),
         //     window.devToolsExtension ? window.devToolsExtension() : f => f
         // )
     );

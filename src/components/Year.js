@@ -49,6 +49,7 @@ export const Year = (props) => {
                                 onChangeSemesterName={props.onChangeSemesterName}
                                 onDeleteSemester={props.onDeleteSemester}
                                 onDeleteModule={props.onDeleteModule}
+                                onReplaceModule={props.onReplaceModule}
                             />
                         </div>
                     </Col>

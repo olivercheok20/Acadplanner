@@ -60,7 +60,8 @@ export const Semester = (props) => {
                                     planName={props.planName}
                                     yearName={props.yearName}
                                     semesterName={props.semester.semesterName}
-                                    onDeleteModule={props.onDeleteModule} />
+                                    onDeleteModule={props.onDeleteModule}
+                                    onReplaceModule={props.onReplaceModule} />
                             ))}
                             {provided.placeholder}
                         </div>

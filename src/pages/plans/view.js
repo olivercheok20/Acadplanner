@@ -26,7 +26,6 @@ class View extends Component {
     { value: 'Student Exchange Programme', label: 'Student Exchange Programme' },
     { value: 'Computing', label: 'Computing' },
     { value: 'University Scholars Programme', label: 'University Scholars Programme' },
-    { value: 'Israel', label: 'Israel' },
     { value: 'Economics', label: 'Economics' },
     { value: 'SDE', label: 'SDE' },
     { value: 'Science', label: 'Science' },
@@ -47,11 +46,12 @@ class View extends Component {
     this.onDeleteSemester = this.props.onDeleteSemester.bind(this);
     this.onDeleteModule = this.props.onDeleteModule.bind(this);
     this.onDeleteYear = this.props.onDeleteYear.bind(this);
+    this.onReplaceModule = this.props.onReplaceModule.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (typeof window !== `undefined`) {
-    this.setState({ activePlan: nextProps.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] });
+      this.setState({ activePlan: nextProps.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] });
     } else {
       this.setState({ activePlan: nextProps.plans[0] });
     }
@@ -198,6 +198,7 @@ class View extends Component {
                 onDeleteSemester={this.onDeleteSemester}
                 onDeleteModule={this.onDeleteModule}
                 onDeleteYear={this.onDeleteYear}
+                onReplaceModule={this.onReplaceModule}
               />
             ))}
           </DragDropContext>
@@ -243,6 +244,7 @@ function mapDispatch(dispatch) {
     onDeleteModule: (planName, yearName, semesterName, moduleName) => dispatch({ type: 'deleteModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'moduleName': moduleName } }),
     onDeleteSemester: (planName, yearName, semesterName) => dispatch({ type: 'deleteSemester', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName } }),
     onDeleteYear: (planName, yearName) => dispatch({ type: 'deleteYear', payload: { 'planName': planName, 'yearName': yearName } }),
+    onReplaceModule: (planName, yearName, semesterName, nameOfPreviousModule, nameOfNewModule) => dispatch({ type: 'replaceModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'nameOfPreviousModule': nameOfPreviousModule, 'nameOfNewModule': nameOfNewModule } }),
   }
 }
 
