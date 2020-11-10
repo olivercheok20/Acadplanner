@@ -299,6 +299,8 @@ function plansReducer(plans =
                 ]
             };
             return plans.concat([newPlan])
+        case 'addSpecificPlan':
+            return plans.concat([action.payload.plan])
         case 'changePublicPlan':
             plans.forEach(plan => {
                 if (plan.planName === action.payload.planName) {

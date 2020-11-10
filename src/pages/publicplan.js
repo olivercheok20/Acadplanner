@@ -6,6 +6,9 @@ import Comment from "../components/Comment"
 
 import "../components/publicplan.css"
 
+import { connect, Provider } from "react-redux";
+import store from '../state/createStore';
+
 import {
   Row,
   Col,
@@ -19,7 +22,7 @@ import {
   Input,
 } from "reactstrap"
 
-export default function PublicPlan() {
+function PublicPlan(props) {
   let plan;
   if (typeof window !== `undefined`) {
     const urlParams = new URLSearchParams(window.location.search)
@@ -177,7 +180,10 @@ export default function PublicPlan() {
         }
         <br />
         <Row className="action-btns-row">
-          <Button color="primary" onClick={toggleImportModal}>
+          <Button color="primary" onClick={() => {
+            props.addSpecificPlan(plan.plan);
+            toggleImportModal();
+          }}>
             Import
           </Button>
           <Modal
@@ -262,3 +268,15 @@ export default function PublicPlan() {
     </Layout>
   )
 }
+
+function mapState(state) {
+  return { }
+}
+
+function mapDispatch(dispatch) {
+  return {
+    addSpecificPlan: (plan) => dispatch({ type: 'addSpecificPlan', payload: {plan: plan} })
+  }
+}
+
+export default connect(mapState, mapDispatch)(PublicPlan)
