@@ -7,12 +7,6 @@ import { FaTrashAlt, FaTh } from 'react-icons/fa';
 
 export const Module = (props) => {
 
-    const [modularCredits, setModularCredits] = useState('');
-    const [grade, setGrade] = useState('');
-
-    const [selectedOption, setSelectedOption] = useState(null);
-
-
     const dummyModules = [
         { name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' },
         { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
@@ -24,24 +18,23 @@ export const Module = (props) => {
 
     const grades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D+', 'D', 'F'];
 
-    const reformatDummyModules = (dummyModules) => {
-        let reformatted = [];
-        for (let dummyModule of dummyModules) {
-            reformatted.push({ value: dummyModule.name, label: dummyModule.name });
+    const formatModulesToSelectOptions = (modules) => {
+        let selectOptions = [];
+        for (let module of modules) {
+            selectOptions.push({ value: module.name, label: module.name });
         }
-        return reformatted;
+        return selectOptions;
     }
 
-    const reformatGrades = (grades) => {
-        let reformatted = [];
+    const formatGradesToSelectOptions = (grades) => {
+        let selectOptions = [];
         for (let grade of grades) {
-            reformatted.push({ value: grade, label: grade });
+            selectOptions.push({ value: grade, label: grade });
         }
-        return reformatted;
+        return selectOptions;
     }
 
     const onReplaceModule = (e) => {
-        setSelectedOption(e);
         props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
     }
 
@@ -60,7 +53,7 @@ export const Module = (props) => {
                             <Select
                                 defaultValue={props.module.name != '' ? { value: props.module.name, label: props.module.name } : { value: 'Add a module..', label: 'Add a module..' }}
                                 onChange={onReplaceModule}
-                                options={reformatDummyModules(dummyModules)}
+                                options={formatModulesToSelectOptions(dummyModules)}
                             />
                         </div>
                         <Input
@@ -76,19 +69,10 @@ export const Module = (props) => {
                             <Select
                                 defaultValue={props.module.grade != '' ? { value: props.module.grade, label: props.module.grade } : { value: 'Grade', label: 'Grade' }}
                                 onChange={onChangeGrade}
-                                options={reformatGrades(grades)}
+                                options={formatGradesToSelectOptions(grades)}
                                 isSearchable={false}
                             />
                         </div>
-                        {/* <Input
-                            type="text"
-                            name="zip"
-                            id="exampleZip"
-                            placeholder="Grade"
-                            value={props.module.grade}
-                            onChange={onChangeGrade}
-                            style={{ flex: 2, margin: 5, textAlign: 'center' }}
-                        /> */}
                         <div style={{ margin: 5 }}>
                             <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)}>
                                 <FaTrashAlt />

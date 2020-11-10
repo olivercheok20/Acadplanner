@@ -40,10 +40,10 @@ function plansReducer(plans =
             public: false,
             current: true,
             tags: [
-                { value: 'University Scholars Programme', label: 'University Scholars Programme' },
-                { value: 'Computing', label: 'Computing' },
-                { value: 'AI', label: 'AI' },
-                { value: 'Computer Science', label: 'Computer Science' },
+                'University Scholars Programme',
+                'Computing',
+                'AI',
+                'Computer Science',
             ],
             years: [
                 {

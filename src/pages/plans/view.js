@@ -18,18 +18,26 @@ class View extends Component {
 
   animatedComponents = makeAnimated();
   dummyTags = [
-    { value: 'Computer Science', label: 'Computer Science' },
-    { value: 'FASS', label: 'FASS' },
-    { value: 'BIZ', label: 'BIZ' },
-    { value: 'AI', label: 'AI' },
-    { value: 'Engineering', label: 'Engineering' },
-    { value: 'Student Exchange Programme', label: 'Student Exchange Programme' },
-    { value: 'Computing', label: 'Computing' },
-    { value: 'University Scholars Programme', label: 'University Scholars Programme' },
-    { value: 'Economics', label: 'Economics' },
-    { value: 'SDE', label: 'SDE' },
-    { value: 'Science', label: 'Science' },
+    'Computer Science',
+    'FASS',
+    'BIZ',
+    'AI',
+    'Engineering',
+    'Student Exchange Programme',
+    'Computing',
+    'University Scholars Programme',
+    'Economics',
+    'SDE',
+    'Science',
   ]
+
+  formatTagsToSelectOptions(tags) {
+    let selectOptions = [];
+    for (let tag of tags) {
+      selectOptions.push({ value: tag, label: tag });
+    }
+    return selectOptions;
+  }
 
   constructor(props) {
     super(props);
@@ -92,6 +100,15 @@ class View extends Component {
     }
 
     this.props.onChangeModulePosition(source.droppableId, source.index, destination.droppableId, destination.index, this.state.activePlan.planName);
+  }
+
+  onChangeTags(selectOptions) {
+    let tags = [];
+    for (let selectOption of selectOptions) {
+      tags.push(selectOption.value);
+    }
+
+    this.props.onChangeTags(this.state.activePlan.planName, tags)
   }
 
   render() {
@@ -175,9 +192,9 @@ class View extends Component {
             <Col md={4}>
               <h5>Tags</h5>
               <Select
-                defaultValue={this.state.activePlan.tags}
-                onChange={(tagsArray) => this.props.onChangeTags(this.state.activePlan.planName, tagsArray)}
-                options={this.dummyTags}
+                defaultValue={this.formatTagsToSelectOptions(this.state.activePlan.tags)}
+                onChange={(selectObjects) => this.onChangeTags(selectObjects)}
+                options={this.formatTagsToSelectOptions(this.dummyTags)}
                 isMulti={true}
                 components={this.animatedComponents}
               />
