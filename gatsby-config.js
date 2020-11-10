@@ -33,7 +33,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [ `/`, `/index/*`] },
+      options: { prefixes: [ `/community/index/*`, `/plans/index/*`, `/profile/index/*`, `/publicplan/index/*`, `/tracker/index/*`, ] },
     },
   ],
 }
