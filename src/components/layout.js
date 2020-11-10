@@ -23,7 +23,7 @@ function Layout(props) {
     return (
         <Provider store={store()}>
             <Fragment>
-                <Row style={{ "margin": 0, "height": '100px', "border-bottom": "1px solid #DDDDDD" }}>
+                <Row style={{ "margin": 0, "height": '8vh', "border-bottom": "1px solid #DDDDDD" }}>
                     <Col lg={2} style={{ "position": "relative" }}>
                         <a href='/plans'>
                             <h2 style={
