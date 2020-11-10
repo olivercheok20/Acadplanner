@@ -59,14 +59,14 @@ export default function PublicPlan() {
     e.target.style.backgroundColor = "#3ac47d" // success colour
     e.target.style.borderColor = "#3ac47d"
 
-    setDownloaded("PNG Downloaded!")
+    setDownloaded("PNG downloaded!")
   }
 
   const handleClickCopyLink = e => {
     e.target.style.backgroundColor = "#3ac47d" // success colour
     e.target.style.borderColor = "#3ac47d"
 
-    setCopyLink("Link Copied!")
+    setCopyLink("Link copied!")
   }
 
   /* for import plan modal */
@@ -125,8 +125,8 @@ export default function PublicPlan() {
 
   return (
     <Layout>
-      <Container className="p-3">
-        <h3>{plan.title}</h3>
+      <Container style={{padding: 0, margin: 0, maxWidth: 'none'}}>
+        <h4>{plan.title}</h4>
         <hr />
         <Col className="px-0">
           <div className="plan-details">
@@ -178,7 +178,7 @@ export default function PublicPlan() {
             Share Plan
           </Button>
           <Button outline color="secondary">
-            Compare with One of My Plans
+            Compare with one of my plans
           </Button>
           <Modal isOpen={modal} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Share Plan</ModalHeader>

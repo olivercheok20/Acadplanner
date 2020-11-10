@@ -660,7 +660,6 @@ function Tracker(props) {
             <Select
             defaultValue={getNamesOfSemesters()}
             onChange={(newSemesterArray) => {
-              console.log(newSemesterArray)
               setSemesterArray(newSemesterArray)
             }}
             options={makeSemesterOptions()}

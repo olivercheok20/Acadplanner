@@ -69,8 +69,11 @@ export default function Community() {
 
   return (
     <Layout>
-      <Container className="py-4 w-75">
-        <InputGroup className="mt-2 mb-3">
+      <h4>Community</h4>
+
+      <hr></hr>
+      <Container style={{padding: 0, margin: 0, maxWidth: 'none'}}>
+        <InputGroup>
           <Input
             type="search"
             name="search"
