@@ -5,7 +5,7 @@ import Loadable from 'react-loadable'
 
 import { Row, Col } from "reactstrap";
 
-import './idkwhyitbreakswithoutthisbutwtv.css'
+import './olivercheokisawesome.css'
 
 import { Link } from "gatsby";
 import { connect } from "react-redux";
