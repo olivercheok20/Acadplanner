@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react"
 
-import { data } from "./search/data"
+import { data } from "../components/data"
 import Layout from "../components/layout"
-import Comment from "./search/Comment"
+import Comment from "../components/Comment"
 
-import "./search/publicplan.css"
+import "../components/publicplan.css"
 
 import {
   Row,
@@ -20,9 +20,14 @@ import {
 } from "reactstrap"
 
 export default function PublicPlan() {
-  const urlParams = new URLSearchParams(window.location.search)
-  const id = urlParams.get("id")
-  const plan = data[id]
+  let plan;
+  if (typeof window !== `undefined`) {
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get("id")
+    plan = data[id]
+  } else {
+    plan = data[0]
+  }
 
   /* for like button */
   const [like, setLike] = useState(false)

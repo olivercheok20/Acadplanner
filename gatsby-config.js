@@ -8,6 +8,7 @@ module.exports = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-sass`,
+    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-plugin-react-redux`,
       options: {
@@ -30,5 +31,9 @@ module.exports = {
         windowKey: '__PRELOADED_STATE__',
       },
     },
+    // {
+    //   resolve: `gatsby-plugin-create-client-paths`,
+    //   options: { prefixes: [ `/community/*`, `/plans/*`, `/profile/*`, `/publicplan/*`, `/tracker/*`, ] },
+    // },
   ],
 }

@@ -14,8 +14,13 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@loadable/component": "^5.14.1",
+    "@metismenu/react": "0.0.2",
     "animate-sass": "^0.8.2",
     "gatsby": "^2.24.91",
+    "gatsby-plugin-create-client-paths": "^2.3.13",
+    "gatsby-plugin-exact-client-paths": "^0.4.1",
+    "gatsby-plugin-netlify": "^2.4.0",
     "gatsby-plugin-react-redux": "^1.1.0",
     "gatsby-plugin-sass": "^2.3.22",
     "linearicons": "^1.0.2",
@@ -26,6 +31,7 @@
     "react-dom": "^16.14.0",
     "react-full-height": "^1.2.2",
     "react-icons": "^3.11.0",
+    "react-loadable": "^5.5.0",
     "react-metismenu": "^1.4.0",
     "react-metismenu-router-link": "^2.1.0",
     "react-redux": "^7.2.2",
@@ -38,7 +44,7 @@
     "redux-devtools": "^3.7.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "webpack": "^5.3.2"
+    "webpack": "^4.44.2"
   },
   "devDependencies": {
     "pe7-icon": "^1.0.4",
