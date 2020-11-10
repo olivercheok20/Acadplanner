@@ -274,6 +274,33 @@ function Tracker(props) {
     return Math.round(total / num * 100) / 100
   }
 
+  function calculateRemainingSUs() {
+    let SUsRemaining = 32
+    for (const year of activePlan.years) {
+      if (year.yearName == 'Year 1') {
+        for (const semester of year.semesters) {
+          for (const mod of semester.modules) {
+            if (mod.grade == 'S' || mod.grade == 'U') {
+              SUsRemaining -= 4
+            }
+          }
+        }
+      } else {
+        if (SUsRemaining > 12) {
+          SUsRemaining = 12
+        }
+        for (const semester of year.semesters) {
+          for (const mod of semester.modules) {
+            if (mod.grade == 'S' || mod.grade == 'U') {
+              SUsRemaining -= 4
+            }
+          }
+        }
+      }
+    }
+    return SUsRemaining
+  }
+
   {
     // function addMod(r) {
     //   toggleModal();
@@ -652,13 +679,21 @@ function Tracker(props) {
                 {isNaN(calculateCAP()) && <h6>0</h6>}
               </Col>
             </Row>
-            <Row>
+            <Row style={{ paddingBottom: '15px' }}>
               <Col>
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
                   <h5>Core CAP</h5>
                 </div>
                 {!isNaN(calculateCoreCAP()) && <h6>{calculateCoreCAP()}</h6>}
                 {isNaN(calculateCoreCAP()) && <h6>0</h6>}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
+                  <h5>Total SUs remaining</h5>
+                </div>
+                <h6>{calculateRemainingSUs()}</h6>
               </Col>
             </Row>
           </Col>

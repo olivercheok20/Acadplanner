@@ -15,7 +15,7 @@ import {
 } from "./NavItems";
 
 const MetisMenu = Loadable({
-    loader: () => import('react-metismenu').then(console.log('Imported')),
+    loader: () => import('react-metismenu'),
     loading: () => null
 })
 
