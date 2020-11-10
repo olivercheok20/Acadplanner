@@ -195,11 +195,12 @@ class Profile extends Component {
                   id="year"
                   defaultValue={this.props.profile.year}
                 >
+                  <option>AY 15/16</option>
+                  <option>AY 16/17</option>
+                  <option>AY 17/18</option>
                   <option>AY 18/19</option>
                   <option>AY 19/20</option>
                   <option>AY 20/21</option>
-                  <option>AY 21/22</option>
-                  <option>AY 22/23</option>
                 </Input>
               </Form>
             }
