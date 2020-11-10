@@ -50,17 +50,17 @@ function plansReducer(plans =
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'S' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A-' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'C' }] }
+                        { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'S' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A-' }] },
+                        { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'C' }] }
                     ]
                 },
                 // {
                 //     yearName: "Year 2",
                 //     semesters: [
-                //         { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                //         { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
-                //         { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                //         { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
                 //     ]
                 // }
             ],
@@ -78,9 +78,9 @@ function plansReducer(plans =
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
                     ]
                 },
             ],

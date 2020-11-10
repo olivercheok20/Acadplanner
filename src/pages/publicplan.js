@@ -154,6 +154,28 @@ export default function PublicPlan() {
             </Col>
           </div>
         </Col>
+        {
+              plan.plan.years.map((year) => (
+                <div>
+                  <h5>{year.yearName}</h5>
+                  {year.semesters.map((semester) => {
+                    return (
+                    <div>
+                      <b style={{ marginBottom: '15px' }}>{semester.semesterName}</b>
+                      {
+                        semester.modules.map((mod) => (
+                          <p style={{ margin: 0 }}>{mod.name}</p>
+                        ))
+                      }
+                    </div>
+                  )}
+                  )
+                  }
+                </div>
+              )
+              )
+        }
+        <br />
         <Row className="action-btns-row">
           <Button color="primary" onClick={toggleImportModal}>
             Import
@@ -210,8 +232,7 @@ export default function PublicPlan() {
           </Modal>
         </Row>
         <br />
-        <div>this is where the plan would go</div>
-        <br />
+
         <hr />
         <section style={{ width: "60%" }}>
           <h5>Comments</h5>

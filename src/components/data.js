@@ -28,6 +28,32 @@ export const data = [
         numLikes: 2,
       },
     ],
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
   },
   {
     id: 1,
@@ -53,6 +79,34 @@ export const data = [
         numLikes: 1,
       },
     ],
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
+
   },
   {
     id: 2,
@@ -78,6 +132,34 @@ export const data = [
         numLikes: 1,
       },
     ],
+
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
   },
   {
     id: 3,
@@ -97,6 +179,35 @@ export const data = [
         numLikes: 1,
       },
     ],
+
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
+
   },
   {
     id: 4,
@@ -116,6 +227,35 @@ export const data = [
         numLikes: 2,
       },
     ],
+
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
+
   },
   {
     id: 5,
@@ -130,7 +270,7 @@ export const data = [
       {
         username: "Kelly Ng",
         date: "5 Oct 2020",
-        content: "why not take ACC3604 in year2sem2?",
+        content: "why not take ACC3604 in year2Semester 2?",
         numLikes: 1,
       },
       {
@@ -141,6 +281,35 @@ export const data = [
         numLikes: 3,
       },
     ],
+
+
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
   },
   {
     id: 6,
@@ -162,9 +331,38 @@ export const data = [
       {
         username: "Jamie Ong",
         date: "1 Oct 2020",
-        content: "would placing PL3232 in year3 sem1 than in year2 sem2?",
+        content: "would placing PL3232 in year3 Semester 1 than in year2 Semester 2?",
         numLikes: 1,
       },
     ],
+
+    plan: {
+      planName: 'Computer Science Year1-4 Focus Area in AI + USP',
+      planDescription: 'This plan is for a CS major specialising in artificial intelligence + USP',
+      public: false,
+      current: false,
+      tags: [
+          { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+          { value: 'Computing', label: 'Computing' },
+          { value: 'AI', label: 'AI' },
+          { value: 'Computer Science', label: 'Computer Science' },
+      ],
+      years: [
+          {
+              yearName: "Year 1",
+              semesters: [
+                  { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' }] },
+                  { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' }] }
+              ]
+          },
+      ],
+      planToTakeModules: [
+          { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+      ]
+  },
+
+
+
   },
 ]
