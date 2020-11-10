@@ -47,7 +47,7 @@ class Plans extends Component {
     return (
       <Layout>
         <Provider store={store()}>
-          <h4>Plans</h4>
+          <h2>My Plans</h2>
           <hr></hr>
 
           <h5>Current Plan</h5>
@@ -59,9 +59,9 @@ class Plans extends Component {
           ))}
 
           <div class="plans_container" onClick={(e => {
-              this.props.addPlan();
-              e.preventDefault();
-              })}>
+            this.props.addPlan();
+            e.preventDefault();
+          })}>
             <a href="#">
 
               <div class="plans_text">+</div>

@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { Semester } from '../components/Semester';
 
 function profileReducer(
     profile = {
@@ -40,7 +39,13 @@ function plansReducer(plans =
             planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Israel in Y3S2.',
             public: false,
             current: true,
-            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Israel'],
+            tags: [
+                { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+                { value: 'Computing', label: 'Computing' },
+                { value: 'AI', label: 'AI' },
+                { value: 'Computer Science', label: 'Computer Science' },
+                { value: 'Israel', label: 'Israel' },
+            ],
             years: [
                 {
                     yearName: "Year 1",
@@ -86,26 +91,38 @@ function plansReducer(plans =
     switch (action.type) {
         case 'changePlanName':
             plans.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.planName = action.payload.newName;
                 }
             })
             return plans;
         case 'changePlanDescription':
             plans.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.planDescription = action.payload.newDescription;
                 }
             })
             return plans;
+        case 'changeYearName':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.yearName = action.payload.newName;
+                        }
+                    })
+                }
+            })
+            return plansCopy;
         case 'changeSemesterName':
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.years.forEach(year => {
-                        if (year.yearName == action.payload.yearName) {
+                        if (year.yearName === action.payload.yearName) {
                             year.semesters.forEach((semester) => {
-                                if (semester.semesterName == action.payload.semesterName) {
+                                if (semester.semesterName === action.payload.semesterName) {
                                     semester.semesterName = action.payload.newName;
                                 }
                             })
@@ -118,12 +135,28 @@ function plansReducer(plans =
             var newModule = { name: '', modularCredits: '', grade: '' };
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.years.forEach(year => {
-                        if (year.yearName == action.payload.yearName) {
+                        if (year.yearName === action.payload.yearName) {
                             year.semesters.forEach((semester) => {
-                                if (semester.semesterName == action.payload.semesterName) {
+                                if (semester.semesterName === action.payload.semesterName) {
                                     semester.modules = semester.modules.concat([newModule]);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'deleteModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules = semester.modules.filter(module => module.name !== action.payload.moduleName);
                                 }
                             })
                         }
@@ -137,10 +170,22 @@ function plansReducer(plans =
             };
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.years.forEach(year => {
-                        if (year.yearName == action.payload.yearName) {
+                        if (year.yearName === action.payload.yearName) {
                             year.semesters = year.semesters.concat([newSemester]);
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'deleteSemester':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters = year.semesters.filter(semester => semester.semesterName !== action.payload.semesterName)
                         }
                     })
                 }
@@ -155,14 +200,21 @@ function plansReducer(plans =
             };
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     newYear.yearName = "Year " + (plan.years.length + 1).toString();
                     plan.years = plan.years.concat([newYear])
                 }
             })
             return plansCopy;
+        case 'deleteYear':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years = plans.years.filter(year => year.yearName !== action.payload.yearName)
+                }
+            })
+            return plansCopy;
         case 'changeModulePosition':
-            console.log(plans);
             let sourceYear = action.payload.sourceSemester.split('<>')[0]
             let sourceSemester = action.payload.sourceSemester.split('<>')[1]
             let sourceModuleIndex = action.payload.sourceModuleIndex;
@@ -174,11 +226,11 @@ function plansReducer(plans =
 
             // remove moved module from original pos
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.years.forEach(year => {
-                        if (year.yearName == sourceYear) {
+                        if (year.yearName === sourceYear) {
                             year.semesters.forEach(semester => {
-                                if (semester.semesterName == sourceSemester) {
+                                if (semester.semesterName === sourceSemester) {
                                     movedModule = semester.modules[sourceModuleIndex];
                                     semester.modules.splice(sourceModuleIndex, 1);
                                 }
@@ -190,11 +242,11 @@ function plansReducer(plans =
 
             // add moved module to new pos
             plansCopy.forEach(plan => {
-                if (plan.planName == action.payload.planName) {
+                if (plan.planName === action.payload.planName) {
                     plan.years.forEach(year => {
-                        if (year.yearName == destinationYear) {
+                        if (year.yearName === destinationYear) {
                             year.semesters.forEach(semester => {
-                                if (semester.semesterName == destinationSemester) {
+                                if (semester.semesterName === destinationSemester) {
                                     semester.modules.splice(destinationModuleIndex, 0, movedModule)
                                 }
                             })
@@ -202,7 +254,6 @@ function plansReducer(plans =
                     })
                 }
             })
-            console.log(plansCopy)
             return plans;
         case 'addPlan':
             var newPlan = {
@@ -222,6 +273,27 @@ function plansReducer(plans =
                 ]
             };
             return plans.concat([newPlan])
+        case 'changePublicPlan':
+            plans.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.public = !plan.public;
+                }
+            })
+            return plans;
+        case 'changeCurrentPlan':
+            plans.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.current = !plan.current;
+                }
+            })
+            return plans;
+        case 'changeTags':
+            plans.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.tags = action.payload.tagsArray;
+                }
+            })
+            return plans;
         default:
             return plans
     }
