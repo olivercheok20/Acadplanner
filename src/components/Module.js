@@ -16,7 +16,7 @@ export const Module = (props) => {
         { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
     ];
 
-    const grades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D+', 'D', 'F'];
+    const grades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D+', 'D', 'F', 'S', 'U'];
 
     const formatModulesToSelectOptions = (modules) => {
         let selectOptions = [];
@@ -74,7 +74,7 @@ export const Module = (props) => {
                             />
                         </div>
                         <div style={{ margin: 5 }}>
-                            <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)}>
+                            <Button color="danger" size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)}>
                                 <FaTrashAlt />
                             </Button>
                         </div>
