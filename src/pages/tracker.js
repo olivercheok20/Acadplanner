@@ -9,118 +9,339 @@ import Select from 'react-select';
 import { connect, Provider } from "react-redux";
 import store from '../state/createStore';
 
-
-var global;
-
-function Tracker() {
+import makeAnimated from 'react-select/animated'
 
 
-  const handleChangePlan = (planName) => {
-    // let selectedPlan = plans.filter(plan => plan.planName == planName)[0];
-    // console.log('before: ' + semesters[0].modules[0].name);
-    // console.log('to change to: ' + selectedPlan.semesters[0].modules[0].name)
-    // setSemesters(selectedPlan.semesters);
-    // setPlanToTakeModules(selectedPlan.planToTakeModules);
-    // setPlanName(selectedPlan.planName);
-    // setPlanDescription(selectedPlan.planDescription);
-  }
+function Tracker(props) {
 
+  const ULR = [
+    { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: '' },
+  ]
 
-  function calcCAP() {
-    var checked = document.querySelectorAll('#exampleSelectMulti :checked');
-    var selected = [...checked].map(option => option.value);
-    selected = String(selected);
-    if (selected === "y1 sem1") {
-      document.getElementById('CCAP').innerHTML = '3.12 (Honours)';
-    } else if (selected === "y1 sem1,y1 sem2") {
-      document.getElementById('CCAP').innerHTML = '3.33 (Honours)';
-    } else if (selected === "y1 sem1,y1 sem2,y2 sem1") {
-      document.getElementById('CCAP').innerHTML = '3.20 (Honours)';
-    } else if (selected === "y1 sem1,y1 sem2,y2 sem1,y2 sem2") {
-      document.getElementById('CCAP').innerHTML = '3.22 (Honours)';
-    } else if (selected === "") {
-      document.getElementById('CCAP').innerHTML = '-';
-    }
-  }
+  const compulsoryULR = [
+    { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: '' },
+  ]
+
+  const UER = [
+
+  ]
+
+  const PR = [
+    { name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' },
+    { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
+    { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
+  ]
+
+  const compulsoryPR = [
+    { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' },
+    { name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' },
+  ]
+
+  const [semesterArray, setSemesterArray] = useState([])
 
   const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  }
-
+  const toggle = tab => { if (activeTab !== tab) setActiveTab(tab); }
   const { className } = 0;
-
   const [modal, setModal] = useState(false);
-
   const toggleModal = () => setModal(!modal);
 
-  function addMod(r) {
-    toggleModal();
-    global = r;
+  const [activePlan, setActivePlan] = useState(getCurrentPlan())
+
+  const animatedComponents = makeAnimated();
+
+  function getCurrentPlan() {
+    let currentPlan;
+    for (const plan of props.plans) {
+      if (plan.current) {
+        currentPlan = plan
+        break;
+      }
+    }
+    return currentPlan
   }
 
-  function myFunction(r, s) {
-    var ul = document.getElementById(r).parentNode.previousSibling.previousSibling;
-    var li = document.createElement("li");
-    var children = ul.children.length + 1
-    li.setAttribute("id", "element" + children)
-    li.appendChild(document.createTextNode("" + global));
-    ul.appendChild(li);
-    toggleModal();
-    updateMC(s);
-    if (global === "UEM8000") {
-      document.getElementById(global).style.display = 'none';
-      document.getElementById(global).nextSibling.style.display = "block";
-      updateuebadge()
-    } else {
-      document.getElementById(global).style.display = 'none';
-      document.getElementById(global).nextSibling.style.display = "block";
-      updatemajbadge()
+  function makeSemesterOptions() {
+    let options = [];
+    for (const year of activePlan.years) {
+      for (const semester of year.semesters) {
+        options.push({'value': semester.semesterName, 'label': semester.semesterName})
+      }
+    }
+    return options
+  }
+
+  function getCareer() {
+    switch (props.profile.year) {
+      case 'AY 15/16':
+        return 'Undergraduate Year 5 Semester 1'
+      case 'AY 16/17':
+        return 'Undergraduate Year 4 Semester 1'
+      case 'AY 17/18':
+        return 'Undergraduate Year 3 Semester 1'
+      case 'AY 18/19':
+        return 'Undergraduate Year 2 Semester 1'
+      case 'AY 19/20':
+        return 'Undergraduate Year 1 Semester 1'
+      case 'AY 20/21':
+        return 'Undergraduate Year 1 Semester 1'
     }
   }
 
-  function updateMC(s) {
-    var ele = document.getElementById(s);
-    var str = ele.innerText;
-    var val = str.substring(12);
-    val = parseInt(val) + 4;
-    ele.innerHTML = "Total MCs : " + val + "";
+  function handleChangePlan(planName) {
+    var newActivePlan = null
+
+    props.plans.forEach(function (plan, index) {
+      if (plan.planName == planName) {
+        newActivePlan = plan
+      }
+    })
+    setActivePlan(newActivePlan)
   }
 
-  function updateuebadge() {
-    var ele = document.getElementById("uebadge");
-    ele.innerHTML = "&#x2713;";
-    ele.style.backgroundColor = "#545cd8";
-
-    var ueUnitsPlanned = document.getElementById("ueplan");
-    var planstr = ueUnitsPlanned.innerText;
-    var planval = planstr.substring(15, 16);
-    planval = parseInt(planval) + 4;
-    ueUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
-
-    var ueUnitsNeeded = document.getElementById("ueneed");
-    var needstr = ueUnitsNeeded.innerText;
-    var needval = needstr.substring(14, 15);
-    needval = parseInt(needval) - 4;
-    ueUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
+  function getNumberOfMCs() {
+    let MCs = 0;
+    for (const year of activePlan.years) {
+      for (const semester of year.semesters) {
+        for (const mod of semester.modules) {
+          MCs += parseInt(mod.modularCredits)
+        }
+      }
+    }
+    return MCs
   }
 
-  function updatemajbadge() {
-    var ele = document.getElementById("majbadge");
-    ele.innerHTML = parseInt(ele.innerHTML) - 4;
+  function takenModsFrom(requirement) {
+    let taken = []
+    for (const year of activePlan.years) {
+      for (const semester of year.semesters) {
+        for (const mod of semester.modules) {
+          for (const req of requirement) {
+            if (mod.name == req.name) {
+              taken.push(mod.name)
+            }
+          }
+        }
+      }
+    }
+    return taken
+  }
 
-    var majUnitsPlanned = document.getElementById("majplan");
-    var planstr = majUnitsPlanned.innerText;
-    var planval = planstr.substring(15, 17);
-    planval = parseInt(planval) + 4;
-    majUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
+  function modulesLeftFrom(requirement) {
+    let left = []
+    for (const req of requirement) {
+      let taken = false;
+      for (const year of activePlan.years) {
+        for (const semester of year.semesters) {
+          for (const mod of semester.modules) {
+            if (req.name == mod.name) {
+              taken = true
+            }
+          }
+        }
+      }
+      if (!taken) {
+        left.push(req.name)
+      }
+    }
+    return left
+  }
 
-    var majUnitsNeeded = document.getElementById("majneed");
-    var needstr = majUnitsNeeded.innerText;
-    var needval = needstr.substring(14, 17);
-    needval = parseInt(needval) - 4;
-    majUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
+  // Fix this one
+  function getNamesOfSemesters() {
+    let names = []
+    for (const year of activePlan.years) {
+      for (const semester of year.semesters) {
+        names.push(semester.name)
+      }
+    }
+    return names
+  }
+
+  function calculateCoreCAP() {
+    let total = 0
+    let num = 0
+    for (const checkSemester of semesterArray) {
+    for (const year of activePlan.years) {
+      for (const semester of year.semesters) {
+        if (checkSemester.value == semester.semesterName ){
+        for (const mod of semester.modules) {
+          for (const req of PR) {
+            if (mod.name == req.name) {
+              if (mod.grade) {
+                if (mod.grade != 'S' && mod.grade != 'U') {
+                  num += 1
+                }
+                switch (mod.grade) {
+                  case 'A+':
+                  case 'A':
+                    total += 5
+                    break;
+                  case 'A-':
+                    total += 4.5
+                    break;
+                  case 'B+':
+                    total += 4
+                    break;
+                  case 'B':
+                    total += 3.5
+                    break;
+                  case 'B-':
+                    total += 3
+                    break;
+                  case 'C+':
+                    total += 2.5
+                    break;
+                  case 'C':
+                    total += 2
+                    break;
+                  case 'D+':
+                    total += 1.5
+                    break;
+                  case 'D':
+                    total += 1
+                    break;
+                  case 'F':
+                  case 'S':
+                  case 'U':
+                    total += 0
+                    break;                                                                                                      
+                }
+              }
+            }
+          }
+        }
+      }
+      }
+    }
+  }
+    return Math.round(total / num * 100) / 100
+  }
+
+  function calculateCAP() {
+    let total = 0
+    let num = 0
+    for (const checkSemester of semesterArray) {
+      for (const year of activePlan.years) {
+        for (const semester of year.semesters) {
+          if (checkSemester.value == semester.semesterName ){
+          for (const mod of semester.modules) {
+                if (mod.grade) {
+                  if (mod.grade != 'S' && mod.grade != 'U') {
+                    num += 1
+                  }
+                  switch (mod.grade) {
+                    case 'A+':
+                    case 'A':
+                      total += 5
+                      break;
+                    case 'A-':
+                      total += 4.5
+                      break;
+                    case 'B+':
+                      total += 4
+                      break;
+                    case 'B':
+                      total += 3.5
+                      break;
+                    case 'B-':
+                      total += 3
+                      break;
+                    case 'C+':
+                      total += 2.5
+                      break;
+                    case 'C':
+                      total += 2
+                      break;
+                    case 'D+':
+                      total += 1.5
+                      break;
+                    case 'D':
+                      total += 1
+                      break;
+                    case 'F':
+                    case 'S':
+                    case 'U':
+                      total += 0
+                      break;                                                                                                      
+                  }
+                }
+              
+          }
+        }
+        }
+      }
+    }
+    return Math.round(total / num * 100) / 100
+  }
+
+  {
+    // function addMod(r) {
+    //   toggleModal();
+    //   global = r;
+    // }
+
+    // function myFunction(r, s) {
+    //   var ul = document.getElementById(r).parentNode.previousSibling.previousSibling;
+    //   var li = document.createElement("li");
+    //   var children = ul.children.length + 1
+    //   li.setAttribute("id", "element" + children)
+    //   li.appendChild(document.createTextNode("" + global));
+    //   ul.appendChild(li);
+    //   toggleModal();
+    //   updateMC(s);
+    //   if (global === "UEM8000") {
+    //     document.getElementById(global).style.display = 'none';
+    //     document.getElementById(global).nextSibling.style.display = "block";
+    //     updateuebadge()
+    //   } else {
+    //     document.getElementById(global).style.display = 'none';
+    //     document.getElementById(global).nextSibling.style.display = "block";
+    //     updatemajbadge()
+    //   }
+    // }
+
+    // function updateMC(s) {
+    //   var ele = document.getElementById(s);
+    //   var str = ele.innerText;
+    //   var val = str.substring(12);
+    //   val = parseInt(val) + 4;
+    //   ele.innerHTML = "Total MCs : " + val + "";
+    // }
+
+    // function updateuebadge() {
+    //   var ele = document.getElementById("uebadge");
+    //   ele.innerHTML = "&#x2713;";
+    //   ele.style.backgroundColor = "#545cd8";
+
+    //   var ueUnitsPlanned = document.getElementById("ueplan");
+    //   var planstr = ueUnitsPlanned.innerText;
+    //   var planval = planstr.substring(15, 16);
+    //   planval = parseInt(planval) + 4;
+    //   ueUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
+
+    //   var ueUnitsNeeded = document.getElementById("ueneed");
+    //   var needstr = ueUnitsNeeded.innerText;
+    //   var needval = needstr.substring(14, 15);
+    //   needval = parseInt(needval) - 4;
+    //   ueUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
+    // }
+
+    // function updatemajbadge() {
+    //   var ele = document.getElementById("majbadge");
+    //   ele.innerHTML = parseInt(ele.innerHTML) - 4;
+
+    //   var majUnitsPlanned = document.getElementById("majplan");
+    //   var planstr = majUnitsPlanned.innerText;
+    //   var planval = planstr.substring(15, 17);
+    //   planval = parseInt(planval) + 4;
+    //   majUnitsPlanned.innerHTML = "Units Planned: " + planval + "MCs";
+
+    //   var majUnitsNeeded = document.getElementById("majneed");
+    //   var needstr = majUnitsNeeded.innerText;
+    //   var needval = needstr.substring(14, 17);
+    //   needval = parseInt(needval) - 4;
+    //   majUnitsNeeded.innerText = "Units Needed: " + needval + "MCs";
+    // }
   }
 
   return (
@@ -131,26 +352,28 @@ function Tracker() {
 
       <div>
 
-        <Row>
+        <Row style={{ marginBottom: '15px' }}>
           <Col md={4}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
               <h5>Academic Year</h5>
             </div>
-            <p>2020/2021 Semester 1</p>
+            <h6>2020/2021 Semester 1</h6>
           </Col>
 
           <Col md={4}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
               <h5>Academic Programme</h5>
             </div>
-            <p>{/* Put programme here */}</p>
+            <h6>{props.profile.programme}</h6>
+            <h6>{props.profile.special}</h6>
           </Col>
 
           <Col md={4}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
-              <h5>Major</h5>
+              <h5>Major/Minor</h5>
             </div>
-            <p>{/* Put major here */}</p>
+            <h6>{props.profile.major}</h6>
+            <h6>{props.profile.minor}</h6>
           </Col>
         </Row>
 
@@ -159,21 +382,21 @@ function Tracker() {
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
               <h5>Career</h5>
             </div>
-            <p>{/* Put career here */}</p>
+            <h6>{getCareer()}</h6>
           </Col>
 
           <Col md={4}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
               <h5>Enrollment Year</h5>
             </div>
-            <p>{/* Put enrollment year here */}</p>
+            <h6>{props.profile.year}</h6>
           </Col>
 
           <Col md={4}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
               <h5>Completed MCs</h5>
             </div>
-            <p>{/* Put number of completed MCs here */}</p>
+            <h6>{getNumberOfMCs()}</h6>
           </Col>
         </Row>
 
@@ -192,10 +415,13 @@ function Tracker() {
             type="select"
             name="text"
             id="planselection"
-            // defaultValue={this.state.activePlan.planName}
-            onChange={(e) => { this.handleChangePlan(document.getElementById("planselection").value) }}
-          // style={{ width: '50%' }}
-          />
+            defaultValue={activePlan.planName}
+            onChange={(e) => { handleChangePlan(document.getElementById("planselection").value) }}
+          >
+            {props.plans.map((plan, i) => (
+              <option key={i}>{plan.planName} </option>
+            ))}
+          </Input>
         </Col>
       </Row>
 
@@ -209,8 +435,8 @@ function Tracker() {
               onClick={() => { toggle('1') }}
             >
               University Level Requirements
-              <Badge color="primary">&#x2713;</Badge>
-              <Badge color="danger">{/* Put number remaining here */}1</Badge>
+              {!(20 - takenModsFrom(ULR).length * 4) && <Badge color="primary">&#x2713;</Badge>}
+              {(20 - takenModsFrom(ULR).length * 4) && <Badge color="danger">{20 - takenModsFrom(ULR).length * 4}</Badge>}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -219,8 +445,8 @@ function Tracker() {
               onClick={() => { toggle('2') }}
             >
               Unrestricted Electives Requirements
-              <Badge color="primary">&#x2713;</Badge>
-              <Badge color="danger">{/* Put number remaining here */}1</Badge>
+              {!(32 - takenModsFrom(UER).length * 4) && <Badge color="primary">&#x2713;</Badge>}
+              {(32 - takenModsFrom(UER).length * 4) && <Badge color="danger">{32 - takenModsFrom(UER).length * 4}</Badge>}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -229,8 +455,9 @@ function Tracker() {
               onClick={() => { toggle('3') }}
             >
               Programme Requirements
-              <Badge color="primary">&#x2713;</Badge>
-              <Badge color="danger">{/* Put number remaining here */}1</Badge>
+              
+              {!(108 - takenModsFrom(PR).length * 4) && <Badge color="primary">&#x2713;</Badge>}
+              {(108 - takenModsFrom(PR).length * 4) && <Badge color="danger">{108 - takenModsFrom(PR).length * 4}</Badge>}
             </NavLink>
           </NavItem>
         </Nav>
@@ -248,9 +475,23 @@ function Tracker() {
             <Row style={{ marginLeft: 0, marginRight: 0, marginBottom: '15px', paddingLeft: '15px', paddingRight: '15px' }}>
               <Col>
                 <Row><b>Modules Taken</b></Row>
+                <Row>
+                {takenModsFrom(ULR).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+                </Row>
               </Col>
               <Col>
-                <Row><b>Modules Left</b></Row>
+                <Row><b>Modules Left</b></Row> 
+                {/* Change this to MODAL */}
+                <Row>
+                {modulesLeftFrom(ULR).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+                </Row>
+
               </Col>
               <Col>
                 <Row style={{ marginBottom: '5px' }}>
@@ -266,7 +507,7 @@ function Tracker() {
                     Units Taken:
                   </Col>
                   <Col>
-                    {/* Put modules taken here */} MCs
+                    {takenModsFrom(ULR).length * 4} MCs
                   </Col>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
@@ -274,7 +515,7 @@ function Tracker() {
                     Units Required:
                   </Col>
                   <Col>
-                    {/* Put 20 - modules taken here */} MCs
+                    {20 - takenModsFrom(ULR).length * 4} MCs
                   </Col>
                 </Row>
               </Col>
@@ -284,9 +525,22 @@ function Tracker() {
             <Row style={{ marginLeft: 0, marginRight: 0, marginBottom: '15px', paddingLeft: '15px', paddingRight: '15px' }}>
               <Col>
                 <Row><b>Modules Taken</b></Row>
+                <Row>
+                {takenModsFrom(UER).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+                </Row>
+
               </Col>
               <Col>
                 <Row><b>Modules Left</b></Row>
+                {/* Change this to MODAL */}
+                {modulesLeftFrom(UER).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+
               </Col>
               <Col>
                 <Row style={{ marginBottom: '5px' }}>
@@ -302,7 +556,7 @@ function Tracker() {
                     Units Taken:
                   </Col>
                   <Col>
-                    {/* Put modules taken here */} MCs
+                    {takenModsFrom(UER).length * 4} MCs
                   </Col>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
@@ -310,7 +564,7 @@ function Tracker() {
                     Units Required:
                   </Col>
                   <Col>
-                    {/* Put 20 - modules taken here */} MCs
+                    {32 - takenModsFrom(ULR).length * 4} MCs
                   </Col>
                 </Row>
               </Col>
@@ -319,10 +573,22 @@ function Tracker() {
           <TabPane tabId="3">
             <Row style={{ marginLeft: 0, marginRight: 0, marginBottom: '15px', paddingLeft: '15px', paddingRight: '15px' }}>
               <Col>
-                <Row><b>Modules Taken</b></Row>
+                <Row style={{marginBottom: '10px'}}><b>Modules Taken</b></Row>
+                <Row>
+                {takenModsFrom(PR).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+                </Row>
               </Col>
               <Col>
                 <Row><b>Modules Left</b></Row>
+                {/* Change this to MODAL */}
+                {modulesLeftFrom(PR).map((mod) => {
+                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                }
+                )}
+
               </Col>
               <Col>
                 <Row style={{ marginBottom: '5px' }}>
@@ -338,7 +604,7 @@ function Tracker() {
                     Units Taken:
                   </Col>
                   <Col>
-                    {/* Put modules taken here */} MCs
+                    {takenModsFrom(PR).length * 4} MCs
                   </Col>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
@@ -346,7 +612,7 @@ function Tracker() {
                     Units Required:
                   </Col>
                   <Col>
-                    {/* Put 20 - modules taken here */} MCs
+                    {108 - takenModsFrom(PR).length * 4} MCs
                   </Col>
                 </Row>
               </Col>
@@ -365,11 +631,14 @@ function Tracker() {
         <Row>
           <Col lg={5}>
             <Select
-            // defaultValue={this.state.activePlan.tags}
-            // onChange={(tagsArray) => this.props.onChangeTags(this.state.activePlan.planName, tagsArray)}
-            // options={this.dummyTags}
-            // isMulti={true}
-            // components={this.animatedComponents}
+            defaultValue={getNamesOfSemesters()}
+            onChange={(newSemesterArray) => {
+              console.log(newSemesterArray)
+              setSemesterArray(newSemesterArray)
+            }}
+            options={makeSemesterOptions()}
+            isMulti={true}
+            components={animatedComponents}
             />
           </Col>
           <Col lg={1}></Col>
@@ -379,7 +648,8 @@ function Tracker() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
                   <h5>Overall CAP</h5>
                 </div>
-                <h6>5</h6>
+                {!isNaN(calculateCAP()) && <h6>{calculateCAP()}</h6>}
+                {isNaN(calculateCAP()) && <h6>0</h6>}
               </Col>
             </Row>
             <Row>
@@ -387,7 +657,8 @@ function Tracker() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: '#545cd8' }}>
                   <h5>Core CAP</h5>
                 </div>
-                <h6>5</h6>
+                {!isNaN(calculateCoreCAP()) && <h6>{calculateCoreCAP()}</h6>}
+                {isNaN(calculateCoreCAP()) && <h6>0</h6>}
               </Col>
             </Row>
           </Col>
@@ -728,7 +999,7 @@ function Tracker() {
 
 
 function mapState(state) {
-  return { plans: state.plans }
+  return { plans: state.plans, profile: state.profile }
 }
 
 function mapDispatch(dispatch) {

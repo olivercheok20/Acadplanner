@@ -50,43 +50,44 @@ function plansReducer(plans =
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A-' }] },
+                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'C' }] }
                     ]
                 },
-                {
-                    yearName: "Year 2",
-                    semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521', modularCredits: '4', grade: 'A' }] }
-                    ]
-                }
+                // {
+                //     yearName: "Year 2",
+                //     semesters: [
+                //         { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                //     ]
+                // }
             ],
             planToTakeModules: [
-                { name: 'CS1231', modularCredits: '4' }
+                { name: 'CS1010 Programming Methodology', modularCredits: '4' }
             ]
         },
-        // {
-        //     planName: 'CS + USP + Germany Exchange',
-        //     planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
-        //     public: false,
-        //     current: false,
-        //     tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
-        //     years: [
-        //         {
-        //             yearName: "Year 1",
-        //             semesters: [
-        //                 { semesterName: 'sem1', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-        //                 { semesterName: 'sem2', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-        //             ]
-        //         }
-        //     ],
-        //     planToTakeModules: [
-        //         { name: 'CS1231', modularCredits: '4' }
-        //     ]
-        // }
+        {
+            planName: 'CS + USP + Germany Exchange',
+            planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
+            public: false,
+            current: false,
+            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
+            years: [
+                {
+                    yearName: "Year 1",
+                    semesters: [
+                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                    ]
+                },
+            ],
+            planToTakeModules: [
+                { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+            ]
+        }
     ], action) {
     switch (action.type) {
         case 'changePlanName':
