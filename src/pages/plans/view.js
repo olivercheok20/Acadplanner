@@ -11,7 +11,26 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import Toggle from 'react-toggle'
 import "react-toggle/style.css"
 
+import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+
 class View extends Component {
+
+  animatedComponents = makeAnimated();
+  dummyTags = [
+    { value: 'Computer Science', label: 'Computer Science' },
+    { value: 'FASS', label: 'FASS' },
+    { value: 'BIZ', label: 'BIZ' },
+    { value: 'AI', label: 'AI' },
+    { value: 'Engineering', label: 'Engineering' },
+    { value: 'Student Exchange Programme', label: 'Student Exchange Programme' },
+    { value: 'Computing', label: 'Computing' },
+    { value: 'University Scholars Programme', label: 'University Scholars Programme' },
+    { value: 'Israel', label: 'Israel' },
+    { value: 'Economics', label: 'Economics' },
+    { value: 'SDE', label: 'SDE' },
+    { value: 'Science', label: 'Science' },
+  ]
 
   constructor(props) {
     super(props);
@@ -142,11 +161,17 @@ class View extends Component {
             </Col>
           </Row>
 
-          <Row style={{ marginLeft: 60, marginBottom: 100 }}>
-            <Col>
+          <Row style={{ marginLeft: 60, marginBottom: 50 }}>
+            <Col md={4}>
               <h5>Tags</h5>
+              <Select
+                defaultValue={this.state.activePlan.tags}
+                onChange={(tagsArray) => this.props.onChangeTags(this.state.activePlan.planName, tagsArray)}
+                options={this.dummyTags}
+                isMulti={true}
+                components={this.animatedComponents}
+              />
             </Col>
-
           </Row>
 
           <h1 style={{ marginLeft: 40 }}>All Years</h1>
@@ -212,6 +237,7 @@ function mapDispatch(dispatch) {
       dispatch({ type: 'changeModulePosition', payload: { 'sourceSemester': sourceSemester, 'sourceModuleIndex': sourceModuleIndex, 'destinationSemester': destinationSemester, 'destinationModuleIndex': destinationModuleIndex, 'planName': planName } }),
     onChangeCurrentPlan: (planName) => dispatch({ type: 'changeCurrentPlan', payload: { 'planName': planName } }),
     onChangePublicPlan: (planName) => dispatch({ type: 'changePublicPlan', payload: { 'planName': planName } }),
+    onChangeTags: (planName, tagsArray) => dispatch({ type: 'changeTags', payload: { 'planName': planName, 'tagsArray': tagsArray } }),
   }
 }
 
