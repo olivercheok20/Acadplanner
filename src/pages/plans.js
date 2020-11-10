@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import Layout from "../components/layout"
 import { Card, Row, Col } from "reactstrap"
-import { Router } from "@reach/router"
 
 import PlanCard from '../components/PlanCard'
 
@@ -46,37 +45,34 @@ class Plans extends Component {
 
   render() {
     return (
-      <Router basepath="/plans">
+      <Layout>
+        <Provider store={store()}>
+          <h4>Plans</h4>
+          <hr></hr>
 
-        <Layout path="/">
-          <Provider store={store()}>
-            <h4>Plans</h4>
-            <hr></hr>
+          <h5>Current Plan</h5>
+          <PlanCard plan={this.getCurrentPlan()} index={this.getIndexOfPlan(this.getCurrentPlan())} />
 
-            <h5>Current Plan</h5>
-            <PlanCard plan={this.getCurrentPlan()} index={this.getIndexOfPlan(this.getCurrentPlan())} />
+          <h5>Other Plans</h5>
+          {this.getOtherPlans().map((plan, i) => (
+            <PlanCard plan={plan} index={this.getIndexOfPlan(plan)} />
+          ))}
 
-            <h5>Other Plans</h5>
-            {this.getOtherPlans().map((plan, i) => (
-              <PlanCard plan={plan} index={this.getIndexOfPlan(plan)} />
-            ))}
-
-            <div class="plans_container" onClick={(e => {
+          <div class="plans_container" onClick={(e => {
               this.props.addPlan();
               e.preventDefault();
-            })}>
-              <a href="#">
+              })}>
+            <a href="#">
 
+              <div class="plans_text">+</div>
+              <div class="plans_overlay">
                 <div class="plans_text">+</div>
-                <div class="plans_overlay">
-                  <div class="plans_text">+</div>
-                </div>
-              </a>
-            </div>
+              </div>
+            </a>
+          </div>
 
-          </Provider>
-        </Layout>
-      </Router>
+        </Provider>
+      </Layout>
     )
   }
 }
