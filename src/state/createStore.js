@@ -103,6 +103,18 @@ function plansReducer(plans =
                 }
             })
             return plans;
+        case 'changeYearName':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.yearName = action.payload.newName;
+                        }
+                    })
+                }
+            })
+            return plansCopy;
         case 'changeSemesterName':
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {

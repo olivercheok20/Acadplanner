@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Layout from "../../components/layout"
-import { Semester } from "../../components/Semester";
+import { Year } from "../../components/Year";
 import { PlanToTake } from "../../components/PlanToTake";
 import { Row, Col, Input, Button } from "reactstrap";
 
@@ -39,11 +39,14 @@ class View extends Component {
       editPlanName: false,
       activePlan: this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]]
     }
-    this.onAddModule = this.props.onAddModule.bind(this)
-    this.onChangeSemesterName = this.props.onChangeSemesterName.bind(this)
-    this.onDragEnd = this.onDragEnd.bind(this)
+    this.onAddModule = this.props.onAddModule.bind(this);
+    this.onAddSemester = this.props.onAddSemester.bind(this);
+    this.onChangeSemesterName = this.props.onChangeSemesterName.bind(this);
+    this.onChangeYearName = this.props.onChangeYearName.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
     this.onDeleteSemester = this.props.onDeleteSemester.bind(this);
     this.onDeleteModule = this.props.onDeleteModule.bind(this);
+    this.onDeleteYear = this.props.onDeleteYear.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -180,40 +183,18 @@ class View extends Component {
 
           <DragDropContext onDragEnd={this.onDragEnd}>
             {this.state.activePlan.years.map((year, i) => (
-              <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
-
-                <div style={{ margin: 20, marginBottom: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
-                    <Button close onClick={() => this.props.onDeleteYear(this.activePlan.planName, year.yearName)} />
-                  </div>
-                  <h3 style={{ marginLeft: 20 }}>{year.yearName}</h3>
-                </div>
-
-                <Row>
-                  {this.state.activePlan && year.semesters.map((semester, i) => (
-                    <Col md={6} key={i}>
-                      <div style={{ margin: 20 }} >
-                        <Semester
-                          semester={semester}
-                          yearName={year.yearName}
-                          planName={this.state.activePlan.planName}
-                          onAddModule={this.onAddModule}
-                          onChangeSemesterName={this.onChangeSemesterName}
-                          onDeleteSemester={this.onDeleteSemester}
-                          onDeleteModule={this.onDeleteModule}
-                        />
-                      </div>
-                    </Col>
-                  ))}
-                  <Col md={6}>
-                    <div style={{ margin: 20, flex: 1 }}>
-                      <Button style={{ width: '100%' }} color="info" onClick={() =>
-                        this.props.onAddSemester(this.state.activePlan.planName, year.yearName)
-                      }>Add Semester</Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
+              <Year
+                semesters={year.semesters}
+                yearName={year.yearName}
+                planName={this.state.activePlan.planName}
+                onAddModule={this.onAddModule}
+                onAddSemester={this.onAddSemester}
+                onChangeSemesterName={this.onChangeSemesterName}
+                onChangeYearName={this.onChangeYearName}
+                onDeleteSemester={this.onDeleteSemester}
+                onDeleteModule={this.onDeleteModule}
+                onDeleteYear={this.onDeleteYear}
+              />
             ))}
           </DragDropContext>
 
@@ -245,6 +226,7 @@ function mapDispatch(dispatch) {
   return {
     onChangePlanName: (planName, newName) => dispatch({ type: 'changePlanName', payload: { 'planName': planName, 'newName': newName } }),
     onChangePlanDescription: (planName, newDescription) => dispatch({ type: 'changePlanDescription', payload: { 'planName': planName, 'newDescription': newDescription } }),
+    onChangeYearName: (planName, yearName, newName) => dispatch({ type: 'changeYearName', payload: { 'planName': planName, 'yearName': yearName, 'newName': newName } }),
     onChangeSemesterName: (planName, yearName, semesterName, newName) => dispatch({ type: 'changeSemesterName', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'newName': newName } }),
     onAddModule: (planName, yearName, semesterName) => dispatch({ type: 'addModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName } }),
     onAddSemester: (planName, yearName) => dispatch({ type: 'addSemester', payload: { 'planName': planName, 'yearName': yearName } }),

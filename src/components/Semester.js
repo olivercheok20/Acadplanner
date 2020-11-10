@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, Button, Input, Form } from "reactstrap";
 import { Module } from './Module';
 
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 
 export const Semester = (props) => {
 
     const [editSemesterName, setEditSemesterName] = useState(false);
-
-    const addModuleRow = () => {
-        // setModules([...modules, { name: '', modularCredits: '', grade: '' }])
-        props.onAddModule(props.planName, props.yearName, props.semester.semesterName);
-    }
 
     const calculateMCs = () => {
         let credits = 0;
@@ -72,7 +67,9 @@ export const Semester = (props) => {
                     )}
                 </Droppable>
 
-                <Button style={{ margin: 5, backgroundColor: 'rgb(237, 241, 247)', borderColor: 'white', color: "black" }} color='info' onClick={() => addModuleRow()}>Add module</Button>
+                <Button style={{ margin: 5, backgroundColor: 'rgb(237, 241, 247)', borderColor: 'white', color: "black" }} color='info' onClick={() => {
+                    props.onAddModule(props.planName, props.yearName, props.semester.semesterName)
+                }}>Add module</Button>
                 <div style={{ display: "flex", marginTop: 10 }}>
                     <p style={{ marginLeft: "auto", fontWeight: 'bold' }}>MCs: {calculateMCs()}</p>
                 </div>
