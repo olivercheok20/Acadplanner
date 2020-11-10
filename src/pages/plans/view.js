@@ -16,7 +16,7 @@ class View extends Component {
     this.state = {
       editPlanDescription: false,
       editPlanName: false,
-      activePlan: this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]]
+      activePlan: (typeof window !== `undefined`) ? this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] : this.props.plans[0]
     }
     this.onAddModule = this.props.onAddModule.bind(this)
     this.onChangeSemesterName = this.props.onChangeSemesterName.bind(this)
@@ -24,7 +24,11 @@ class View extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (typeof window !== `undefined`) {
     this.setState({ activePlan: nextProps.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] });
+    } else {
+      this.setState({ activePlan: nextProps.plans[0] });
+    }
   }
 
   getNamesFromPlans() {

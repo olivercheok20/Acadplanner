@@ -20,9 +20,14 @@ import {
 } from "reactstrap"
 
 export default function PublicPlan() {
-  const urlParams = new URLSearchParams(window.location.search)
-  const id = urlParams.get("id")
-  const plan = data[id]
+  let plan;
+  if (typeof window !== `undefined`) {
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get("id")
+    plan = data[id]
+  } else {
+    plan = data[0]
+  }
 
   /* for like button */
   const [like, setLike] = useState(false)

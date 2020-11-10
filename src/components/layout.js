@@ -1,9 +1,10 @@
 import React, { Fragment, Component } from "react";
 import { Provider } from 'react-redux';
 import store from '../state/createStore';
+import loadable from '@loadable/component'
 
 import { Navbar, Nav, NavbarBrand, NavItem, NavLink, Row, Col } from "reactstrap";
-import MetisMenu from "react-metismenu";
+const MetisMenu = loadable(() => import('react-metismenu'))
 import { Link } from "gatsby";
 import { connect } from "react-redux";
 
