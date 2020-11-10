@@ -1,13 +1,13 @@
 import React, { Component } from "react"
 import Layout from "../../components/layout"
 import { Year } from "../../components/Year";
-import { PlanToTake } from "../../components/PlanToTake";
-import { Row, Col, Input, Button } from "reactstrap";
+import { Module } from "../../components/Module";
+import { Row, Col, Input, Button, Card } from "reactstrap";
 
 import { connect, Provider } from "react-redux";
 import store from '../../state/createStore';
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Toggle from 'react-toggle'
 import "react-toggle/style.css"
 
@@ -56,6 +56,8 @@ class View extends Component {
     this.onDeleteYear = this.props.onDeleteYear.bind(this);
     this.onReplaceModule = this.props.onReplaceModule.bind(this);
     this.onChangeGrade = this.props.onChangeGrade.bind(this);
+    this.onDeletePlanToTakeModule = this.props.onDeletePlanToTakeModule.bind(this);
+    this.onReplacePlanToTakeModule = this.props.onReplacePlanToTakeModule.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -78,7 +80,7 @@ class View extends Component {
     var newActivePlan = null
 
     this.props.plans.forEach(function (plan, index) {
-      if (plan.planName == planName) {
+      if (plan.planName === planName) {
         newActivePlan = plan
       }
     }
@@ -220,20 +222,49 @@ class View extends Component {
                 onChangeGrade={this.onChangeGrade}
               />
             ))}
+
+
+            <div style={{ margin: 20, flex: 1 }}>
+              <Button style={{ width: '100%' }} color="info" onClick={() => {
+                this.props.onAddYear(this.state.activePlan.planName)
+              }}>Add Year</Button>
+            </div>
+
+            <hr style={{ margin: 50, marginTop: 80 }} />
+
+            <h3 style={{ marginLeft: 50 }}>Plan to take</h3>
+            <Row style={{ margin: 30, marginTop: 0 }}>
+              <Col md={6} style={{ margin: 20 }}>
+                {/* {this.state.activePlan && <PlanToTake planToTakeModules={this.state.activePlan.planToTakeModules} />} */}
+                <Card style={{ padding: 30, borderWidth: '1px' }}>
+                  <Droppable droppableId={`<>` + 'planToTake'}>
+                    {provided => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        {this.state.activePlan.planToTakeModules.map((module, i) => (
+                          <Module
+                            module={module}
+                            key={Math.random()}
+                            index={i}
+                            planName={this.state.activePlan.planName}
+                            onDeletePlanToTakeModule={this.props.onDeletePlanToTakeModule}
+                            onReplacePlanToTakeModule={this.props.onReplacePlanToTakeModule}
+                            isPlanToTakeModule={true}
+                          />
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                  <Button style={{ margin: 5, backgroundColor: 'rgb(237, 241, 247)', borderColor: 'white', color: "black" }} color='info' onClick={() => {
+                    this.props.onAddPlanToTakeModule(this.state.activePlan.planName)
+                  }}>Add module</Button>
+                </Card>
+              </Col>
+            </Row>
           </DragDropContext>
-
-          <div style={{ margin: 20, flex: 1 }}>
-            <Button style={{ width: '100%' }} color="info" onClick={() => {
-              this.props.onAddYear(this.state.activePlan.planName)
-            }}>Add Year</Button>
-          </div>
-
-          <h3 style={{ marginLeft: 50 }}>Plan to take</h3>
-          <Row style={{ margin: 30, marginTop: 0 }}>
-            <Col md={6} style={{ margin: 20 }}>
-              {this.state.activePlan && <PlanToTake planToTakeModules={this.state.activePlan.planToTakeModules} />}
-            </Col>
-          </Row>
 
           <hr style={{ margin: 50, marginBottom: 100 }} />
         </Provider>
@@ -265,6 +296,9 @@ function mapDispatch(dispatch) {
     onDeleteYear: (planName, yearName) => dispatch({ type: 'deleteYear', payload: { 'planName': planName, 'yearName': yearName } }),
     onReplaceModule: (planName, yearName, semesterName, nameOfPreviousModule, nameOfNewModule) => dispatch({ type: 'replaceModule', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'nameOfPreviousModule': nameOfPreviousModule, 'nameOfNewModule': nameOfNewModule } }),
     onChangeGrade: (planName, yearName, semesterName, moduleName, newGrade) => dispatch({ type: 'changeGrade', payload: { 'planName': planName, 'yearName': yearName, 'semesterName': semesterName, 'moduleName': moduleName, 'newGrade': newGrade } }),
+    onDeletePlanToTakeModule: (planName, moduleName) => dispatch({ type: 'deletePlanToTakeModule', payload: { 'planName': planName, 'moduleName': moduleName } }),
+    onReplacePlanToTakeModule: (planName, nameOfPreviousModule, nameOfNewModule) => dispatch({ type: 'replacePlanToTakeModule', payload: { 'planName': planName, 'nameOfPreviousModule': nameOfPreviousModule, 'nameOfNewModule': nameOfNewModule } }),
+    onAddPlanToTakeModule: (planName) => dispatch({ type: 'addPlanToTakeModule', payload: { 'planName': planName } }),
   }
 }
 

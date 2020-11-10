@@ -35,11 +35,23 @@ export const Module = (props) => {
     }
 
     const onReplaceModule = (e) => {
-        props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+        if (props.isPlanToTakeModule) {
+            props.onReplacePlanToTakeModule(props.planName, props.module.name, e.value)
+        } else {
+            props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+        }
     }
 
     const onChangeGrade = (e) => {
         props.onChangeGrade(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+    }
+
+    const onDeleteModule = () => {
+        if (props.isPlanToTakeModule) {
+            props.onDeletePlanToTakeModule(props.planName, props.module.name)
+        } else {
+            props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)
+        }
     }
 
     return (
@@ -65,16 +77,16 @@ export const Module = (props) => {
                             disabled
                             style={{ flex: 1, margin: 5, textAlign: 'center' }}
                         />
-                        <div style={{ flex: 2, margin: 5 }}>
+                        {!props.isPlanToTakeModule && <div style={{ flex: 2, margin: 5 }}>
                             <Select
                                 defaultValue={props.module.grade != '' ? { value: props.module.grade, label: props.module.grade } : { value: 'Grade', label: 'Grade' }}
                                 onChange={onChangeGrade}
                                 options={formatGradesToSelectOptions(grades)}
                                 isSearchable={false}
                             />
-                        </div>
+                        </div>}
                         <div style={{ margin: 5 }}>
-                            <Button color="danger" size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)}>
+                            <Button color="danger" size="lg" onClick={onDeleteModule}>
                                 <FaTrashAlt />
                             </Button>
                         </div>

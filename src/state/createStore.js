@@ -64,7 +64,7 @@ function plansReducer(plans =
                 }
             ],
             planToTakeModules: [
-                { name: 'CS1231', modularCredits: '4' }
+                { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
             ]
         },
         // {
@@ -147,6 +147,15 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'addPlanToTakeModule':
+            var newModule = { name: '', modularCredits: '', grade: '' };
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules = plan.planToTakeModules.concat([newModule]);
+                }
+            })
+            return plansCopy;
         case 'deleteModule':
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
@@ -163,6 +172,14 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'deletePlanToTakeModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules = plan.planToTakeModules.filter(module => module.name !== action.payload.moduleName);
+                }
+            })
+            return plansCopy;
         case 'replaceModule':
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
@@ -174,7 +191,7 @@ function plansReducer(plans =
                                     semester.modules.forEach(module => {
                                         if (module.name === action.payload.nameOfPreviousModule) {
                                             module.name = action.payload.nameOfNewModule;
-                                            if (module.modularCredits == '') {
+                                            if (module.modularCredits === '') {
                                                 module.modularCredits = '4';
                                             }
                                             module.grade = '';
@@ -182,6 +199,22 @@ function plansReducer(plans =
                                     })
                                 }
                             })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'replacePlanToTakeModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules.forEach(module => {
+                        if (module.name === action.payload.nameOfPreviousModule) {
+                            module.name = action.payload.nameOfNewModule;
+                            if (module.modularCredits === '') {
+                                module.modularCredits = '4';
+                            }
+                            module.grade = '';
                         }
                     })
                 }
@@ -267,36 +300,84 @@ function plansReducer(plans =
             let movedModule;
             var plansCopy = plans.slice();
 
-            // remove moved module from original pos
-            plansCopy.forEach(plan => {
-                if (plan.planName === action.payload.planName) {
-                    plan.years.forEach(year => {
-                        if (year.yearName === sourceYear) {
-                            year.semesters.forEach(semester => {
-                                if (semester.semesterName === sourceSemester) {
-                                    movedModule = semester.modules[sourceModuleIndex];
-                                    semester.modules.splice(sourceModuleIndex, 1);
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+            if (sourceSemester != 'planToTake' && destinationSemester != 'planToTake') { // movement from semester to semester
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === sourceYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === sourceSemester) {
+                                        movedModule = semester.modules[sourceModuleIndex];
+                                        semester.modules.splice(sourceModuleIndex, 1);
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
 
-            // add moved module to new pos
-            plansCopy.forEach(plan => {
-                if (plan.planName === action.payload.planName) {
-                    plan.years.forEach(year => {
-                        if (year.yearName === destinationYear) {
-                            year.semesters.forEach(semester => {
-                                if (semester.semesterName === destinationSemester) {
-                                    semester.modules.splice(destinationModuleIndex, 0, movedModule)
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === destinationYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === destinationSemester) {
+                                        semester.modules.splice(destinationModuleIndex, 0, movedModule)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            } else if (sourceSemester == 'planToTake') { // movement from planToTake section to semester
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        movedModule = plan.planToTakeModules[sourceModuleIndex];
+                        plan.planToTakeModules.splice(sourceModuleIndex, 1);
+                    }
+                })
+
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === destinationYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === destinationSemester) {
+                                        semester.modules.splice(destinationModuleIndex, 0, movedModule)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            } else { // movement from semester to planToTake section 
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === sourceYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === sourceSemester) {
+                                        movedModule = semester.modules[sourceModuleIndex];
+                                        semester.modules.splice(sourceModuleIndex, 1);
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.planToTakeModules.splice(destinationModuleIndex, 0, movedModule)
+                    }
+                })
+            }
             return plans;
         case 'addPlan':
             var newPlan = {
