@@ -33,7 +33,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/plans/*`] },
+      options: { prefixes: [`/*`] },
     },
   ],
 }
