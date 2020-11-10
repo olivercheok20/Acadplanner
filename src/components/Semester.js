@@ -54,7 +54,7 @@ export const Semester = (props) => {
                         {...provided.droppableProps}
                     >
                         {props.semester.modules.map((module, i) => (
-                            <Module moduleData={module} key={i} index={i} yearName={props.yearName} semesterName={props.semesterName} />
+                            <Module moduleData={module} key={Math.random()} index={i} yearName={props.yearName} semesterName={props.semester.semesterName} />
                         ))}
                         {provided.placeholder}
                     </div>

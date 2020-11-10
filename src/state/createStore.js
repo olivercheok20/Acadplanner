@@ -162,7 +162,6 @@ function plansReducer(plans =
             })
             return plansCopy;
         case 'changeModulePosition':
-            console.log(plans);
             let sourceYear = action.payload.sourceSemester.split('<>')[0]
             let sourceSemester = action.payload.sourceSemester.split('<>')[1]
             let sourceModuleIndex = action.payload.sourceModuleIndex;
@@ -202,7 +201,6 @@ function plansReducer(plans =
                     })
                 }
             })
-            console.log(plansCopy)
             return plans;
         case 'addPlan':
             var newPlan = {
@@ -222,6 +220,20 @@ function plansReducer(plans =
                 ]
             };
             return plans.concat([newPlan])
+        case 'changePublicPlan':
+            plans.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.public = !plan.public;
+                }
+            })
+            return plans;
+        case 'changeCurrentPlan':
+            plans.forEach(plan => {
+                if (plan.planName == action.payload.planName) {
+                    plan.current = !plan.current;
+                }
+            })
+            return plans;
         default:
             return plans
     }

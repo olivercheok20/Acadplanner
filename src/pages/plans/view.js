@@ -8,6 +8,8 @@ import { connect, Provider } from "react-redux";
 import store from '../../state/createStore';
 
 import { DragDropContext } from 'react-beautiful-dnd';
+import Toggle from 'react-toggle'
+import "react-toggle/style.css"
 
 class View extends Component {
 
@@ -56,7 +58,6 @@ class View extends Component {
 
     // Destination and source droppables are the same, index/position is also the same.
     // i.e. User dropped the item back into the position that it started 
-    // droppableId is set to semester name for now, each semester should probably have an id in dummy data to prevent issues when semesters have the same names
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
@@ -69,19 +70,36 @@ class View extends Component {
       <Layout>
         <Provider store={store()}>
 
-          <Input
-            type="select"
-            name="text"
-            id="planselection"
-            defaultValue={this.state.activePlan.planName}
-            onChange={(e) => { this.handleChangePlan(document.getElementById("planselection").value) }}
-            style={{ marginLeft: 60, marginBottom: 50, width: 500, marginTop: 50 }}
-          >
-            {this.props.plans.map((plan, i) => (
-              <option key={i}>{plan.planName} </option>
-            ))}
-          </Input>
+          <div style={{ display: 'flex', margin: 50, marginLeft: 60, alignItems: 'center', justifyContent: 'space-between' }}>
+            <Input
+              type="select"
+              name="text"
+              id="planselection"
+              defaultValue={this.state.activePlan.planName}
+              onChange={(e) => { this.handleChangePlan(document.getElementById("planselection").value) }}
+              style={{ width: 500 }}
+            >
+              {this.props.plans.map((plan, i) => (
+                <option key={i}>{plan.planName} </option>
+              ))}
+            </Input>
 
+            <div style={{ display: 'flex' }}>
+              <div style={{ display: 'flex' }}>
+                <h5 style={{ margin: 0, marginRight: 5 }}>Current Plan</h5>
+                <Toggle
+                  defaultChecked={this.state.activePlan.current}
+                  onChange={() => this.props.onChangeCurrentPlan(this.state.activePlan.planName)} />
+              </div>
+
+              <div style={{ display: 'flex', marginLeft: 20 }}>
+                <h5 style={{ margin: 0, marginRight: 5 }}>Public Plan</h5>
+                <Toggle
+                  defaultChecked={this.state.activePlan.public}
+                  onChange={() => this.props.onChangePublicPlan(this.state.activePlan.planName)} />
+              </div>
+            </div>
+          </div>
 
           <Row style={{ marginLeft: 60, marginBottom: 30, height: 100 }}>
             <Col md={3}>
@@ -122,6 +140,13 @@ class View extends Component {
                 rows={3}
               />}
             </Col>
+          </Row>
+
+          <Row style={{ marginLeft: 60, marginBottom: 100 }}>
+            <Col>
+              <h5>Tags</h5>
+            </Col>
+
           </Row>
 
           <h1 style={{ marginLeft: 40 }}>All Years</h1>
@@ -184,7 +209,9 @@ function mapDispatch(dispatch) {
     onAddSemester: (planName, yearName) => dispatch({ type: 'addSemester', payload: { 'planName': planName, 'yearName': yearName } }),
     onAddYear: (planName) => dispatch({ type: 'addYear', payload: { 'planName': planName } }),
     onChangeModulePosition: (sourceSemester, sourceModuleIndex, destinationSemester, destinationModuleIndex, planName) =>
-      dispatch({ type: 'changeModulePosition', payload: { 'sourceSemester': sourceSemester, 'sourceModuleIndex': sourceModuleIndex, 'destinationSemester': destinationSemester, 'destinationModuleIndex': destinationModuleIndex, 'planName': planName } })
+      dispatch({ type: 'changeModulePosition', payload: { 'sourceSemester': sourceSemester, 'sourceModuleIndex': sourceModuleIndex, 'destinationSemester': destinationSemester, 'destinationModuleIndex': destinationModuleIndex, 'planName': planName } }),
+    onChangeCurrentPlan: (planName) => dispatch({ type: 'changeCurrentPlan', payload: { 'planName': planName } }),
+    onChangePublicPlan: (planName) => dispatch({ type: 'changePublicPlan', payload: { 'planName': planName } }),
   }
 }
 

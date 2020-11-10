@@ -36,6 +36,7 @@ export const Module = (props) => {
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                 >
+                    {/* <div>{props.moduleData.name}</div> */}
                     <div style={{ display: 'flex' }}>
                         <div style={{ flex: 5, margin: 5 }}>
                             <Select
