@@ -21,30 +21,33 @@ export const Semester = (props) => {
     return (
         <>
             <Card style={{ padding: 30, paddingBottom: 5, borderWidth: '1px', paddingTop: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
-                    <Button close onClick={() => props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName)} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+                    <div style={{ display: 'flex', marginLeft: 5 }}>
+                        {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{props.semester.semesterName}</h5>}
+                        {!editSemesterName && <Button color="link" onClick={() => setEditSemesterName(true)}>edit</Button>}
+                        {editSemesterName && <Form onSubmit={() => {
+                            setEditSemesterName(false)
+                            props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
+                        }}>
+                            <Input
+                                type="text"
+                                name="text"
+                                id={props.semester.semesterName}
+                                defaultValue={props.semester.semesterName}
+                                rows={1}
+                            />
+                        </Form>}
+                        {editSemesterName && <Button color="link" onClick={() => {
+                            setEditSemesterName(false)
+                            props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
+                        }}>done</Button>}
+                    </div>
+
+                    <div>
+                        <Button close onClick={() => props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName)} />
+                    </div>
                 </div>
 
-                <div style={{ display: 'flex', marginLeft: 5 }}>
-                    {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{props.semester.semesterName}</h5>}
-                    {!editSemesterName && <Button color="link" onClick={() => setEditSemesterName(true)}>edit</Button>}
-                    {editSemesterName && <Form onSubmit={() => {
-                        setEditSemesterName(false)
-                        props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
-                    }}>
-                        <Input
-                            type="text"
-                            name="text"
-                            id={props.semester.semesterName}
-                            defaultValue={props.semester.semesterName}
-                            rows={1}
-                        />
-                    </Form>}
-                    {editSemesterName && <Button color="link" onClick={() => {
-                        setEditSemesterName(false)
-                        props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
-                    }}>done</Button>}
-                </div>
 
                 <Droppable droppableId={props.yearName + `<>` + props.semester.semesterName}>
                     {provided => (

@@ -9,12 +9,7 @@ export const Year = (props) => {
 
     return (
         <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
-
-            <div style={{ margin: 20, marginBottom: 0 }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
-                    <Button close onClick={() => props.onDeleteYear(props.planName, props.yearName)} />
-                </div>
-
+            <div style={{ margin: 20, marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', marginLeft: 20 }}>
                     {!editYearName && <h3 style={{ paddingTop: 5 }}>{props.yearName}</h3>}
                     {!editYearName && <Button color="link" onClick={() => setEditYearName(true)}>edit</Button>}
@@ -34,6 +29,10 @@ export const Year = (props) => {
                         setEditYearName(false)
                         props.onChangeYearName(props.planName, props.yearName, document.getElementById(props.yearName).value)
                     }}>done</Button>}
+                </div>
+
+                <div>
+                    <Button close onClick={() => props.onDeleteYear(props.planName, props.yearName)} />
                 </div>
             </div>
 
