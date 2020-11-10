@@ -8,6 +8,7 @@ module.exports = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-sass`,
+    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-plugin-react-redux`,
       options: {
