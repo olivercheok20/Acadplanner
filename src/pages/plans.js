@@ -46,8 +46,9 @@ class Plans extends Component {
 
   render() {
     return (
-      <Router basepath="/plans">
-        <Layout path="">
+      <Router basepath="/">
+
+        <Layout path="/plans">
           <Provider store={store()}>
             <h4>Plans</h4>
             <hr></hr>
