@@ -15,7 +15,16 @@ import makeAnimated from 'react-select/animated'
 function Tracker(props) {
 
   const ULR = [
-    { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: '' },
+    { name: 'GE1101E Geographical Journeys: Exploring World Environments', modularCredits: '4', grade: '' },
+    { name: 'GET1018 The Mathematics of Games', modularCredits: '4', grade: '' },
+    { name: 'GET1002 Bridging East and West: Exploring Chinese Communication', modularCredits: '4', grade: '' },
+    { name: 'GEM1052T Understanding The Changing Global Economic Landscape', modularCredits: '4', grade: '' },
+    { name: 'UTC2402 Environment and Civil Society in Singapore', modularCredits: '4', grade: '' },
+    { name: 'GE2202 Economy & Space', modularCredits: '4', grade: '' },
+    { name: 'GET1042 Sky and Telescopes', modularCredits: '4', grade: '' },
+    { name: 'GEH1002 Economic Issues in Dev World', modularCredits: '4', grade: '' },
+    { name: 'GES1000 Singapore Employment Law', modularCredits: '4', grade: '' },
+    { name: "GES1002 Global EC Dimensions of S'pore", modularCredits: '4', grade: '' },
   ]
 
   const compulsoryULR = [
@@ -23,18 +32,38 @@ function Tracker(props) {
   ]
 
   const UER = [
-
+    { name: 'LAT4202 Thai 6', modularCredits: '4', grade: '' },
+    { name: 'LAF1201 French 1', modularCredits: '4', grade: '' },
+    { name: 'LAT1201 Thai 1', modularCredits: '4', grade: '' },
+    { name: 'LSM1306 Forensic Science', modularCredits: '4', grade: '' },
+    { name: 'LAC1201 Chinese 1', modularCredits: '4', grade: '' },
   ]
 
   const PR = [
-    { name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' },
-    { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
-    { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
+    { name: 'CS4211 Formal Methods for Software Engineering', modularCredits: '4', grade: '' },
+    { name: 'CS4216 Constraint Logic Programming', modularCredits: '4', grade: '' },
+    { name: 'CS4218 Software Testing', modularCredits: '4', grade: '' },
+    { name: 'CS4222 Wireless Networking', modularCredits: '4', grade: '' },
+    { name: 'CS4224 Distributed Databases', modularCredits: '4', grade: '' },
+    { name: 'CS4226 Internet Architecture', modularCredits: '4', grade: '' },
+    { name: 'CS4232 Theory of Computation', modularCredits: '4', grade: '' },
+    { name: 'CS4235 Computational Geometry', modularCredits: '4', grade: '' },
+    { name: 'CS4239 Software Security', modularCredits: '4', grade: '' },
   ]
 
   const compulsoryPR = [
+    { name: 'IS1103  Ethics in Computing', modularCredits: '4', grade: '' },
+    { name: 'CS2101 Effective Communication for Computing Professionals', modularCredits: '4', grade: '' },
+    { name: 'ST2334 Probability and Statistics', modularCredits: '4', grade: '' },
+    { name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' },
+    { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
+    { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
     { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' },
     { name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' },
+    { name: 'CS2100 Computer Organisation', modularCredits: '4', grade: '' },
+    { name: 'CS2103T Software Engineering', modularCredits: '4', grade: '' },
+    { name: 'CS2106 Introduction to Operating Systems', modularCredits: '4', grade: '' },
+    { name: 'CS3230 Design and Analysis of Algorithms', modularCredits: '4', grade: '' },
   ]
 
   const allModules = ULR.concat(UER).concat(PR)
