@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Input, Form } from "reactstrap";
+import { Card, Button, Input, Form, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { Module } from './Module';
 
 import { Droppable } from 'react-beautiful-dnd';
@@ -7,6 +7,8 @@ import { Droppable } from 'react-beautiful-dnd';
 export const Semester = (props) => {
 
     const [editSemesterName, setEditSemesterName] = useState(false);
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     const calculateMCs = () => {
         let credits = 0;
@@ -21,30 +23,33 @@ export const Semester = (props) => {
     return (
         <>
             <Card style={{ padding: 30, paddingBottom: 5, borderWidth: '1px', paddingTop: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
-                    <Button close onClick={() => props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName)} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+                    <div style={{ display: 'flex', marginLeft: 5 }}>
+                        {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{props.semester.semesterName}</h5>}
+                        {!editSemesterName && <Button color="link" onClick={() => setEditSemesterName(true)}>edit</Button>}
+                        {editSemesterName && <Form onSubmit={() => {
+                            setEditSemesterName(false)
+                            props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
+                        }}>
+                            <Input
+                                type="text"
+                                name="text"
+                                id={props.semester.semesterName}
+                                defaultValue={props.semester.semesterName}
+                                rows={1}
+                            />
+                        </Form>}
+                        {editSemesterName && <Button color="link" onClick={() => {
+                            setEditSemesterName(false)
+                            props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
+                        }}>done</Button>}
+                    </div>
+
+                    <div>
+                        <Button close onClick={toggle} />
+                    </div>
                 </div>
 
-                <div style={{ display: 'flex', marginLeft: 5 }}>
-                    {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{props.semester.semesterName}</h5>}
-                    {!editSemesterName && <Button color="link" onClick={() => setEditSemesterName(true)}>edit</Button>}
-                    {editSemesterName && <Form onSubmit={() => {
-                        setEditSemesterName(false)
-                        props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
-                    }}>
-                        <Input
-                            type="text"
-                            name="text"
-                            id={props.semester.semesterName}
-                            defaultValue={props.semester.semesterName}
-                            rows={1}
-                        />
-                    </Form>}
-                    {editSemesterName && <Button color="link" onClick={() => {
-                        setEditSemesterName(false)
-                        props.onChangeSemesterName(props.planName, props.yearName, props.semester.semesterName, document.getElementById(props.semester.semesterName).value)
-                    }}>done</Button>}
-                </div>
 
                 <Droppable droppableId={props.yearName + `<>` + props.semester.semesterName}>
                     {provided => (
@@ -54,13 +59,16 @@ export const Semester = (props) => {
                         >
                             {props.semester.modules.map((module, i) => (
                                 <Module
-                                    moduleData={module}
+                                    module={module}
                                     key={Math.random()}
                                     index={i}
                                     planName={props.planName}
                                     yearName={props.yearName}
                                     semesterName={props.semester.semesterName}
-                                    onDeleteModule={props.onDeleteModule} />
+                                    onDeleteModule={props.onDeleteModule}
+                                    onReplaceModule={props.onReplaceModule}
+                                    onChangeGrade={props.onChangeGrade}
+                                />
                             ))}
                             {provided.placeholder}
                         </div>
@@ -74,6 +82,22 @@ export const Semester = (props) => {
                     <p style={{ marginLeft: "auto", fontWeight: 'bold' }}>MCs: {calculateMCs()}</p>
                 </div>
             </Card>
+
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>Confirmation</ModalHeader>
+                <ModalBody>
+                    <div style={{ textAlign: 'center' }}>
+                        <div style={{ marginTop: 50, marginBottom: 50 }}>Are you sure you want to delete this semester?</div>
+                        <div>
+                            <Button color="primary" onClick={() => {
+                                props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName);
+                                toggle();
+                            }}>Confirm</Button>{' '}
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
         </>
     )
 }

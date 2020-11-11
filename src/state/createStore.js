@@ -40,11 +40,10 @@ function plansReducer(plans =
             public: false,
             current: true,
             tags: [
-                { value: 'University Scholars Programme', label: 'University Scholars Programme' },
-                { value: 'Computing', label: 'Computing' },
-                { value: 'AI', label: 'AI' },
-                { value: 'Computer Science', label: 'Computer Science' },
-                { value: 'Israel', label: 'Israel' },
+                'University Scholars Programme',
+                'Computing',
+                'AI',
+                'Computer Science',
             ],
             years: [
                 {
@@ -85,7 +84,7 @@ function plansReducer(plans =
                 },
             ],
             planToTakeModules: [
-                { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+                { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
             ]
         }
     ], action) {
@@ -149,6 +148,12 @@ function plansReducer(plans =
                 }
             })
             return plansCopy;
+        case 'addPlanToTakeModule':
+            var newModule = { name: '', modularCredits: '', grade: '' };
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules = plan.planToTakeModules.concat([newModule]);
         case 'addSpecifiedModule':
             var newModule = action.payload.module;
             var plansCopy = plans.slice();
@@ -183,6 +188,74 @@ function plansReducer(plans =
                             year.semesters.forEach((semester) => {
                                 if (semester.semesterName === action.payload.semesterName) {
                                     semester.modules = semester.modules.filter(module => module.name !== action.payload.moduleName);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'deletePlanToTakeModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules = plan.planToTakeModules.filter(module => module.name !== action.payload.moduleName);
+                }
+            })
+            return plansCopy;
+        case 'replaceModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules.forEach(module => {
+                                        if (module.name === action.payload.nameOfPreviousModule) {
+                                            module.name = action.payload.nameOfNewModule;
+                                            if (module.modularCredits === '') {
+                                                module.modularCredits = '4';
+                                            }
+                                            module.grade = '';
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'replacePlanToTakeModule':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.planToTakeModules.forEach(module => {
+                        if (module.name === action.payload.nameOfPreviousModule) {
+                            module.name = action.payload.nameOfNewModule;
+                            if (module.modularCredits === '') {
+                                module.modularCredits = '4';
+                            }
+                            module.grade = '';
+                        }
+                    })
+                }
+            })
+            return plansCopy;
+        case 'changeGrade':
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach(semester => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    semester.modules.forEach(module => {
+                                        if (module.name === action.payload.moduleName) {
+                                            module.grade = action.payload.newGrade;
+                                        }
+                                    })
                                 }
                             })
                         }
@@ -236,7 +309,7 @@ function plansReducer(plans =
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
                 if (plan.planName === action.payload.planName) {
-                    plan.years = plans.years.filter(year => year.yearName !== action.payload.yearName)
+                    plan.years = plan.years.filter(year => year.yearName !== action.payload.yearName)
                 }
             })
             return plansCopy;
@@ -250,36 +323,84 @@ function plansReducer(plans =
             let movedModule;
             var plansCopy = plans.slice();
 
-            // remove moved module from original pos
-            plansCopy.forEach(plan => {
-                if (plan.planName === action.payload.planName) {
-                    plan.years.forEach(year => {
-                        if (year.yearName === sourceYear) {
-                            year.semesters.forEach(semester => {
-                                if (semester.semesterName === sourceSemester) {
-                                    movedModule = semester.modules[sourceModuleIndex];
-                                    semester.modules.splice(sourceModuleIndex, 1);
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+            if (sourceSemester != 'planToTake' && destinationSemester != 'planToTake') { // movement from semester to semester
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === sourceYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === sourceSemester) {
+                                        movedModule = semester.modules[sourceModuleIndex];
+                                        semester.modules.splice(sourceModuleIndex, 1);
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
 
-            // add moved module to new pos
-            plansCopy.forEach(plan => {
-                if (plan.planName === action.payload.planName) {
-                    plan.years.forEach(year => {
-                        if (year.yearName === destinationYear) {
-                            year.semesters.forEach(semester => {
-                                if (semester.semesterName === destinationSemester) {
-                                    semester.modules.splice(destinationModuleIndex, 0, movedModule)
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === destinationYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === destinationSemester) {
+                                        semester.modules.splice(destinationModuleIndex, 0, movedModule)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            } else if (sourceSemester == 'planToTake') { // movement from planToTake section to semester
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        movedModule = plan.planToTakeModules[sourceModuleIndex];
+                        plan.planToTakeModules.splice(sourceModuleIndex, 1);
+                    }
+                })
+
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === destinationYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === destinationSemester) {
+                                        semester.modules.splice(destinationModuleIndex, 0, movedModule)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            } else { // movement from semester to planToTake section 
+                // remove moved module from original pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.years.forEach(year => {
+                            if (year.yearName === sourceYear) {
+                                year.semesters.forEach(semester => {
+                                    if (semester.semesterName === sourceSemester) {
+                                        movedModule = semester.modules[sourceModuleIndex];
+                                        semester.modules.splice(sourceModuleIndex, 1);
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+
+                // add moved module to new pos
+                plansCopy.forEach(plan => {
+                    if (plan.planName === action.payload.planName) {
+                        plan.planToTakeModules.splice(destinationModuleIndex, 0, movedModule)
+                    }
+                })
+            }
             return plans;
         case 'addPlan':
             var newPlan = {
@@ -342,7 +463,7 @@ export default preloadedState => {
         rootReducer,
         preloadedState,
         // compose(
-            applyMiddleware(thunk),
+        applyMiddleware(thunk),
         //     window.devToolsExtension ? window.devToolsExtension() : f => f
         // )
     );

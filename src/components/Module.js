@@ -7,41 +7,65 @@ import { FaTrashAlt, FaTh } from 'react-icons/fa';
 
 export const Module = (props) => {
 
-    const [modularCredits, setModularCredits] = useState('');
-    const [grade, setGrade] = useState('');
+    const dummyModules = [
+        { name: 'CS1010 Programming Methodology', modularCredits: '4', grade: '' },
+        { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
+        { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: '' },
+        { name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: '' },
+        { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: '' },
+        { name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: '' },
+    ];
 
-    const [selectedOption, setSelectedOption] = useState(null);
+    const grades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D+', 'D', 'F', 'S', 'U'];
 
-    const dummyAllModulesData = [
-        { value: 'CS1010', label: 'CS1010 Programming Methodology' },
-        { value: 'CS1231', label: 'CS1231 Discrete Structures' },
-        { value: 'CS2030', label: 'CS2030 Programming Methodology II' },
-        { value: 'CS2040', label: 'CS2040 Data Structures and Algorithms' },
-        { value: 'GER1000', label: 'GER1000 Quantitative Reasoning' },
-    ]
+    const formatModulesToSelectOptions = (modules) => {
+        let selectOptions = [];
+        for (let module of modules) {
+            selectOptions.push({ value: module.name, label: module.name });
+        }
+        return selectOptions;
+    }
 
-    useEffect(() => {
-        let moduleData = props.moduleData;
-        setModularCredits(moduleData.modularCredits)
-        setGrade(moduleData.grade);
-    }, [])
+    const formatGradesToSelectOptions = (grades) => {
+        let selectOptions = [];
+        for (let grade of grades) {
+            selectOptions.push({ value: grade, label: grade });
+        }
+        return selectOptions;
+    }
 
-    const onChangeGrade = e => {
-        setGrade(e.target.value);
+    const onReplaceModule = (e) => {
+        if (props.isPlanToTakeModule) {
+            props.onReplacePlanToTakeModule(props.planName, props.module.name, e.value)
+        } else {
+            props.onReplaceModule(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+        }
+    }
+
+    const onChangeGrade = (e) => {
+        props.onChangeGrade(props.planName, props.yearName, props.semesterName, props.module.name, e.value);
+    }
+
+    const onDeleteModule = () => {
+        if (props.isPlanToTakeModule) {
+            props.onDeletePlanToTakeModule(props.planName, props.module.name)
+        } else {
+            props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.module.name)
+        }
     }
 
     return (
-        <Draggable draggableId={props.yearName + props.semesterName + props.moduleData.name} index={props.index}>
+        <Draggable draggableId={props.yearName + props.semesterName + props.module.name} index={props.index}>
             {(provided) => (
                 <div {...provided.draggableProps}
                     ref={provided.innerRef}
                 >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ flex: 7, margin: 5 }}>
+                        <div style={{ flex: 10, margin: 5 }}>
                             <Select
-                                defaultValue={props.moduleData.name ? { value: props.moduleData.name, label: props.moduleData.name } : { value: 'Add a module..', label: 'Add a module..' }}
-                                onChange={setSelectedOption}
-                                options={dummyAllModulesData}
+                                defaultValue={props.module.name != '' ? { value: props.module.name, label: props.module.name } : { value: 'Add a module..', label: 'Add a module..' }}
+                                onChange={onReplaceModule}
+                                options={formatModulesToSelectOptions(dummyModules)}
                             />
                         </div>
                         <Input
@@ -49,21 +73,20 @@ export const Module = (props) => {
                             name="state"
                             id="exampleState"
                             placeholder="0"
-                            value={modularCredits}
+                            value={props.module.modularCredits}
                             disabled
                             style={{ flex: 1, margin: 5, textAlign: 'center' }}
                         />
-                        <Input
-                            type="text"
-                            name="zip"
-                            id="exampleZip"
-                            placeholder="Grade"
-                            value={grade}
-                            onChange={onChangeGrade}
-                            style={{ flex: 1, margin: 5, textAlign: 'center' }}
-                        />
+                        {!props.isPlanToTakeModule && <div style={{ flex: 2, margin: 5 }}>
+                            <Select
+                                defaultValue={props.module.grade != '' ? { value: props.module.grade, label: props.module.grade } : { value: 'Grade', label: 'Grade' }}
+                                onChange={onChangeGrade}
+                                options={formatGradesToSelectOptions(grades)}
+                                isSearchable={false}
+                            />
+                        </div>}
                         <div style={{ margin: 5 }}>
-                            <Button outline style={{ borderColor: '#ced4da' }} size="lg" onClick={() => props.onDeleteModule(props.planName, props.yearName, props.semesterName, props.moduleData.name)}>
+                            <Button color="danger" size="lg" onClick={onDeleteModule}>
                                 <FaTrashAlt />
                             </Button>
                         </div>
