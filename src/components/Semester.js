@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Input, Form } from "reactstrap";
+import { Card, Button, Input, Form, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { Module } from './Module';
 
 import { Droppable } from 'react-beautiful-dnd';
@@ -7,6 +7,8 @@ import { Droppable } from 'react-beautiful-dnd';
 export const Semester = (props) => {
 
     const [editSemesterName, setEditSemesterName] = useState(false);
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     const calculateMCs = () => {
         let credits = 0;
@@ -44,7 +46,7 @@ export const Semester = (props) => {
                     </div>
 
                     <div>
-                        <Button close onClick={() => props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName)} />
+                        <Button close onClick={toggle} />
                     </div>
                 </div>
 
@@ -80,6 +82,22 @@ export const Semester = (props) => {
                     <p style={{ marginLeft: "auto", fontWeight: 'bold' }}>MCs: {calculateMCs()}</p>
                 </div>
             </Card>
+
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>Confirmation</ModalHeader>
+                <ModalBody>
+                    <div style={{ textAlign: 'center' }}>
+                        <div style={{ marginTop: 50, marginBottom: 50 }}>Are you sure you want to delete this semester?</div>
+                        <div>
+                            <Button color="primary" onClick={() => {
+                                props.onDeleteSemester(props.planName, props.yearName, props.semester.semesterName);
+                                toggle();
+                            }}>Confirm</Button>{' '}
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
         </>
     )
 }

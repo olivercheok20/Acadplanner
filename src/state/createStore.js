@@ -286,7 +286,7 @@ function plansReducer(plans =
             var plansCopy = plans.slice();
             plansCopy.forEach(plan => {
                 if (plan.planName === action.payload.planName) {
-                    plan.years = plans.years.filter(year => year.yearName !== action.payload.yearName)
+                    plan.years = plan.years.filter(year => year.yearName !== action.payload.yearName)
                 }
             })
             return plansCopy;

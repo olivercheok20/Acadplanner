@@ -1,13 +1,15 @@
 import React, { useState } from "react"
 import { Semester } from "./Semester";
 // import { PlanToTake } from "../../components/PlanToTake";
-import { Row, Col, Button, Input, Form, Collapse } from "reactstrap";
+import { Row, Col, Button, Input, Form, Collapse, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
 export const Year = (props) => {
 
     const [editYearName, setEditYearName] = useState(false);
     const [isOpen, setIsOpen] = useState(true);
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     return (
         <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
@@ -42,7 +44,7 @@ export const Year = (props) => {
                     </div>
 
                     <div>
-                        <Button close onClick={() => props.onDeleteYear(props.planName, props.yearName)} />
+                        <Button close onClick={toggle} />
                     </div>
                 </div>
             </div>
@@ -75,6 +77,22 @@ export const Year = (props) => {
                     </Col>
                 </Row>
             </Collapse>
+
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>Confirmation</ModalHeader>
+                <ModalBody>
+                    <div style={{ textAlign: 'center' }}>
+                        <div style={{ marginTop: 50, marginBottom: 50 }}>Are you sure you want to delete this year?</div>
+                        <div>
+                            <Button color="primary" onClick={() => {
+                                props.onDeleteYear(props.planName, props.yearName);
+                                toggle();
+                            }}>Confirm</Button>{' '}
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
         </div>
     )
 
