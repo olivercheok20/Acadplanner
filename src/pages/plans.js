@@ -47,7 +47,7 @@ class Plans extends Component {
     return (
       <Layout>
         <Provider store={store()}>
-          <h2>My Plans</h2>
+          <h4>My Plans</h4>
           <hr></hr>
 
           <h5>Current Plan</h5>

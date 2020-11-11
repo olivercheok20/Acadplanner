@@ -19,7 +19,7 @@ const SearchResult = ({
     <article className="mb-4">
       <Row className="mx-0">
         <Col className="px-0">
-          <a href={url} target="_blank" className="link">
+          <a href={url} className="link">
             {title}
           </a>
           <Row className="plan-details">

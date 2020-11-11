@@ -27,11 +27,11 @@ class Profile extends Component {
 
           <hr></hr>
 
-          <div class="container">
+          <div class="profilecontainer">
             <a href="#">
-              <img src={require('../assets/profile-picture.jpg')} alt="Avatar" class="image" />
-              <div class="overlay">
-                <div class="text">+</div>
+              <img src={require('../assets/profile-picture.jpg')} alt="Avatar" class="profileimage" />
+              <div class="profileoverlay">
+                <div class="profiletext">+</div>
               </div>
             </a>
           </div>
@@ -172,7 +172,7 @@ class Profile extends Component {
             {/* YEAR */}
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h5>Year</h5>
+              <h5>Matriculation Year</h5>
 
               {!this.state.editYear && <Button color="link" onClick={() => this.setState({ editYear: true })}>edit</Button>}
               {this.state.editYear && <Button color="link" onClick={() => {
@@ -195,11 +195,12 @@ class Profile extends Component {
                   id="year"
                   defaultValue={this.props.profile.year}
                 >
+                  <option>AY 15/16</option>
+                  <option>AY 16/17</option>
+                  <option>AY 17/18</option>
                   <option>AY 18/19</option>
                   <option>AY 19/20</option>
                   <option>AY 20/21</option>
-                  <option>AY 21/22</option>
-                  <option>AY 22/23</option>
                 </Input>
               </Form>
             }

@@ -49,43 +49,44 @@ function plansReducer(plans =
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'S' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A-' }] },
+                        { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'C' }] }
                     ]
                 },
+                // {
+                //     yearName: "Year 2",
+                //     semesters: [
+                //         { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                //         { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                //     ]
+                // }
+            ],
+            planToTakeModules: [
+                { name: 'CS1010 Programming Methodology', modularCredits: '4' }
+            ]
+        },
+        {
+            planName: 'CS + USP + Germany Exchange',
+            planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
+            public: false,
+            current: false,
+            tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
+            years: [
                 {
-                    yearName: "Year 2",
+                    yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'sem1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'sem3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
+                        { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
+                        { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
                     ]
-                }
+                },
             ],
             planToTakeModules: [
                 { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: '' },
             ]
-        },
-        // {
-        //     planName: 'CS + USP + Germany Exchange',
-        //     planDescription: 'This plan is for a CS major specialising in artificial intelligence and computer security + USP + an exchange to Germany in Y2S1.',
-        //     public: false,
-        //     current: false,
-        //     tags: ['Computer Science', 'Student Exchange Programme', 'Computing', 'University Scholars Programme', 'AI', 'Germany'],
-        //     years: [
-        //         {
-        //             yearName: "Year 1",
-        //             semesters: [
-        //                 { semesterName: 'sem1', modules: [{ name: 'CS2040', modularCredits: '4', grade: 'A' }] },
-        //                 { semesterName: 'sem2', modules: [{ name: 'CS1010', modularCredits: '4', grade: 'A' }, { name: 'CS2030', modularCredits: '4', grade: 'A' }] },
-        //             ]
-        //         }
-        //     ],
-        //     planToTakeModules: [
-        //         { name: 'CS1231', modularCredits: '4' }
-        //     ]
-        // }
+        }
     ], action) {
     switch (action.type) {
         case 'changePlanName':
@@ -153,6 +154,28 @@ function plansReducer(plans =
             plansCopy.forEach(plan => {
                 if (plan.planName === action.payload.planName) {
                     plan.planToTakeModules = plan.planToTakeModules.concat([newModule]);
+        case 'addSpecifiedModule':
+            var newModule = action.payload.module;
+            var plansCopy = plans.slice();
+            plansCopy.forEach(plan => {
+                if (plan.planName === action.payload.planName) {
+                    plan.years.forEach(year => {
+                        if (year.yearName === action.payload.yearName) {
+                            year.semesters.forEach((semester) => {
+                                if (semester.semesterName === action.payload.semesterName) {
+                                    let add = true;
+                                    for (const mod of semester.modules) {
+                                        if (mod.name == newModule.name) {
+                                            add = false
+                                        }
+                                    }
+                                    if (add) {
+                                        semester.modules = semester.modules.concat([newModule]);
+                                    }
+                                }
+                            })
+                        }
+                    })
                 }
             })
             return plansCopy;
@@ -397,6 +420,8 @@ function plansReducer(plans =
                 ]
             };
             return plans.concat([newPlan])
+        case 'addSpecificPlan':
+            return plans.concat([action.payload.plan])
         case 'changePublicPlan':
             plans.forEach(plan => {
                 if (plan.planName === action.payload.planName) {

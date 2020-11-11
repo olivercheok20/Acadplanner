@@ -5,7 +5,7 @@ import Loadable from 'react-loadable'
 
 import { Row, Col } from "reactstrap";
 
-import './idkwhyitbreakswithoutthisbutwtv.css'
+import './olivercheokisawesome.css'
 
 import { Link } from "gatsby";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ import {
 } from "./NavItems";
 
 const MetisMenu = Loadable({
-    loader: () => import('react-metismenu').then(console.log('Imported')),
+    loader: () => import('react-metismenu'),
     loading: () => null
 })
 
@@ -23,7 +23,7 @@ function Layout(props) {
     return (
         <Provider store={store()}>
             <Fragment>
-                <Row style={{ "margin": 0, "height": '100px', "border-bottom": "1px solid #DDDDDD" }}>
+                <Row style={{ "margin": 0, "height": '8vh', "border-bottom": "1px solid #DDDDDD" }}>
                     <Col lg={2} style={{ "position": "relative" }}>
                         <a href='/plans'>
                             <h2 style={
