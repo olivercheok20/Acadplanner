@@ -49,19 +49,41 @@ function plansReducer(plans =
                 {
                     yearName: "Year 1",
                     semesters: [
-                        { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'S' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                        { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A-' }] },
-                        { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'C' }] }
+                        {
+                            semesterName: 'Semester 1',
+                            modules: [
+                                { name: 'IS1103 Ethics in Computing', modularCredits: '4', grade: 'S' },
+                                { name: 'CS2101 Effective Communication for Computing Professionals', modularCredits: '4', grade: 'A' },
+                                { name: 'GER1000 Quantitative Reasoning', modularCredits: '4', grade: 'A' },
+                                { name: 'GET1018 The Mathematics of Games', modularCredits: '4', grade: 'B+' },
+                                { name: 'CS1231 Discrete Structures', modularCredits: '4', grade: 'C' }
+                            ]
+                        },
+                        {
+                            semesterName: 'Semester 2',
+                            modules: [
+                                { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'S' },
+                                { name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' },
+                                { name: 'CS2100 Computer Organisation', modularCredits: '4', grade: 'A' },
+                                { name: 'LAF1201 French 1', modularCredits: '4', grade: 'A' },
+                                { name: 'GE2202 Economy & Space', modularCredits: '4', grade: 'A' }
+                            ]
+                        }
                     ]
                 },
-                // {
-                //     yearName: "Year 2",
-                //     semesters: [
-                //         { semesterName: 'Semester 1', modules: [{ name: 'CS1010 Programming Methodology', modularCredits: '4', grade: 'A' }, { name: 'CS2030 Programming Methodology II', modularCredits: '4', grade: 'A' }] },
-                //         { semesterName: 'Semester 2', modules: [{ name: 'CS2040 Data Structures and Algorithms', modularCredits: '4', grade: 'A' }] },
-                //         { semesterName: 'Semester 3', modules: [{ name: 'MA1521 Calculus for Computing', modularCredits: '4', grade: 'A' }] }
-                //     ]
-                // }
+                {
+                    yearName: "Year 2",
+                    semesters: [
+                        {
+                            semesterName: 'Semester 1',
+                            modules: [
+                                { name: 'CS2103T Software Engineering', modularCredits: '4', grade: 'S' },
+                                { name: 'CS2106 Introduction to Operating Systems', modularCredits: '4', grade: 'A' },
+                                { name: 'CS4218 Software Testing', modularCredits: '4', grade: 'C' },
+                            ]
+                        },
+                    ]
+                }
             ],
             planToTakeModules: [
                 { name: 'CS1010 Programming Methodology', modularCredits: '4' }
@@ -154,6 +176,9 @@ function plansReducer(plans =
             plansCopy.forEach(plan => {
                 if (plan.planName === action.payload.planName) {
                     plan.planToTakeModules = plan.planToTakeModules.concat([newModule]);
+                }
+            })
+            return plansCopy;
         case 'addSpecifiedModule':
             var newModule = action.payload.module;
             var plansCopy = plans.slice();

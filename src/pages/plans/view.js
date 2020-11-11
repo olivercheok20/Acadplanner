@@ -106,11 +106,14 @@ class View extends Component {
 
   onChangeTags(selectOptions) {
     let tags = [];
-    for (let selectOption of selectOptions) {
-      tags.push(selectOption.value);
+    if (selectOptions) {
+      for (let selectOption of selectOptions) {
+        tags.push(selectOption.value);
+      }
     }
 
     this.props.onChangeTags(this.state.activePlan.planName, tags)
+
   }
 
   render() {
