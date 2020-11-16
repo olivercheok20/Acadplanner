@@ -68,8 +68,6 @@ function Tracker(props) {
 
   const allModules = ULR.concat(UER).concat(PR)
 
-  const [semesterArray, setSemesterArray] = useState([])
-
   const [activeTab, setActiveTab] = useState('1');
   const toggle = tab => { if (activeTab !== tab) setActiveTab(tab); }
   const { className } = 0;
@@ -78,6 +76,8 @@ function Tracker(props) {
 
   const [activePlan, setActivePlan] = useState(getCurrentPlan())
   const [moduleToAdd, setModuleToAdd] = useState(null)
+  const [semesterArray, setSemesterArray] = useState(makeSemesterOptions())
+
 
   const animatedComponents = makeAnimated();
 
@@ -96,7 +96,7 @@ function Tracker(props) {
     let options = [];
     for (const year of activePlan.years) {
       for (const semester of year.semesters) {
-        options.push({'value': semester.semesterName, 'label': semester.semesterName})
+        options.push({'value': year.yearName + ' ' + semester.semesterName, 'label': year.yearName + ' ' + semester.semesterName})
       }
     }
     return options
@@ -197,58 +197,66 @@ function Tracker(props) {
     return names
   }
 
+ 
+
   function calculateCoreCAP() {
     let total = 0
     let num = 0
+    if (semesterArray) {
     for (const checkSemester of semesterArray) {
-    for (const year of activePlan.years) {
-      for (const semester of year.semesters) {
-        if (checkSemester.value == semester.semesterName ){
-        for (const mod of semester.modules) {
-          for (const req of PR) {
-            if (mod.name == req.name) {
-              if (mod.grade) {
-                if (mod.grade != 'S' && mod.grade != 'U') {
-                  num += 1
+      const tokens = checkSemester.value.split(" ")
+      const checkSemYear = tokens[0] + " " + tokens[1]
+      const checkSemSem = tokens[2] + " " + tokens[3]
+      for (const year of activePlan.years) {
+        if (year.yearName == checkSemYear) {
+          for (const semester of year.semesters) {
+            if (checkSemSem == semester.semesterName ){
+              for (const mod of semester.modules) {
+                for (const req of PR) {
+                  if (mod.name == req.name) {
+                    if (mod.grade) {
+                      if (mod.grade != 'S' && mod.grade != 'U') {
+                        num += 1
+                      }
+                      switch (mod.grade) {
+                        case 'A+':
+                        case 'A':
+                          total += 5
+                          break;
+                        case 'A-':
+                          total += 4.5
+                          break;
+                        case 'B+':
+                          total += 4
+                          break;
+                        case 'B':
+                          total += 3.5
+                          break;
+                        case 'B-':
+                          total += 3
+                          break;
+                        case 'C+':
+                          total += 2.5
+                          break;
+                        case 'C':
+                          total += 2
+                          break;
+                        case 'D+':
+                          total += 1.5
+                          break;
+                        case 'D':
+                          total += 1
+                          break;
+                        case 'F':
+                        case 'S':
+                        case 'U':
+                          total += 0
+                          break;                                                                                                      
+                  }
                 }
-                switch (mod.grade) {
-                  case 'A+':
-                  case 'A':
-                    total += 5
-                    break;
-                  case 'A-':
-                    total += 4.5
-                    break;
-                  case 'B+':
-                    total += 4
-                    break;
-                  case 'B':
-                    total += 3.5
-                    break;
-                  case 'B-':
-                    total += 3
-                    break;
-                  case 'C+':
-                    total += 2.5
-                    break;
-                  case 'C':
-                    total += 2
-                    break;
-                  case 'D+':
-                    total += 1.5
-                    break;
-                  case 'D':
-                    total += 1
-                    break;
-                  case 'F':
-                  case 'S':
-                  case 'U':
-                    total += 0
-                    break;                                                                                                      
-                }
-              }
-            }
-          }
+                  }
+          }}
+        }
         }
       }
       }
@@ -260,57 +268,63 @@ function Tracker(props) {
   function calculateCAP() {
     let total = 0
     let num = 0
+    if (semesterArray) {
     for (const checkSemester of semesterArray) {
+      const tokens = checkSemester.value.split(" ")
+      const checkSemYear = tokens[0] + " " + tokens[1]
+      const checkSemSem = tokens[2] + " " + tokens[3]
       for (const year of activePlan.years) {
-        for (const semester of year.semesters) {
-          if (checkSemester.value == semester.semesterName ){
-          for (const mod of semester.modules) {
-                if (mod.grade) {
-                  if (mod.grade != 'S' && mod.grade != 'U') {
-                    num += 1
-                  }
-                  switch (mod.grade) {
-                    case 'A+':
-                    case 'A':
-                      total += 5
-                      break;
-                    case 'A-':
-                      total += 4.5
-                      break;
-                    case 'B+':
-                      total += 4
-                      break;
-                    case 'B':
-                      total += 3.5
-                      break;
-                    case 'B-':
-                      total += 3
-                      break;
-                    case 'C+':
-                      total += 2.5
-                      break;
-                    case 'C':
-                      total += 2
-                      break;
-                    case 'D+':
-                      total += 1.5
-                      break;
-                    case 'D':
-                      total += 1
-                      break;
-                    case 'F':
-                    case 'S':
-                    case 'U':
-                      total += 0
-                      break;                                                                                                      
+        if (year.yearName == checkSemYear) {
+          for (const semester of year.semesters) {
+            if (checkSemSem == semester.semesterName ){
+              for (const mod of semester.modules) {
+                    if (mod.grade) {
+                      if (mod.grade != 'S' && mod.grade != 'U') {
+                        num += 1
+                      }
+                      switch (mod.grade) {
+                        case 'A+':
+                        case 'A':
+                          total += 5
+                          break;
+                        case 'A-':
+                          total += 4.5
+                          break;
+                        case 'B+':
+                          total += 4
+                          break;
+                        case 'B':
+                          total += 3.5
+                          break;
+                        case 'B-':
+                          total += 3
+                          break;
+                        case 'C+':
+                          total += 2.5
+                          break;
+                        case 'C':
+                          total += 2
+                          break;
+                        case 'D+':
+                          total += 1.5
+                          break;
+                        case 'D':
+                          total += 1
+                          break;
+                        case 'F':
+                        case 'S':
+                        case 'U':
+                          total += 0
+                          break;                                                                                                      
                   }
                 }
               
-          }
+          }}
         }
         }
       }
     }
+  }
     return Math.round(total / num * 100) / 100
   }
 
@@ -342,11 +356,9 @@ function Tracker(props) {
   }
 
   function isModInPlan(moduleName) {
-    console.log(moduleName)
     for (const year of activePlan.years) {
       for (const semester of year.semesters) {
         for (const mod of semester.modules) {
-          console.log(mod.name)
           if (mod.name == moduleName) {
             return true
           }
@@ -649,7 +661,6 @@ function Tracker(props) {
                 <div>
                   <h5>{year.yearName}</h5>
                   {year.semesters.map((semester) => {
-                    console.log(moduleToAdd)
                     return (
                     <div>
                       <b style={{ marginBottom: '15px' }}>{semester.semesterName}</b>
@@ -690,7 +701,7 @@ function Tracker(props) {
         <Row>
           <Col lg={5}>
             <Select
-            defaultValue={getNamesOfSemesters()}
+            defaultValue={makeSemesterOptions()}
             onChange={(newSemesterArray) => {
               setSemesterArray(newSemesterArray)
             }}

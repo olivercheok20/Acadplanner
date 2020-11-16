@@ -31,6 +31,8 @@ class View extends Component {
     'Science',
   ]
 
+
+
   formatTagsToSelectOptions(tags) {
     let selectOptions = [];
     for (let tag of tags) {
@@ -44,7 +46,11 @@ class View extends Component {
     this.state = {
       editPlanDescription: false,
       editPlanName: false,
-      activePlan: (typeof window !== `undefined`) ? this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] : this.props.plans[0]
+      activePlan: (typeof window !== `undefined`) ? this.props.plans[window.location.href.split('#')[window.location.href.split('#').length - 1]] : this.props.plans[0],
+      errorModules: [],
+      constraints: [
+        ['CS1010 Programming Methodology', 'CS2030 Programming Methodology II']
+      ]
     }
     this.onAddModule = this.props.onAddModule.bind(this);
     this.onAddSemester = this.props.onAddSemester.bind(this);
@@ -88,6 +94,10 @@ class View extends Component {
     this.setState({ activePlan: newActivePlan });
   }
 
+  componentDidMount() {
+    this.checkAllConstraints()
+  }
+
   onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
@@ -100,6 +110,7 @@ class View extends Component {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
+    this.checkAllConstraints()
 
     this.props.onChangeModulePosition(source.droppableId, source.index, destination.droppableId, destination.index, this.state.activePlan.planName);
   }
@@ -115,6 +126,65 @@ class View extends Component {
     this.props.onChangeTags(this.state.activePlan.planName, tags)
 
   }
+
+  flattenModules() {
+    let modules = [];
+    for (const year of this.state.activePlan.years) {
+      for (const semester of year.semesters) {
+        for (const mod of semester.modules) {
+          modules.push(mod)
+        }
+      }
+    }
+    return modules
+  }
+
+  checkForConstraint(firstMod, secondMod) {
+    const modules = this.flattenModules()
+    for (const mod of modules) {
+      if (mod.name == firstMod) {
+        return true
+      }
+      if (mod.name == secondMod) {
+        return false
+      }
+    }
+  }
+
+  flattenModules() {
+    let modules = [];
+    for (const year of this.state.activePlan.years) {
+      for (const semester of year.semesters) {
+        for (const mod of semester.modules) {
+          modules.push(mod)
+        }
+      }
+    }
+    return modules
+  }
+
+  checkForConstraint(firstMod, secondMod) {
+    const modules = this.flattenModules()
+    for (const mod of modules) {
+      if (mod.name == firstMod) {
+        return true
+      }
+      if (mod.name == secondMod) {
+        return false
+      }
+    }
+  }
+
+  checkAllConstraints() {
+    let errorModules = []
+    for (const constraint of this.state.constraints) {
+      if (!this.checkForConstraint(constraint[0], constraint[1])) {
+        errorModules.push(constraint[1])
+      }
+    }
+    this.setState({errorModules: errorModules})
+  }
+
 
   render() {
     return (
@@ -214,6 +284,8 @@ class View extends Component {
                 semesters={year.semesters}
                 yearName={year.yearName}
                 planName={this.state.activePlan.planName}
+                errorModules={this.state.errorModules}
+                constraints={this.state.constraints}
                 onAddModule={this.onAddModule}
                 onAddSemester={this.onAddSemester}
                 onChangeSemesterName={this.onChangeSemesterName}

@@ -58,6 +58,8 @@ export const Year = (props) => {
                                     semester={semester}
                                     yearName={props.yearName}
                                     planName={props.planName}
+                                    errorModules={props.errorModules}
+                                    constraints={props.constraints}
                                     onAddModule={props.onAddModule}
                                     onChangeSemesterName={props.onChangeSemesterName}
                                     onDeleteSemester={props.onDeleteSemester}

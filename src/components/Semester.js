@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Input, Form, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Card, Button, Input, Form, Modal, ModalHeader, ModalBody, Alert } from "reactstrap";
 import { Module } from './Module';
 
 import { Droppable } from 'react-beautiful-dnd';
@@ -9,6 +9,37 @@ export const Semester = (props) => {
     const [editSemesterName, setEditSemesterName] = useState(false);
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
+    function isError() {
+        for (const mod of props.semester.modules) {
+            for (const errorMod of props.errorModules) {
+                if (mod.name == errorMod) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function errorModulesInSemester() {
+        let errorMods = []
+        for (const mod of props.semester.modules) {
+            for (const errorMod of props.errorModules) {
+                if (mod.name == errorMod) {
+                    errorMods.push(errorMod)
+                }
+            }
+        }
+        return errorMods;
+    }
+
+    function findPrerequisiteModule(errorMod) {
+        for (var i = 0; i < props.constraints.length; i++) {
+            if (props.constraints[i][1] == errorMod) {
+                return props.constraints[i][0]
+            }
+        }
+    }
 
     const calculateMCs = () => {
         let credits = 0;
@@ -81,6 +112,19 @@ export const Semester = (props) => {
                 <div style={{ display: "flex", marginTop: 10 }}>
                     <p style={{ marginLeft: "auto", fontWeight: 'bold' }}>MCs: {calculateMCs()}</p>
                 </div>
+                {
+                        isError() && (
+                            <Alert color="danger">
+                                {errorModulesInSemester().map((errorMod) => (
+                                    <p>{errorMod.split(" ", 1)[0]} is missing requirement {findPrerequisiteModule(errorMod).split(" ",1)[0]}.</p>
+                                )
+
+                                )}
+
+                            </Alert>
+
+                        )
+                    }
             </Card>
 
             <Modal isOpen={modal} toggle={toggle}>
