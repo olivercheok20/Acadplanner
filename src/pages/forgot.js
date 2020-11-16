@@ -98,7 +98,7 @@ export default class Forgot extends Component {
                         </a>
                       </h6>
                       <div className="ml-auto">
-                        <Button color="primary" size="lg" href="/">
+                        <Button color="primary" className="btn-hover-shine" size="lg" href="/">
                           Recover Password
                         </Button>
                       </div>

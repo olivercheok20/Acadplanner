@@ -115,7 +115,7 @@ export default class Login extends Component {
                         <a href="/forgot" className="btn-lg btn btn-link" >
                           Recover Password
                         </a>{" "}
-                        <Button color="primary" size="lg" href="/plans">
+                        <Button color="primary" className="btn-hover-shine" size="lg" href="/plans">
                           Log In
                         </Button>
                       </div>
