@@ -460,7 +460,7 @@ function Tracker(props) {
             >
               University Level Requirements
               {!(20 - takenModsFrom(ULR).length * 4) && <Badge color="primary">&#x2713;</Badge>}
-              {(20 - takenModsFrom(ULR).length * 4) && <Badge color="danger">{20 - takenModsFrom(ULR).length * 4}</Badge>}
+              {!!(20 - takenModsFrom(ULR).length * 4) && <Badge color="danger">{20 - takenModsFrom(ULR).length * 4}</Badge>}
             </NavLink>
           </NavItem>
           <NavItem>

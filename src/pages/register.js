@@ -81,7 +81,7 @@ export default class Register extends Component {
                         </a>
                       </h5>
                       <div className="ml-auto">
-                        <Button color="primary" className="btn-wide btn-pill btn-shadow btn-hover-shine" size="lg" href="/">
+                        <Button color="primary" className="btn-hover-shine" size="lg" href="/">
                           Create Account
                         </Button>
                       </div>
