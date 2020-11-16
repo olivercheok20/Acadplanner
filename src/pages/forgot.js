@@ -8,6 +8,8 @@ import bg3 from "../assets/utils/images/originals/nus3.jpg";
 
 import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
+import "../assets/base.scss";
+
 export default class Forgot extends Component {
   render() {
     let settings = {

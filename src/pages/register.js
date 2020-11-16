@@ -6,6 +6,9 @@ import bg3 from "../assets/utils/images/originals/nus1.jpg";
 
 import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
+import "../assets/base.scss";
+
+
 export default class Register extends Component {
   render() {
     let settings = {
