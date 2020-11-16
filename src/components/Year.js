@@ -12,7 +12,7 @@ export const Year = (props) => {
     const toggle = () => setModal(!modal);
 
     return (
-        <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 30 }}>
+        <div style={{ border: '1px solid #ced4da', borderRadius: 5, margin: 20 }}>
             <div style={{ margin: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', marginLeft: 20 }}>
                     {!editYearName && <h3 style={{ paddingTop: 5 }}>{props.yearName}</h3>}
@@ -50,9 +50,9 @@ export const Year = (props) => {
             </div>
 
             <Collapse isOpen={isOpen}>
-                <Row>
+                <Row style={{ marginLeft: 15, marginRight: 15 }}>
                     {props.semesters.map((semester, i) => (
-                        <Col md={6} key={i}>
+                        <Col md={6} key={i} style={{ padding: 0 }}>
                             <div style={{ margin: 20 }}>
                                 <Semester
                                     semester={semester}
@@ -71,7 +71,7 @@ export const Year = (props) => {
                         </Col>
                     ))}
                     <Col md={6}>
-                        <div style={{ margin: 20, flex: 1 }}>
+                        <div style={{ margin: 5, flex: 1, marginBottom: 50, marginTop: 20 }}>
                             <Button style={{ width: '100%' }} color="info" onClick={() =>
                                 props.onAddSemester(props.planName, props.yearName)
                             }>Add Semester</Button>

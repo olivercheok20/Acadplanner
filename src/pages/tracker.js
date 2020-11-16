@@ -501,7 +501,7 @@ function Tracker(props) {
                 <Row><b>Modules Taken</b></Row>
                 <Row>
                 {takenModsFrom(ULR).map((mod) => {
-                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                  return (<p style={{marginBottom: 0, width:'100%'}}>{mod}</p>)
                 }
                 )}
                 </Row>
@@ -511,7 +511,7 @@ function Tracker(props) {
                 {/* Change this to MODAL */}
                 <Row>
                 {modulesLeftFrom(ULR).map((mod) => {
-                  return (<a style={{marginBottom: 0}} href="#" onClick={(e) => {
+                  return (<a style={{marginBottom: 0, width:'100%'}} href="#" onClick={(e) => {
                     toggleModal(mod); 
                     e.preventDefault()
                     setModuleToAdd(mod)
@@ -556,7 +556,7 @@ function Tracker(props) {
                 <Row><b>Modules Taken</b></Row>
                 <Row>
                 {takenModsFrom(UER).map((mod) => {
-                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                  return (<p style={{marginBottom: 0, width:'100%'}}>{mod}</p>)
                 }
                 )}
                 </Row>
@@ -567,7 +567,7 @@ function Tracker(props) {
                 {/* Change this to MODAL */}
                 <Row>
                 {modulesLeftFrom(UER).map((mod) => {
-                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                  return (<p style={{marginBottom: 0, width:'100%'}}>{mod}</p>)
                 }
                 )}
                 </Row>
@@ -606,7 +606,7 @@ function Tracker(props) {
                 <Row style={{marginBottom: '10px'}}><b>Modules Taken</b></Row>
                 <Row>
                 {takenModsFrom(PR).map((mod) => {
-                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                  return (<p style={{marginBottom: 0, width:'100%'}}>{mod}</p>)
                 }
                 )}
                 </Row>
@@ -616,7 +616,7 @@ function Tracker(props) {
                 {/* Change this to MODAL */}
                 <Row>
                 {modulesLeftFrom(PR).map((mod) => {
-                  return (<p style={{marginBottom: 0}}>{mod}</p>)
+                  return (<p style={{marginBottom: 0, width:'100%'}}>{mod}</p>)
                 }
                 )}
                 </Row>
