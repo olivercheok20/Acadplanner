@@ -75,7 +75,7 @@ function plansReducer(plans =
                     yearName: "Year 2",
                     semesters: [
                         {
-                            semesterName: 'Semester 1',
+                            semesterName: 'Semester 3',
                             modules: [
                                 { name: 'CS2103T Software Engineering', modularCredits: '4', grade: 'S' },
                                 { name: 'CS2106 Introduction to Operating Systems', modularCredits: '4', grade: 'A' },

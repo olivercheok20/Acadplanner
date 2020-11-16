@@ -22,7 +22,7 @@ export const Semester = (props) => {
 
     return (
         <>
-            <Card style={{ padding: 30, paddingBottom: 5, borderWidth: '1px', paddingTop: 10 }}>
+            <Card style={{ padding: 15, paddingBottom: 5, borderWidth: '1px', paddingTop: 10 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', }}>
                     <div style={{ display: 'flex', marginLeft: 5 }}>
                         {!editSemesterName && <h5 style={{ paddingTop: 5 }}>{props.semester.semesterName}</h5>}
